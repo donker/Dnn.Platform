@@ -30,6 +30,15 @@ namespace DotNetNuke.Web.Api.Auth.ApiTokens
         private static readonly HashAlgorithm Hasher = SHA384.Create();
         private static readonly Encoding TextEncoder = Encoding.UTF8;
 
+        private readonly IApiTokenRepository apiTokenRepository;
+
+        /// <summary>Initializes a new instance of the <see cref="ApiTokenController"/> class.</summary>
+        /// <param name="apiTokenRepository">The API token repository.</param>
+        public ApiTokenController(IApiTokenRepository apiTokenRepository)
+        {
+            this.apiTokenRepository = apiTokenRepository;
+        }
+
         /// <inheritdoc />
         public string SchemeType => "ApiToken";
 
@@ -98,7 +107,7 @@ namespace DotNetNuke.Web.Api.Auth.ApiTokens
         /// <inheritdoc />
         public IPagedList<ApiToken> GetApiTokens(ApiTokenScope scope, bool includeNarrowerScopes, int portalId, int userId, ApiTokenFilter filter, string apiKey, int pageIndex, int pageSize)
         {
-            return ApiTokenRepository.Instance.GetApiTokens(scope, includeNarrowerScopes, portalId, userId, filter, apiKey, pageIndex, pageSize);
+            return this.apiTokenRepository.GetApiTokens(scope, includeNarrowerScopes, portalId, userId, filter, apiKey, pageIndex, pageSize);
         }
 
         /// <inheritdoc />
@@ -120,14 +129,14 @@ namespace DotNetNuke.Web.Api.Auth.ApiTokens
                 ExpiresOn = expiresOn,
                 TokenHash = hashedToken,
             };
-            token = ApiTokenRepository.Instance.AddApiToken(token, apiKeys, userId);
+            token = this.apiTokenRepository.AddApiToken(token, apiKeys, userId);
             return newToken;
         }
 
         /// <inheritdoc />
         public ApiToken GetApiToken(int apiTokenId)
         {
-            return ApiTokenRepository.Instance.GetApiToken(apiTokenId);
+            return this.apiTokenRepository.GetApiToken(apiTokenId);
         }
 
         /// <inheritdoc />
@@ -135,11 +144,11 @@ namespace DotNetNuke.Web.Api.Auth.ApiTokens
         {
             if (delete)
             {
-                ApiTokenRepository.Instance.DeleteApiToken(token);
+                this.apiTokenRepository.DeleteApiToken(token);
             }
             else
             {
-                ApiTokenRepository.Instance.RevokeApiToken(token, userId);
+                this.apiTokenRepository.RevokeApiToken(token, userId);
             }
         }
 
@@ -178,7 +187,7 @@ namespace DotNetNuke.Web.Api.Auth.ApiTokens
         {
             var tokenAndHostGuid = authorization + Entities.Host.Host.GUID;
             var hashedToken = this.GetHashedStr(tokenAndHostGuid);
-            var apiToken = ApiTokenRepository.Instance.GetApiToken(this.PortalSettings.PortalId, hashedToken);
+            var apiToken = this.apiTokenRepository.GetApiToken(this.PortalSettings.PortalId, hashedToken);
             if (apiToken != null)
             {
                 if (apiToken.ExpiresOn < DateTime.UtcNow || apiToken.IsRevoked)
@@ -191,7 +200,7 @@ namespace DotNetNuke.Web.Api.Auth.ApiTokens
                     return (null, null);
                 }
 
-                apiToken.TokenKeys = ApiTokenRepository.Instance.GetApiTokenKeys(apiToken.ApiTokenId);
+                apiToken.TokenKeys = this.apiTokenRepository.GetApiTokenKeys(apiToken.ApiTokenId);
 
                 switch (apiToken.Scope)
                 {
