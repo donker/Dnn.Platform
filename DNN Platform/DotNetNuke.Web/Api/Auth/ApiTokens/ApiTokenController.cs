@@ -16,14 +16,13 @@ namespace DotNetNuke.Web.Api.Auth.ApiTokens
     using DotNetNuke.Collections;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Users;
-    using DotNetNuke.Framework;
     using DotNetNuke.Framework.Reflections;
     using DotNetNuke.Instrumentation;
     using DotNetNuke.Web.Api.Auth.ApiTokens.Models;
     using DotNetNuke.Web.Api.Auth.ApiTokens.Repositories;
 
     /// <inheritdoc />
-    public class ApiTokenController : ServiceLocator<IApiTokenController, ApiTokenController>, IApiTokenController
+    public class ApiTokenController : IApiTokenController
     {
         private const string AuthScheme = "Bearer";
 
@@ -142,12 +141,6 @@ namespace DotNetNuke.Web.Api.Auth.ApiTokens
             {
                 ApiTokenRepository.Instance.RevokeApiToken(token, userId);
             }
-        }
-
-        /// <inheritdoc />
-        protected override Func<IApiTokenController> GetFactory()
-        {
-            return () => new ApiTokenController();
         }
 
         private string ValidateAuthHeader(AuthenticationHeaderValue authHdr)
