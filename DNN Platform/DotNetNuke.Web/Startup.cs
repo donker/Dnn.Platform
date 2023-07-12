@@ -7,6 +7,7 @@ namespace DotNetNuke.Web
 
     using DotNetNuke.Common.Internal;
     using DotNetNuke.DependencyInjection;
+    using DotNetNuke.Web.Api.Auth.ApiTokens;
     using DotNetNuke.Web.Api.Internal;
     using DotNetNuke.Web.Extensions;
 
@@ -24,6 +25,8 @@ namespace DotNetNuke.Web
             services.AddTransient<IFilterProvider, DnnActionFilterProvider>();
             services.TryAddEnumerable(new ServiceDescriptor(typeof(IRoutingManager), typeof(ServicesRoutingManager), ServiceLifetime.Singleton));
             services.AddWebApi();
+
+            services.AddTransient<IApiTokenController, ApiTokenController>();
         }
     }
 }
