@@ -1459,7 +1459,7 @@ Sincerely,
     <value>Administrators can access and change all content of this site and control all site settings. They can manage user access to the site and manage other administrators as well.  This user type cannot make system-level changes or perform privileged administration tasks that Superusers can.</value>
   </data>
   <data name="All Users.RoleDescription" xml:space="preserve">
-    <value>This is a dummy role (i.e. you cannot add or remove users from this role). It means both all the users who have an account on this website but also any unauthenticated user on this site.</value>
+    <value>This is a platform-managed role (i.e. you cannot add or remove users from this role). This role represents ANY visitor to the website regardless of their login/account status.</value>
   </data>
   <data name="Content Editors.RoleDescription" xml:space="preserve">
     <value>Content editors are allowed to add and change content on this site. The exact functionality depends on the what the modules used on this site support.</value>
