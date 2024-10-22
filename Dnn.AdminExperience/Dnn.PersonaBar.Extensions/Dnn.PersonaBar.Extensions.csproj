@@ -667,7 +667,9 @@
     <Content Include="admin\personaBar\Dnn.Licensing\App_LocalResources\Licensing.resx" />
     <Content Include="admin\personaBar\Dnn.Security\App_LocalResources\Security.resx" />
     <Content Include="admin\personaBar\Dnn.Seo\App_LocalResources\Seo.resx" />
-    <Content Include="admin\personaBar\Dnn.Servers\App_LocalResources\Servers.resx" />
+    <Content Include="admin\personaBar\Dnn.Servers\App_LocalResources\Servers.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="admin\personaBar\Dnn.SiteImportExport\App_LocalResources\SiteImportExport.resx" />
     <Content Include="admin\personaBar\Dnn.SiteSettings\App_LocalResources\SiteSettings.resx" />
     <Content Include="admin\personaBar\Dnn.SqlConsole\App_LocalResources\SqlConsole.resx" />
@@ -717,9 +719,6 @@
     <Content Include="SqlDataProvider\09.04.01.SqlDataProvider" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=1.4.2.13, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SharpZipLib.1.4.2\lib\netstandard2.0\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
