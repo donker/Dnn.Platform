@@ -2993,7 +2993,7 @@ namespace DotNetNuke.Common
                 case glbRoleAllUsers:
                     return glbRoleAllUsersName;
                 case glbRoleUnauthUser:
-                    return Localization.LocalizeRole(glbRoleUnauthUserName);
+                    return glbRoleUnauthUserName;
             }
 
             Hashtable htRoles = null;
