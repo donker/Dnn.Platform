@@ -19,7 +19,6 @@ namespace DotNetNuke.Build.Tasks
     [IsDependentOn(typeof(UpdateDnnManifests))]
     [IsDependentOn(typeof(CreateInstall))]
     [IsDependentOn(typeof(CreateUpgrade))]
-    [IsDependentOn(typeof(CreateDeploy))]
     [IsDependentOn(typeof(CreateSymbols))]
     public sealed class GeneratePackagesChecksums : FrostingTask<Context>
     {

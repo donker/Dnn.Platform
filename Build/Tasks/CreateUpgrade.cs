@@ -18,7 +18,6 @@ namespace DotNetNuke.Build.Tasks
     [IsDependentOn(typeof(OtherPackages))]
     [IsDependentOn(typeof(CreateInstall))] // This is to ensure CreateUpgrade runs last and not in parallel, can be removed when we get to v10 where the telerik workaround is no longer needed
     [IsDependentOn(typeof(CreateSymbols))] // This is to ensure CreateUpgrade runs last and not in parallel, can be removed when we get to v10 where the telerik workaround is no longer needed
-    [IsDependentOn(typeof(CreateDeploy))] // This is to ensure CreateUpgrade runs last and not in parallel, can be removed when we get to v10 where the telerik workaround is no longer needed
     public sealed class CreateUpgrade : FrostingTask<Context>
     {
         /// <inheritdoc/>

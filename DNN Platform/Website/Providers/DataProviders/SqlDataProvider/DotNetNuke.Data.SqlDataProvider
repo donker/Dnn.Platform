@@ -7,13 +7,13 @@
 /*****       for {databaseOwner} and {objectQualifier}  *****/
 /*****                                                  *****/
 /************************************************************/
-		
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}RelationshipTypes] ON 
+
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}RelationshipTypes] ON
 INSERT {databaseOwner}[{objectQualifier}RelationshipTypes] ([RelationshipTypeID], [Direction], [Name], [Description], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (1, 2, N'Friends', N'Friends', -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime))
 INSERT {databaseOwner}[{objectQualifier}RelationshipTypes] ([RelationshipTypeID], [Direction], [Name], [Description], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (2, 1, N'Followers', N'Followers', -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime))
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}RelationshipTypes] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}ContentTypes] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}ContentTypes] ON
 INSERT {databaseOwner}[{objectQualifier}ContentTypes] ([ContentTypeID], [ContentType]) VALUES (3, N'DesktopModule')
 INSERT {databaseOwner}[{objectQualifier}ContentTypes] ([ContentTypeID], [ContentType]) VALUES (5, N'DNNCorp_JournalGroup')
 INSERT {databaseOwner}[{objectQualifier}ContentTypes] ([ContentTypeID], [ContentType]) VALUES (4, N'DNNCorp_JournalProfile')
@@ -22,7 +22,7 @@ INSERT {databaseOwner}[{objectQualifier}ContentTypes] ([ContentTypeID], [Content
 INSERT {databaseOwner}[{objectQualifier}ContentTypes] ([ContentTypeID], [ContentType]) VALUES (1, N'Tab')
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}ContentTypes] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}ContentItems] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}ContentItems] ON
 INSERT {databaseOwner}[{objectQualifier}ContentItems] ([ContentItemID], [Content], [ContentTypeID], [TabID], [ModuleID], [ContentKey], [Indexed], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [StateID]) VALUES (1, N'Dashboard', 3, -1, -1, NULL, 0, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}ContentItems] ([ContentItemID], [Content], [ContentTypeID], [TabID], [ModuleID], [ContentKey], [Indexed], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [StateID]) VALUES (6, N'Skins', 3, -1, -1, NULL, 0, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}ContentItems] ([ContentItemID], [Content], [ContentTypeID], [TabID], [ModuleID], [ContentKey], [Indexed], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [StateID]) VALUES (7, N'Skin Designer', 3, -1, -1, NULL, 0, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, NULL)
@@ -50,18 +50,18 @@ INSERT {databaseOwner}[{objectQualifier}ContentItems] ([ContentItemID], [Content
 INSERT {databaseOwner}[{objectQualifier}ContentItems] ([ContentItemID], [Content], [ContentTypeID], [TabID], [ModuleID], [ContentKey], [Indexed], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [StateID]) VALUES (69, N'Account Registration', 3, -1, -1, N'', 0, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, NULL)
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}ContentItems] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Tabs] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Tabs] ON
 INSERT {databaseOwner}[{objectQualifier}Tabs] ([TabID], [TabOrder], [PortalID], [TabName], [IsVisible], [ParentId], [IconFile], [DisableLink], [Title], [Description], [KeyWords], [IsDeleted], [Url], [SkinSrc], [ContainerSrc], [StartDate], [EndDate], [RefreshInterval], [PageHeadText], [IsSecure], [PermanentRedirect], [SiteMapPriority], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [IconFileLarge], [CultureCode], [ContentItemID], [UniqueId], [VersionGuid], [DefaultLanguageGuid], [LocalizedVersionGuid], [Level], [TabPath], [HasBeenPublished], [IsSystem]) VALUES (7, 1, NULL, N'Host', 0, NULL, N'', 0, N'', N'', N'', 0, N'', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 0.5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'70041966-019f-46fb-a743-c8ec8ce65686', N'ad13bd37-583e-46bd-90e4-e337140279d9', NULL, N'c7fddd76-4adb-48cc-b54b-ebe3cacb24fe', 0, N'//Host', 1, 0)
 INSERT {databaseOwner}[{objectQualifier}Tabs] ([TabID], [TabOrder], [PortalID], [TabName], [IsVisible], [ParentId], [IconFile], [DisableLink], [Title], [Description], [KeyWords], [IsDeleted], [Url], [SkinSrc], [ContainerSrc], [StartDate], [EndDate], [RefreshInterval], [PageHeadText], [IsSecure], [PermanentRedirect], [SiteMapPriority], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [IconFileLarge], [CultureCode], [ContentItemID], [UniqueId], [VersionGuid], [DefaultLanguageGuid], [LocalizedVersionGuid], [Level], [TabPath], [HasBeenPublished], [IsSystem]) VALUES (19, 7, NULL, N'File Manager', 1, 7, N'~/Icons/Sigma/Files_16X16_Standard.png', 0, N'', N'Manage files.', N'', 0, N'', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 0.5, NULL, NULL, NULL, NULL, N'~/Icons/Sigma/Files_32X32_Standard.png', NULL, NULL, N'ef3213d2-9023-410c-88d0-99393c6e64b0', N'7810864b-0e43-4187-a98c-25d00d545baf', NULL, N'95d3d919-47f8-4b5f-b776-0e6c372a2192', 1, N'//Host//FileManager', 1, 0)
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Tabs] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Roles] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Roles] ON
 INSERT {databaseOwner}[{objectQualifier}Roles] ([RoleID], [PortalID], [RoleName], [Description], [ServiceFee], [BillingFrequency], [TrialPeriod], [TrialFrequency], [BillingPeriod], [TrialFee], [IsPublic], [AutoAssignment], [RoleGroupID], [RSVPCode], [IconFile], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [Status], [SecurityMode], [IsSystemRole]) VALUES (-3, NULL, N'Unauthenticated Users', NULL, 0.0000, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 1, 0, 1)
 INSERT {databaseOwner}[{objectQualifier}Roles] ([RoleID], [PortalID], [RoleName], [Description], [ServiceFee], [BillingFrequency], [TrialPeriod], [TrialFrequency], [BillingPeriod], [TrialFee], [IsPublic], [AutoAssignment], [RoleGroupID], [RSVPCode], [IconFile], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [Status], [SecurityMode], [IsSystemRole]) VALUES (-2, NULL, N'Superusers', NULL, 0.0000, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 1, 0, 1)
 INSERT {databaseOwner}[{objectQualifier}Roles] ([RoleID], [PortalID], [RoleName], [Description], [ServiceFee], [BillingFrequency], [TrialPeriod], [TrialFrequency], [BillingPeriod], [TrialFee], [IsPublic], [AutoAssignment], [RoleGroupID], [RSVPCode], [IconFile], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [Status], [SecurityMode], [IsSystemRole]) VALUES (-1, NULL, N'All Users', NULL, 0.0000, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 1, 0, 1)
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Roles] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Permission] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Permission] ON
 INSERT {databaseOwner}[{objectQualifier}Permission] ([PermissionID], [PermissionCode], [ModuleDefID], [PermissionKey], [PermissionName], [ViewOrder], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (1, N'SYSTEM_MODULE_DEFINITION', -1, N'VIEW', N'View', 0, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}Permission] ([PermissionID], [PermissionCode], [ModuleDefID], [PermissionKey], [PermissionName], [ViewOrder], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (2, N'SYSTEM_MODULE_DEFINITION', -1, N'EDIT', N'Edit', 9999, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}Permission] ([PermissionID], [PermissionCode], [ModuleDefID], [PermissionKey], [PermissionName], [ViewOrder], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (3, N'SYSTEM_TAB', -1, N'VIEW', N'View Tab', 0, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
@@ -95,7 +95,7 @@ INSERT {databaseOwner}[{objectQualifier}Permission] ([PermissionID], [Permission
 INSERT {databaseOwner}[{objectQualifier}Permission] ([PermissionID], [PermissionCode], [ModuleDefID], [PermissionKey], [PermissionName], [ViewOrder], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (31, N'SYSTEM_TAB', -1, N'NAVIGATE', N'Navigate', 8, -1, CAST(N'2024-05-28T06:29:30.983' AS DateTime), -1, CAST(N'2024-05-28T06:29:30.983' AS DateTime))
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Permission] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}ProfilePropertyDefinition] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}ProfilePropertyDefinition] ON
 INSERT {databaseOwner}[{objectQualifier}ProfilePropertyDefinition] ([PropertyDefinitionID], [PortalID], [ModuleDefID], [Deleted], [DataType], [DefaultValue], [PropertyCategory], [PropertyName], [Length], [Required], [ValidationExpression], [ViewOrder], [Visible], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [DefaultVisibility], [ReadOnly]) VALUES (1, NULL, -1, 0, 349, NULL, N'Name', N'Prefix', 50, 0, N'', 1, 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 0, 0)
 INSERT {databaseOwner}[{objectQualifier}ProfilePropertyDefinition] ([PropertyDefinitionID], [PortalID], [ModuleDefID], [Deleted], [DataType], [DefaultValue], [PropertyCategory], [PropertyName], [Length], [Required], [ValidationExpression], [ViewOrder], [Visible], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [DefaultVisibility], [ReadOnly]) VALUES (2, NULL, -1, 0, 349, NULL, N'Name', N'FirstName', 50, 0, N'', 3, 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 0, 0)
 INSERT {databaseOwner}[{objectQualifier}ProfilePropertyDefinition] ([PropertyDefinitionID], [PortalID], [ModuleDefID], [Deleted], [DataType], [DefaultValue], [PropertyCategory], [PropertyName], [Length], [Required], [ValidationExpression], [ViewOrder], [Visible], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [DefaultVisibility], [ReadOnly]) VALUES (3, NULL, -1, 0, 349, NULL, N'Name', N'MiddleName', 50, 0, N'', 5, 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 0, 0)
@@ -143,7 +143,7 @@ INSERT {databaseOwner}[{objectQualifier}PackageTypes] ([PackageType], [Descripti
 GO
 INSERT {databaseOwner}[{objectQualifier}PackageTypes] ([PackageType], [Description], [SecurityAccessLevel], [EditorControlSrc], [SupportsSideBySideInstallation]) VALUES (N'Widget', N'Widget', 3, NULL, 0)
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Packages] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Packages] ON
 INSERT {databaseOwner}[{objectQualifier}Packages] ([PackageID], [PortalID], [Name], [FriendlyName], [Description], [PackageType], [Version], [License], [Manifest], [Owner], [Organization], [Url], [Email], [ReleaseNotes], [IsSystemPackage], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [FolderName], [IconFile]) VALUES (1, NULL, N'DotNetNuke.Authentication', N'Authentication', N'Allows you to manage authentication settings for sites using Windows Authentication.', N'Module', N'09.03.02', NULL, NULL, N'DNN', N'DNN Corp.', N'http://www.dnnsoftware.com', N'support@dnnsoftware.com', NULL, 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, N'DesktopModules/Admin/Authentication', N'~/DesktopModules/Admin/Authentication/authentication.png')
 INSERT {databaseOwner}[{objectQualifier}Packages] ([PackageID], [PortalID], [Name], [FriendlyName], [Description], [PackageType], [Version], [License], [Manifest], [Owner], [Organization], [Url], [Email], [ReleaseNotes], [IsSystemPackage], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [FolderName], [IconFile]) VALUES (16, NULL, N'DotNetNuke.SearchResults', N'Search Results', N'The Search Results module displays search results.', N'Module', N'09.03.02', NULL, NULL, N'DNN', N'DNN Corp.', N'http://www.dnnsoftware.com', N'support@dnnsoftware.com', NULL, 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, N'DesktopModules/Admin/SearchResults', N'~/Icons/Sigma/Search_32x32_Standard.png')
 INSERT {databaseOwner}[{objectQualifier}Packages] ([PackageID], [PortalID], [Name], [FriendlyName], [Description], [PackageType], [Version], [License], [Manifest], [Owner], [Organization], [Url], [Email], [ReleaseNotes], [IsSystemPackage], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [FolderName], [IconFile]) VALUES (17, NULL, N'DotNetNuke.Security', N'Users and Roles', N'Administrators can manage the security roles defined for their site. The module allows you to add new security roles, modify existing security roles, delete security roles, and manage the users assigned to security roles.', N'Module', N'09.03.02', N'', N'', N'DNN', N'DNN Corp.', N'http://www.dnnsoftware.com', N'support@dnnsoftware.com', N'', 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, N'DesktopModules/Admin/Security', N'~/Icons/Sigma/Hostuser_32X32_Standard.png')
@@ -184,36 +184,36 @@ INSERT {databaseOwner}[{objectQualifier}Packages] ([PackageID], [PortalID], [Nam
 Copyright (c) 2002-2018<br/>
 by DotNetNuke Corporation
 <br/><br/>
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
-documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
-the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and 
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and
 to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 <br/><br/>
-The above copyright notice and this permission notice shall be included in all copies or substantial portions 
+The above copyright notice and this permission notice shall be included in all copies or substantial portions
 of the Software.
 <br/><br/>
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
-TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
-THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
-CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.', NULL, N'DNN', N'DNN Corp.', N'http://www.dnnsoftware.com', N'support@dnnsoftware.com', N'There are no release notes for this version.', 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}Packages] ([PackageID], [PortalID], [Name], [FriendlyName], [Description], [PackageType], [Version], [License], [Manifest], [Owner], [Organization], [Url], [Email], [ReleaseNotes], [IsSystemPackage], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [FolderName], [IconFile]) VALUES (69, NULL, N'DotNetNuke.ViewProfile', N'ViewProfile', N'', N'Module', N'09.03.02', N'', N'', N'DNN', N'DNN Corp.', N'http://www.dnnsoftware.com', N'support@dnnsoftware.com', N'', 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, N'DesktopModules/Admin/ViewProfile', N'~/DesktopModules/Admin/ViewProfile/viewProfile.png')
 INSERT {databaseOwner}[{objectQualifier}Packages] ([PackageID], [PortalID], [Name], [FriendlyName], [Description], [PackageType], [Version], [License], [Manifest], [Owner], [Organization], [Url], [Email], [ReleaseNotes], [IsSystemPackage], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [FolderName], [IconFile]) VALUES (71, NULL, N'DotNetNuke.TagsSkinObject', N'TAGSSkinObject', NULL, N'SkinObject', N'09.03.02', N'DotNetNuke® - https://www.dnnsoftware.com<br/>
 Copyright (c) 2002-2018<br/>
 by DotNetNuke Corporation
 <br/><br/>
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
-documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
-the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and 
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and
 to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 <br/><br/>
-The above copyright notice and this permission notice shall be included in all copies or substantial portions 
+The above copyright notice and this permission notice shall be included in all copies or substantial portions
 of the Software.
 <br/><br/>
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
-TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
-THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
-CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.', NULL, N'DNN', N'DNN Corp.', N'http://www.dnnsoftware.com', N'support@dnnsoftware.com', N'There are no release notes for this version.', 0, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}Packages] ([PackageID], [PortalID], [Name], [FriendlyName], [Description], [PackageType], [Version], [License], [Manifest], [Owner], [Organization], [Url], [Email], [ReleaseNotes], [IsSystemPackage], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [FolderName], [IconFile]) VALUES (81, NULL, N'DotNetNuke.Skin.Default', N'Default', N'', N'Skin', N'1.0.0', NULL, NULL, N'DNN', N'DNN Corp.', N'http://www.dnnsoftware.com', N'support@dnnsoftware.com', NULL, 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}Packages] ([PackageID], [PortalID], [Name], [FriendlyName], [Description], [PackageType], [Version], [License], [Manifest], [Owner], [Organization], [Url], [Email], [ReleaseNotes], [IsSystemPackage], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [FolderName], [IconFile]) VALUES (82, NULL, N'DotNetNuke.Container.Default', N'Default', N'', N'Container', N'1.0.0', NULL, NULL, N'DNN', N'DNN Corp.', N'http://www.dnnsoftware.com', N'support@dnnsoftware.com', NULL, 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, NULL, NULL)
@@ -225,7 +225,7 @@ INSERT {databaseOwner}[{objectQualifier}Packages] ([PackageID], [PortalID], [Nam
 INSERT {databaseOwner}[{objectQualifier}Packages] ([PackageID], [PortalID], [Name], [FriendlyName], [Description], [PackageType], [Version], [License], [Manifest], [Owner], [Organization], [Url], [Email], [ReleaseNotes], [IsSystemPackage], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [FolderName], [IconFile]) VALUES (101, NULL, N'DotNetNuke.DNNJSEXCLUDESkinObject', N'DNNJSEXCLUDE SkinObject', N'', N'SkinObject', N'09.03.02', NULL, NULL, N'DNN', N'DNN Corp.', N'http://www.dnnsoftware.com', N'support@dnnsoftware.com', NULL, 0, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, NULL, NULL)
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Packages] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}DesktopModules] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}DesktopModules] ON
 INSERT {databaseOwner}[{objectQualifier}DesktopModules] ([DesktopModuleID], [FriendlyName], [Description], [Version], [IsPremium], [IsAdmin], [BusinessControllerClass], [FolderName], [ModuleName], [SupportedFeatures], [CompatibleVersions], [Dependencies], [Permissions], [PackageID], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [ContentItemId], [Shareable], [AdminPage], [HostPage]) VALUES (10, N'Users And Roles', N'Administrators can manage the security roles defined for their portal. The module allows you to add new security roles, modify existing security roles, delete security roles, and manage the users assigned to security roles.', N'09.03.02', 1, 0, N'', N'Admin/Security', N'Security', 0, NULL, NULL, NULL, 17, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 19, 0, NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}DesktopModules] ([DesktopModuleID], [FriendlyName], [Description], [Version], [IsPremium], [IsAdmin], [BusinessControllerClass], [FolderName], [ModuleName], [SupportedFeatures], [CompatibleVersions], [Dependencies], [Permissions], [PackageID], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [ContentItemId], [Shareable], [AdminPage], [HostPage]) VALUES (45, N'Search Results', N'The Search Results module displays search results.', N'09.03.02', 0, 0, N'', N'Admin/SearchResults', N'SearchResults', 0, NULL, NULL, NULL, 16, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 59, 0, NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}DesktopModules] ([DesktopModuleID], [FriendlyName], [Description], [Version], [IsPremium], [IsAdmin], [BusinessControllerClass], [FolderName], [ModuleName], [SupportedFeatures], [CompatibleVersions], [Dependencies], [Permissions], [PackageID], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [ContentItemId], [Shareable], [AdminPage], [HostPage]) VALUES (49, N'Account Login', N'Allows users to login to the portal.', N'09.03.02', 0, 0, N'', N'Admin/Authentication', N'Authentication', 0, NULL, NULL, NULL, 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 46, 0, NULL, NULL)
@@ -234,7 +234,7 @@ INSERT {databaseOwner}[{objectQualifier}DesktopModules] ([DesktopModuleID], [Fri
 INSERT {databaseOwner}[{objectQualifier}DesktopModules] ([DesktopModuleID], [FriendlyName], [Description], [Version], [IsPremium], [IsAdmin], [BusinessControllerClass], [FolderName], [ModuleName], [SupportedFeatures], [CompatibleVersions], [Dependencies], [Permissions], [PackageID], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [ContentItemId], [Shareable], [AdminPage], [HostPage]) VALUES (69, N'Account Registration', N'Allow users to create membership in the site.', N'09.03.02', 0, 0, N'', N'Admin/Security', N'Registration', 0, NULL, NULL, NULL, 96, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 69, 0, NULL, NULL)
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}DesktopModules] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}ModuleDefinitions] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}ModuleDefinitions] ON
 INSERT {databaseOwner}[{objectQualifier}ModuleDefinitions] ([ModuleDefID], [FriendlyName], [DesktopModuleID], [DefaultCacheTime], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [DefinitionName]) VALUES (12, N'Security Roles', 10, -1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, N'Security Roles')
 INSERT {databaseOwner}[{objectQualifier}ModuleDefinitions] ([ModuleDefID], [FriendlyName], [DesktopModuleID], [DefaultCacheTime], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [DefinitionName]) VALUES (15, N'User Accounts', 10, -1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, N'User Accounts')
 INSERT {databaseOwner}[{objectQualifier}ModuleDefinitions] ([ModuleDefID], [FriendlyName], [DesktopModuleID], [DefaultCacheTime], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [DefinitionName]) VALUES (74, N'Account Login', 49, -1, NULL, NULL, NULL, NULL, N'Account Login')
@@ -245,58 +245,58 @@ INSERT {databaseOwner}[{objectQualifier}ModuleDefinitions] ([ModuleDefID], [Frie
 INSERT {databaseOwner}[{objectQualifier}ModuleDefinitions] ([ModuleDefID], [FriendlyName], [DesktopModuleID], [DefaultCacheTime], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [DefinitionName]) VALUES (111, N'Account Registration', 69, -1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, N'Account Registration')
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}ModuleDefinitions] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Modules] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Modules] ON
 INSERT {databaseOwner}[{objectQualifier}Modules] ([ModuleID], [ModuleDefID], [AllTabs], [IsDeleted], [InheritViewPermissions], [StartDate], [EndDate], [PortalID], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [LastContentModifiedOnDate], [ContentItemID], [IsShareable], [IsShareableViewOnly]) VALUES (343, 15, 0, 0, 1, NULL, NULL, NULL, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, NULL, NULL, 1, 1)
 INSERT {databaseOwner}[{objectQualifier}Modules] ([ModuleID], [ModuleDefID], [AllTabs], [IsDeleted], [InheritViewPermissions], [StartDate], [EndDate], [PortalID], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [LastContentModifiedOnDate], [ContentItemID], [IsShareable], [IsShareableViewOnly]) VALUES (352, 102, 0, 0, 1, NULL, NULL, NULL, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, NULL, 12, 1, 1)
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Modules] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}FolderMappings] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}FolderMappings] ON
 INSERT {databaseOwner}[{objectQualifier}FolderMappings] ([FolderMappingID], [PortalID], [MappingName], [FolderProviderType], [Priority], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (5, NULL, N'Standard', N'StandardFolderProvider', 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}FolderMappings] ([FolderMappingID], [PortalID], [MappingName], [FolderProviderType], [Priority], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (6, NULL, N'Secure', N'SecureFolderProvider', 2, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}FolderMappings] ([FolderMappingID], [PortalID], [MappingName], [FolderProviderType], [Priority], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (7, NULL, N'Database', N'DatabaseFolderProvider', 3, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}FolderMappings] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}SkinPackages] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}SkinPackages] ON
 INSERT {databaseOwner}[{objectQualifier}SkinPackages] ([SkinPackageID], [PackageID], [PortalID], [SkinName], [SkinType], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (1, 81, NULL, N'_default', N'Skin', NULL, NULL, NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}SkinPackages] ([SkinPackageID], [PackageID], [PortalID], [SkinName], [SkinType], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (2, 82, NULL, N'_default', N'Container', NULL, NULL, NULL, NULL)
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}SkinPackages] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Skins] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Skins] ON
 INSERT {databaseOwner}[{objectQualifier}Skins] ([SkinID], [SkinPackageID], [SkinSrc]) VALUES (1, 1, N'No Skin.ascx')
 INSERT {databaseOwner}[{objectQualifier}Skins] ([SkinID], [SkinPackageID], [SkinSrc]) VALUES (2, 2, N'No Container.ascx')
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Skins] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}TabModules] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}TabModules] ON
 INSERT {databaseOwner}[{objectQualifier}TabModules] ([TabModuleID], [TabID], [ModuleID], [PaneName], [ModuleOrder], [CacheTime], [Alignment], [Color], [Border], [IconFile], [Visibility], [ContainerSrc], [DisplayTitle], [DisplayPrint], [DisplaySyndicate], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [IsDeleted], [CacheMethod], [ModuleTitle], [Header], [Footer], [CultureCode], [UniqueId], [VersionGuid], [DefaultLanguageGuid], [LocalizedVersionGuid]) VALUES (41, 7, 352, N'ContentPane', 1, 0, NULL, NULL, NULL, NULL, 2, NULL, 1, 1, 0, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 0, NULL, N'Basic Features', NULL, NULL, NULL, N'e44d7fb5-34ea-4af7-b715-ab995a6e93b5', N'9a7917fb-0a63-4d56-b4a7-3cffb0e8076e', NULL, N'47559492-e817-469d-8522-fd4bedc20822')
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}TabModules] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Languages] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Languages] ON
 INSERT {databaseOwner}[{objectQualifier}Languages] ([LanguageID], [CultureCode], [CultureName], [FallbackCulture], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (1, N'en-US', N'English (United States)', NULL, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Languages] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Taxonomy_VocabularyTypes] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Taxonomy_VocabularyTypes] ON
 INSERT {databaseOwner}[{objectQualifier}Taxonomy_VocabularyTypes] ([VocabularyTypeID], [VocabularyType]) VALUES (1, N'Simple')
 INSERT {databaseOwner}[{objectQualifier}Taxonomy_VocabularyTypes] ([VocabularyTypeID], [VocabularyType]) VALUES (2, N'Heirarchy')
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Taxonomy_VocabularyTypes] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Taxonomy_ScopeTypes] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Taxonomy_ScopeTypes] ON
 INSERT {databaseOwner}[{objectQualifier}Taxonomy_ScopeTypes] ([ScopeTypeID], [ScopeType]) VALUES (1, N'Application')
 INSERT {databaseOwner}[{objectQualifier}Taxonomy_ScopeTypes] ([ScopeTypeID], [ScopeType]) VALUES (2, N'Portal')
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Taxonomy_ScopeTypes] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Taxonomy_Vocabularies] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Taxonomy_Vocabularies] ON
 INSERT {databaseOwner}[{objectQualifier}Taxonomy_Vocabularies] ([VocabularyID], [VocabularyTypeID], [Name], [Description], [Weight], [ScopeID], [ScopeTypeID], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [IsSystem]) VALUES (1, 1, N'Tags', N'System Vocabulary for free form user entered Tags', 0, NULL, 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 1)
 INSERT {databaseOwner}[{objectQualifier}Taxonomy_Vocabularies] ([VocabularyID], [VocabularyTypeID], [Name], [Description], [Weight], [ScopeID], [ScopeTypeID], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [IsSystem]) VALUES (2, 1, N'Module_Categories', N'System Vocabulary to manage Module Categories', 0, NULL, 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 1)
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Taxonomy_Vocabularies] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Taxonomy_Terms] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Taxonomy_Terms] ON
 INSERT {databaseOwner}[{objectQualifier}Taxonomy_Terms] ([TermID], [VocabularyID], [ParentTermID], [Name], [Description], [Weight], [TermLeft], [TermRight], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (1, 2, NULL, N'Admin', N'', 0, 0, 0, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}Taxonomy_Terms] ([TermID], [VocabularyID], [ParentTermID], [Name], [Description], [Weight], [TermLeft], [TermRight], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (2, 2, NULL, N'Common', N'', 0, 0, 0, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}Taxonomy_Terms] ([TermID], [VocabularyID], [ParentTermID], [Name], [Description], [Weight], [TermLeft], [TermRight], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (3, 2, NULL, N'< None >', N'', 0, 0, 0, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}Taxonomy_Terms] ([TermID], [VocabularyID], [ParentTermID], [Name], [Description], [Weight], [TermLeft], [TermRight], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (4, 2, NULL, N'Developer', N'', 0, 0, 0, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Taxonomy_Terms] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}CoreMessaging_NotificationTypes] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}CoreMessaging_NotificationTypes] ON
 INSERT {databaseOwner}[{objectQualifier}CoreMessaging_NotificationTypes] ([NotificationTypeID], [Name], [Description], [TTL], [DesktopModuleID], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [IsTask]) VALUES (1, N'FriendRequest', N'Friend Request', NULL, NULL, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 0)
 INSERT {databaseOwner}[{objectQualifier}CoreMessaging_NotificationTypes] ([NotificationTypeID], [Name], [Description], [TTL], [DesktopModuleID], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [IsTask]) VALUES (2, N'FollowerRequest', N'Follower Request', NULL, NULL, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 0)
 INSERT {databaseOwner}[{objectQualifier}CoreMessaging_NotificationTypes] ([NotificationTypeID], [Name], [Description], [TTL], [DesktopModuleID], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [IsTask]) VALUES (3, N'FollowBackRequest', N'Follow Back Request', NULL, NULL, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 0)
@@ -310,7 +310,7 @@ INSERT {databaseOwner}[{objectQualifier}CoreMessaging_NotificationTypes] ([Notif
 INSERT {databaseOwner}[{objectQualifier}CoreMessaging_NotificationTypes] ([NotificationTypeID], [Name], [Description], [TTL], [DesktopModuleID], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [IsTask]) VALUES (11, N'NewUnauthorizedUserRegistration', N'New Unauthorized User Registration Notification', NULL, NULL, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 0)
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}CoreMessaging_NotificationTypes] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}CoreMessaging_NotificationTypeActions] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}CoreMessaging_NotificationTypeActions] ON
 INSERT {databaseOwner}[{objectQualifier}CoreMessaging_NotificationTypeActions] ([NotificationTypeActionID], [NotificationTypeID], [NameResourceKey], [DescriptionResourceKey], [ConfirmResourceKey], [Order], [APICall], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (3, 1, N'Accept', N'AcceptFriend', NULL, 1, N'API/InternalServices/RelationshipService/AcceptFriend', -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}CoreMessaging_NotificationTypeActions] ([NotificationTypeActionID], [NotificationTypeID], [NameResourceKey], [DescriptionResourceKey], [ConfirmResourceKey], [Order], [APICall], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (4, 3, N'FollowBack', N'FollowBack', NULL, 1, N'API/InternalServices/RelationshipService/FollowBack', -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}CoreMessaging_NotificationTypeActions] ([NotificationTypeActionID], [NotificationTypeID], [NameResourceKey], [DescriptionResourceKey], [ConfirmResourceKey], [Order], [APICall], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (5, 8, N'ViewJournal', N'ViewJournal', NULL, 1, N'API/Journal/NotificationServices/ViewJournal', -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
@@ -650,7 +650,7 @@ INSERT {databaseOwner}[{objectQualifier}EventLogTypes] ([LogTypeKey], [LogTypeFr
 GO
 INSERT {databaseOwner}[{objectQualifier}EventLogTypes] ([LogTypeKey], [LogTypeFriendlyName], [LogTypeDescription], [LogTypeOwner], [LogTypeCSSClass]) VALUES (N'WEBSERVER_UPDATED', N'Web Server Updated', N'', N'DotNetNuke.Logging.EventLogType', N'ItemUpdated')
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}EventLogConfig] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}EventLogConfig] ON
 INSERT {databaseOwner}[{objectQualifier}EventLogConfig] ([ID], [LogTypeKey], [LogTypePortalID], [LoggingIsActive], [KeepMostRecent], [EmailNotificationIsActive], [NotificationThreshold], [NotificationThresholdTime], [NotificationThresholdTimeType], [MailFromAddress], [MailToAddress]) VALUES (1, N'APPLICATION_START', NULL, 1, 10, 0, 1, 1, 1, N'', N'')
 INSERT {databaseOwner}[{objectQualifier}EventLogConfig] ([ID], [LogTypeKey], [LogTypePortalID], [LoggingIsActive], [KeepMostRecent], [EmailNotificationIsActive], [NotificationThreshold], [NotificationThresholdTime], [NotificationThresholdTimeType], [MailFromAddress], [MailToAddress]) VALUES (2, N'APPLICATION_END', NULL, 1, 10, 0, 1, 1, 1, N'', N'')
 INSERT {databaseOwner}[{objectQualifier}EventLogConfig] ([ID], [LogTypeKey], [LogTypePortalID], [LoggingIsActive], [KeepMostRecent], [EmailNotificationIsActive], [NotificationThreshold], [NotificationThresholdTime], [NotificationThresholdTimeType], [MailFromAddress], [MailToAddress]) VALUES (3, N'SCHEDULER_EXCEPTION', NULL, 1, 100, 0, 1, 1, 1, N'', N'')
@@ -804,7 +804,7 @@ INSERT {databaseOwner}[{objectQualifier}ModuleSettings] ([ModuleID], [SettingNam
 GO
 INSERT {databaseOwner}[{objectQualifier}ModuleSettings] ([ModuleID], [SettingName], [SettingValue], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (352, N'ShowTooltip', N'True', -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}ModuleControls] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}ModuleControls] ON
 INSERT {databaseOwner}[{objectQualifier}ModuleControls] ([ModuleControlID], [ModuleDefID], [ControlKey], [ControlTitle], [ControlSrc], [IconFile], [ControlType], [ViewOrder], [HelpUrl], [SupportsPartialRendering], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [SupportsPopUps]) VALUES (24, 15, NULL, NULL, N'DesktopModules/Admin/Security/Users.ascx', N'~/Icons/Sigma/Users_32x32_Standard.png', 0, NULL, N'http://help.dotnetnuke.com/070100/default.htm#Documentation/Using the Control Panel/Admin Console/User Accounts/About the User Accounts Module.html', 1, NULL, NULL, NULL, NULL, 1)
 INSERT {databaseOwner}[{objectQualifier}ModuleControls] ([ModuleControlID], [ModuleDefID], [ControlKey], [ControlTitle], [ControlSrc], [IconFile], [ControlType], [ViewOrder], [HelpUrl], [SupportsPartialRendering], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [SupportsPopUps]) VALUES (25, 15, N'Edit', N'Edit User Accounts', N'DesktopModules/Admin/Security/ManageUsers.ascx', N'~/Icons/Sigma/Users_32x32_Standard.png', 1, NULL, N'http://help.dotnetnuke.com/070100/default.htm#Documentation/Using the Control Panel/Admin Console/User Accounts/Module Editors/Adding a User Account.html', 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 1)
 INSERT {databaseOwner}[{objectQualifier}ModuleControls] ([ModuleControlID], [ModuleDefID], [ControlKey], [ControlTitle], [ControlSrc], [IconFile], [ControlType], [ViewOrder], [HelpUrl], [SupportsPartialRendering], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [SupportsPopUps]) VALUES (42, 12, N'User Roles', N'User Roles', N'DesktopModules/Admin/Security/SecurityRoles.ascx', N'~/Icons/Sigma/SecurityRoles_32X32_Standard.png', 1, NULL, N'http://help.dotnetnuke.com/070100/default.htm#Documentation/Using the Control Panel/Admin Console/Security Roles/About the Security Roles Module.html', 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, 1)
@@ -911,11 +911,7 @@ INSERT {databaseOwner}[{objectQualifier}Journal_Types] ([JournalTypeId], [Journa
 GO
 INSERT {databaseOwner}[{objectQualifier}Journal_Types] ([JournalTypeId], [JournalType], [icon], [PortalId], [IsEnabled], [AppliesToProfile], [AppliesToGroup], [AppliesToStream], [Options], [SupportsNotify], [EnableComments]) VALUES (35, N'challengecompleted', N'', -1, 1, 1, 1, 1, NULL, 1, 0)
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Authentication] ON 
-INSERT {databaseOwner}[{objectQualifier}Authentication] ([AuthenticationID], [PackageID], [AuthenticationType], [IsEnabled], [SettingsControlSrc], [LoginControlSrc], [LogoffControlSrc], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (1, 67, N'DNN', 1, N'DesktopModules/AuthenticationServices/DNN/Settings.ascx', N'DesktopModules/AuthenticationServices/DNN/Login.ascx', N'', -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Authentication] OFF
-GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}SkinControls] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}SkinControls] ON
 INSERT {databaseOwner}[{objectQualifier}SkinControls] ([SkinControlID], [PackageID], [ControlKey], [ControlSrc], [IconFile], [HelpUrl], [SupportsPartialRendering], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (1, 23, N'ACTIONBUTTON', N'Admin/Containers/ActionButton.ascx', NULL, NULL, 0, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}SkinControls] ([SkinControlID], [PackageID], [ControlKey], [ControlSrc], [IconFile], [HelpUrl], [SupportsPartialRendering], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (3, 25, N'BANNER', N'Admin/Skins/Banner.ascx', NULL, NULL, 0, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}SkinControls] ([SkinControlID], [PackageID], [ControlKey], [ControlSrc], [IconFile], [HelpUrl], [SupportsPartialRendering], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (4, 26, N'BREADCRUMB', N'Admin/Skins/BreadCrumb.ascx', NULL, NULL, 0, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
@@ -954,7 +950,7 @@ INSERT {databaseOwner}[{objectQualifier}SkinControls] ([SkinControlID], [Package
 INSERT {databaseOwner}[{objectQualifier}SkinControls] ([SkinControlID], [PackageID], [ControlKey], [ControlSrc], [IconFile], [HelpUrl], [SupportsPartialRendering], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (44, 101, N'DNNJSEXCLUDE', N'Admin/Skins/DnnJsExclude.ascx', NULL, NULL, 0, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}SkinControls] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Assemblies] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Assemblies] ON
 INSERT {databaseOwner}[{objectQualifier}Assemblies] ([AssemblyID], [PackageID], [AssemblyName], [Version]) VALUES (3, NULL, N'Lucene.Net.dll', N'3.0.3')
 INSERT {databaseOwner}[{objectQualifier}Assemblies] ([AssemblyID], [PackageID], [AssemblyName], [Version]) VALUES (4, NULL, N'Lucene.Net.Contrib.FastVectorHighlighter.dll', N'3.0.3')
 INSERT {databaseOwner}[{objectQualifier}Assemblies] ([AssemblyID], [PackageID], [AssemblyName], [Version]) VALUES (5, NULL, N'Lucene.Net.Contrib.Analyzers.dll', N'3.0.3')
@@ -977,7 +973,7 @@ INSERT {databaseOwner}[{objectQualifier}Assemblies] ([AssemblyID], [PackageID], 
 INSERT {databaseOwner}[{objectQualifier}Assemblies] ([AssemblyID], [PackageID], [AssemblyName], [Version]) VALUES (24, NULL, N'WebMatrix.WebData.dll', N'2.0.20126')
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Assemblies] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Schedule] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Schedule] ON
 INSERT {databaseOwner}[{objectQualifier}Schedule] ([ScheduleID], [TypeFullName], [TimeLapse], [TimeLapseMeasurement], [RetryTimeLapse], [RetryTimeLapseMeasurement], [RetainHistoryNum], [AttachToEvent], [CatchUpEnabled], [Enabled], [ObjectDependencies], [Servers], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [FriendlyName], [ScheduleStartDate]) VALUES (3, N'DotNetNuke.Services.Scheduling.PurgeScheduleHistory, DOTNETNUKE', 1, N'd', 2, N'h', 60, N'', 0, 1, N'ScheduleHistory', NULL, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, N'Purge Schedule History', NULL)
 INSERT {databaseOwner}[{objectQualifier}Schedule] ([ScheduleID], [TypeFullName], [TimeLapse], [TimeLapseMeasurement], [RetryTimeLapse], [RetryTimeLapseMeasurement], [RetainHistoryNum], [AttachToEvent], [CatchUpEnabled], [Enabled], [ObjectDependencies], [Servers], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [FriendlyName], [ScheduleStartDate]) VALUES (4, N'DotNetNuke.Services.Log.EventLog.PurgeLogBuffer, DOTNETNUKE', 1, N'm', 30, N's', 60, N'', 0, 0, N'EventLog', NULL, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, N'Purge Log Buffer', NULL)
 INSERT {databaseOwner}[{objectQualifier}Schedule] ([ScheduleID], [TypeFullName], [TimeLapse], [TimeLapseMeasurement], [RetryTimeLapse], [RetryTimeLapseMeasurement], [RetainHistoryNum], [AttachToEvent], [CatchUpEnabled], [Enabled], [ObjectDependencies], [Servers], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [FriendlyName], [ScheduleStartDate]) VALUES (5, N'DotNetNuke.Services.Log.EventLog.SendLogNotifications, DOTNETNUKE', 5, N'm', 2, N'm', 60, N'', 0, 0, N'EventLog', NULL, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL, N'Send Log Notifications', NULL)
@@ -992,7 +988,7 @@ INSERT {databaseOwner}[{objectQualifier}Schedule] ([ScheduleID], [TypeFullName],
 INSERT {databaseOwner}[{objectQualifier}Schedule] ([ScheduleID], [TypeFullName], [TimeLapse], [TimeLapseMeasurement], [RetryTimeLapse], [RetryTimeLapseMeasurement], [RetainHistoryNum], [AttachToEvent], [CatchUpEnabled], [Enabled], [ObjectDependencies], [Servers], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate], [FriendlyName], [ScheduleStartDate]) VALUES (16, N'DotNetNuke.Services.SystemHealth.WebServerMonitor, DotNetNuke', 5, N'm', 2, N'm', 10, N'', 0, 1, N'', NULL, -1, CAST(N'2024-05-15T23:06:11.820' AS DateTime), NULL, CAST(N'2024-05-15T23:06:11.820' AS DateTime), N'Monitor Web Servers', NULL)
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Schedule] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}ContentItems_Tags] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}ContentItems_Tags] ON
 INSERT {databaseOwner}[{objectQualifier}ContentItems_Tags] ([ContentItemTagID], [ContentItemID], [TermID]) VALUES (22, 6, 1)
 INSERT {databaseOwner}[{objectQualifier}ContentItems_Tags] ([ContentItemTagID], [ContentItemID], [TermID]) VALUES (21, 7, 1)
 INSERT {databaseOwner}[{objectQualifier}ContentItems_Tags] ([ContentItemTagID], [ContentItemID], [TermID]) VALUES (26, 8, 1)
@@ -1005,7 +1001,7 @@ INSERT {databaseOwner}[{objectQualifier}ContentItems_Tags] ([ContentItemTagID], 
 INSERT {databaseOwner}[{objectQualifier}ContentItems_Tags] ([ContentItemTagID], [ContentItemID], [TermID]) VALUES (25, 65, 1)
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}ContentItems_Tags] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}MetaData] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}MetaData] ON
 INSERT {databaseOwner}[{objectQualifier}MetaData] ([MetaDataID], [MetaDataName], [MetaDataDescription]) VALUES (1, N'Title', NULL)
 INSERT {databaseOwner}[{objectQualifier}MetaData] ([MetaDataID], [MetaDataName], [MetaDataDescription]) VALUES (2, N'Creator', NULL)
 INSERT {databaseOwner}[{objectQualifier}MetaData] ([MetaDataID], [MetaDataName], [MetaDataDescription]) VALUES (3, N'Subject', NULL)
@@ -1031,11 +1027,11 @@ INSERT {databaseOwner}[{objectQualifier}HostSettings] ([SettingName], [SettingVa
 GO
 INSERT {databaseOwner}[{objectQualifier}HostSettings] ([SettingName], [SettingValue], [SettingIsSecure], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (N'UsernameUnallowedCharacters', N'!"#$%&''()*+,/:;<=>?[\]^`{|}', 0, -1, CAST(N'2024-05-15T23:06:10.807' AS DateTime), NULL, NULL)
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}IPFilter] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}IPFilter] ON
 INSERT {databaseOwner}[{objectQualifier}IPFilter] ([IPFilterID], [IPAddress], [SubnetMask], [RuleType], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (1, N'*', N'', 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}IPFilter] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Lists] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Lists] ON
 INSERT {databaseOwner}[{objectQualifier}Lists] ([EntryID], [ListName], [Value], [Text], [ParentID], [Level], [SortOrder], [DefinitionID], [Description], [PortalID], [SystemList], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (1, N'Country', N'AD', N'Andorra', 0, 0, 0, -1, NULL, -1, 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}Lists] ([EntryID], [ListName], [Value], [Text], [ParentID], [Level], [SortOrder], [DefinitionID], [Description], [PortalID], [SystemList], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (2, N'Country', N'AE', N'United Arab Emirates', 0, 0, 0, -1, NULL, -1, 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
 INSERT {databaseOwner}[{objectQualifier}Lists] ([EntryID], [ListName], [Value], [Text], [ParentID], [Level], [SortOrder], [DefinitionID], [Description], [PortalID], [SystemList], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (3, N'Country', N'AF', N'Afghanistan', 0, 0, 0, -1, NULL, -1, 1, -1, CAST(N'2000-01-01T00:00:00.000' AS DateTime), NULL, NULL)
@@ -6168,7 +6164,7 @@ INSERT {databaseOwner}[{objectQualifier}Lists] ([EntryID], [ListName], [Value], 
 INSERT {databaseOwner}[{objectQualifier}Lists] ([EntryID], [ListName], [Value], [Text], [ParentID], [Level], [SortOrder], [DefinitionID], [Description], [PortalID], [SystemList], [CreatedByUserID], [CreatedOnDate], [LastModifiedByUserID], [LastModifiedOnDate]) VALUES (5152, N'ContentTypes', N'css', N'text/css', 0, 0, 0, -1, N'', -1, 1, -1, CAST(N'2024-05-15T23:06:11.597' AS DateTime), -1, CAST(N'2024-05-15T23:06:11.597' AS DateTime))
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}Lists] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}SearchCommonWords] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}SearchCommonWords] ON
 INSERT {databaseOwner}[{objectQualifier}SearchCommonWords] ([CommonWordID], [CommonWord], [Locale]) VALUES (1, N'a', N'en-US')
 INSERT {databaseOwner}[{objectQualifier}SearchCommonWords] ([CommonWordID], [CommonWord], [Locale]) VALUES (2, N'about', N'en-US')
 INSERT {databaseOwner}[{objectQualifier}SearchCommonWords] ([CommonWordID], [CommonWord], [Locale]) VALUES (3, N'above', N'en-US')
@@ -6540,7 +6536,7 @@ INSERT {databaseOwner}[{objectQualifier}SearchCommonWords] ([CommonWordID], [Com
 INSERT {databaseOwner}[{objectQualifier}SearchCommonWords] ([CommonWordID], [CommonWord], [Locale]) VALUES (369, N'z', N'en-US')
 SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}SearchCommonWords] OFF
 GO
-SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}SearchTypes] ON 
+SET IDENTITY_INSERT {databaseOwner}[{objectQualifier}SearchTypes] ON
 INSERT {databaseOwner}[{objectQualifier}SearchTypes] ([SearchTypeId], [SearchTypeName], [SearchResultClass], [IsPrivate]) VALUES (1, N'module', N'DotNetNuke.Services.Search.Controllers.ModuleResultController', 0)
 INSERT {databaseOwner}[{objectQualifier}SearchTypes] ([SearchTypeId], [SearchTypeName], [SearchResultClass], [IsPrivate]) VALUES (2, N'tab', N'DotNetNuke.Services.Search.Controllers.TabResultController', 0)
 INSERT {databaseOwner}[{objectQualifier}SearchTypes] ([SearchTypeId], [SearchTypeName], [SearchResultClass], [IsPrivate]) VALUES (3, N'user', N'DotNetNuke.Services.Search.Controllers.UserResultController', 0)

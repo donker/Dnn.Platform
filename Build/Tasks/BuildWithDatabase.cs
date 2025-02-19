@@ -13,7 +13,6 @@ namespace DotNetNuke.Build.Tasks
     [IsDependentOn(typeof(UpdateDnnManifests))]
     [IsDependentOn(typeof(CreateInstall))]
     [IsDependentOn(typeof(CreateUpgrade))]
-    [IsDependentOn(typeof(CreateDeploy))]
     [IsDependentOn(typeof(CreateSymbols))]
     [IsDependentOn(typeof(CreateDatabase))]
     public sealed class BuildWithDatabase : FrostingTask<Context>

@@ -8,6 +8,9 @@ namespace DotNetNuke.Modules.Admin.Authentication
     using DotNetNuke.Services.Authentication;
     using DotNetNuke.Services.Exceptions;
 
+    /// <summary>
+    /// Represents the settings for the DotNetNuke authentication module.
+    /// </summary>
     public partial class Settings : AuthenticationSettingsBase
     {
         /// <inheritdoc/>

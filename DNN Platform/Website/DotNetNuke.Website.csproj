@@ -740,20 +740,6 @@
     <Compile Include="DesktopModules\Admin\ViewProfile\ViewProfile.ascx.designer.cs">
       <DependentUpon>ViewProfile.ascx</DependentUpon>
     </Compile>
-    <Compile Include="DesktopModules\AuthenticationServices\DNN\Login.ascx.cs">
-      <DependentUpon>Login.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DesktopModules\AuthenticationServices\DNN\Login.ascx.designer.cs">
-      <DependentUpon>Login.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="DesktopModules\AuthenticationServices\DNN\Settings.ascx.cs">
-      <DependentUpon>Settings.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DesktopModules\AuthenticationServices\DNN\Settings.ascx.designer.cs">
-      <DependentUpon>Settings.ascx</DependentUpon>
-    </Compile>
     <Compile Include="ErrorPage.aspx.cs">
       <DependentUpon>ErrorPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1436,8 +1422,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="DesktopModules\Admin\ViewProfile\viewProfile.png" />
-    <Content Include="DesktopModules\AuthenticationServices\DNN\Login.ascx" />
-    <Content Include="DesktopModules\AuthenticationServices\DNN\Settings.ascx" />
     <Content Include="DNN.ico" />
     <Content Include="Documentation\Contributors.txt" />
     <Content Include="Documentation\License.txt" />
@@ -3100,8 +3084,6 @@
     <Content Include="DesktopModules\Admin\ViewProfile\App_LocalResources\Settings.ascx.resx" />
     <Content Include="DesktopModules\Admin\ViewProfile\App_LocalResources\SharedResources.resx" />
     <Content Include="DesktopModules\Admin\ViewProfile\App_LocalResources\ViewProfile.ascx.resx" />
-    <Content Include="DesktopModules\AuthenticationServices\DNN\App_LocalResources\Login.ascx.resx" />
-    <Content Include="DesktopModules\AuthenticationServices\DNN\App_LocalResources\Settings.ascx.resx" />
     <None Include="Install\App_LocalResources\Installwizard.aspx.de-DE.resx" />
     <None Include="Install\App_LocalResources\Installwizard.aspx.es-ES.resx" />
     <None Include="Install\App_LocalResources\Installwizard.aspx.fr-FR.resx" />
