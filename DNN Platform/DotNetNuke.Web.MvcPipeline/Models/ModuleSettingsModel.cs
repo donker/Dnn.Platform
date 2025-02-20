@@ -81,18 +81,6 @@ namespace DotNetNuke.Web.MvcPipeline.Models
         [Display(Name = "plDisplaySyndicate")]
         public bool DisplaySyndicate { get; set; }
 
-        [Display(Name = "plWebSlice")]
-        public bool IsWebSlice { get; set; }
-
-        [Display(Name = "plWebSliceTitle")]
-        public string WebSliceTitle { get; set; }
-
-        [Display(Name = "plWebSliceExpiry")]
-        public DateTime? WebSliceExpiryDate { get; set; }
-
-        [Display(Name = "plWebSliceTTL")]
-        public int? WebSliceTTL { get; set; }
-
         [Display(Name = "plDefault")]
         public bool IsDefaultModule { get; set; }
 

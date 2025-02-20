@@ -17,6 +17,7 @@ namespace DotNetNuke
     using DotNetNuke.Application;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Internal;
+    using DotNetNuke.ContentSecurityPolicy;
     using DotNetNuke.Data;
     using DotNetNuke.Data.PetaPoco;
     using DotNetNuke.DependencyInjection;

@@ -16,7 +16,6 @@ namespace DotNetNuke.Framework.JavaScriptLibraries
     using DotNetNuke.Entities.Host;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Users;
-    using DotNetNuke.Mvc;
     using DotNetNuke.Services.Installer.Packages;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.Services.Log.EventLog;
