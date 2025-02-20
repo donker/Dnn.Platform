@@ -224,18 +224,6 @@ namespace DotNetNuke.Website.Controllers
             model.DisplayPrint = module.DisplayPrint;
             model.DisplaySyndicate = module.DisplaySyndicate;
 
-            model.IsWebSlice = module.IsWebSlice;
-            model.WebSliceTitle = module.WebSliceTitle;
-            if (!Null.IsNull(module.WebSliceExpiryDate))
-            {
-                model.WebSliceExpiryDate = module.WebSliceExpiryDate;
-            }
-
-            if (!Null.IsNull(module.WebSliceTTL))
-            {
-                model.WebSliceTTL = module.WebSliceTTL;
-            }
-
             if (module.ModuleID == this.PortalSettings.DefaultModuleId && module.TabID == this.PortalSettings.DefaultTabId)
             {
                 model.IsDefaultModule = true;

@@ -73,14 +73,6 @@ namespace DotNetNuke.Web.MvcPipeline.Models
 
         public bool DisplaySyndicate { get; set; }
 
-        public bool IsWebSlice { get; set; }
-
-        public string WebSliceTitle { get; set; }
-
-        public DateTime? WebSliceExpiryDate { get; set; }
-
-        public int? WebSliceTTL { get; set; }
-
         public string ContainerSrc { get; set; }
 
         public bool IsDefaultModule { get; set; }
@@ -122,10 +114,6 @@ namespace DotNetNuke.Web.MvcPipeline.Models
             this.DisplayTitle = module.DisplayTitle;
             this.DisplayPrint = module.DisplayPrint;
             this.DisplaySyndicate = module.DisplaySyndicate;
-            this.IsWebSlice = module.IsWebSlice;
-            this.WebSliceTitle = module.WebSliceTitle;
-            this.WebSliceExpiryDate = module.WebSliceExpiryDate;
-            this.WebSliceTTL = module.WebSliceTTL;
             this.IsDefaultModule = module.IsDefaultModule;
             this.AllModules = module.AllModules;
 
