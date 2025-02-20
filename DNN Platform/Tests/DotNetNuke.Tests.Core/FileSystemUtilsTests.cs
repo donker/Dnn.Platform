@@ -1,30 +1,29 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
-
 namespace DotNetNuke.Tests.Core
 {
     using System;
     using System.IO;
     using System.IO.Compression;
-    using System.Linq;
-    using System.Reflection;
 
-    using DotNetNuke.Abstractions;
     using DotNetNuke.Abstractions.Application;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
-    using DotNetNuke.ComponentModel;
-    using DotNetNuke.Entities.Tabs;
-    using DotNetNuke.Tests.Utilities.Mocks;
+    using DotNetNuke.Tests.Utilities.Fakes;
+
     using Microsoft.Extensions.DependencyInjection;
+
     using Moq;
+
     using NUnit.Framework;
 
     /// <summary>  FileSystemUtilsTests.</summary>
     [TestFixture]
     public class FileSystemUtilsTests
     {
+        private FakeServiceProvider serviceProvider;
+
         [SetUp]
         public void SetUp()
         {
@@ -32,18 +31,19 @@ namespace DotNetNuke.Tests.Core
             var rootPath = Path.Combine(applicationStatusInfo.ApplicationMapPath, "FileSystemUtilsTest");
             this.PrepareRootPath(rootPath, applicationStatusInfo.ApplicationMapPath);
 
-            var serviceCollection = new ServiceCollection();
             var mock = new Mock<IApplicationStatusInfo>();
             mock.Setup(info => info.ApplicationMapPath).Returns(rootPath);
-            serviceCollection.AddTransient<IApplicationStatusInfo>(container => mock.Object);
-            serviceCollection.AddTransient<INavigationManager>(container => Mock.Of<INavigationManager>());
-            Globals.DependencyProvider = serviceCollection.BuildServiceProvider();
+            this.serviceProvider = FakeServiceProvider.Setup(
+                services =>
+                {
+                    services.AddSingleton(mock.Object);
+                });
         }
 
         [TearDown]
         public void TearDown()
         {
-            Globals.DependencyProvider = null;
+            this.serviceProvider.Dispose();
         }
 
         [TestCase("/")]
@@ -65,7 +65,7 @@ namespace DotNetNuke.Tests.Core
             FileSystemUtils.DeleteFiles(new string[] { path });
 
             var files = Directory.GetFiles(Globals.ApplicationMapPath, "*.*", SearchOption.AllDirectories);
-            Assert.Greater(files.Length, 0);
+            Assert.That(files.Length, Is.GreaterThan(0));
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace DotNetNuke.Tests.Core
                 }
 
                 var unZippedFiles = Directory.GetFiles(destPath, "*.*", SearchOption.TopDirectoryOnly);
-                Assert.AreEqual(files.Length, unZippedFiles.Length);
+                Assert.That(unZippedFiles, Has.Length.EqualTo(files.Length));
             }
             finally
             {
@@ -128,7 +128,7 @@ namespace DotNetNuke.Tests.Core
 
             // Assert
             bool res = File.Exists(testPath.Replace("/", "\\"));
-            Assert.IsFalse(res);
+            Assert.That(res, Is.False);
         }
 
         [TestCase(null)]
@@ -144,16 +144,19 @@ namespace DotNetNuke.Tests.Core
             // Assert
             if (string.IsNullOrEmpty(input))
             {
-                Assert.IsTrue(input == result);
+                Assert.That(input == result, Is.True);
             }
             else if (string.IsNullOrWhiteSpace(input))
             {
-                Assert.IsTrue(result == string.Empty);
+                Assert.That(result == string.Empty, Is.True);
             }
             else
             {
-                Assert.IsFalse(result.Contains(" "));
-                Assert.IsFalse(result.Contains("/"));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(result.Contains(" "), Is.False);
+                    Assert.That(result.Contains("/"), Is.False);
+                });
             }
         }
 

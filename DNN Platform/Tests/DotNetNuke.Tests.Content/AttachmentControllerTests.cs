@@ -1,24 +1,20 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
-
 namespace DotNetNuke.Tests.Content
 {
     using System.Collections.Generic;
     using System.Linq;
 
-    using DotNetNuke.Abstractions;
-    using DotNetNuke.Abstractions.Application;
-    using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.ComponentModel;
     using DotNetNuke.Entities.Content;
     using DotNetNuke.Entities.Content.Data;
-    using DotNetNuke.Entities.Controllers;
     using DotNetNuke.Services.Cache;
     using DotNetNuke.Services.FileSystem;
     using DotNetNuke.Tests.Content.Mocks;
     using DotNetNuke.Tests.Utilities;
+    using DotNetNuke.Tests.Utilities.Fakes;
     using DotNetNuke.Tests.Utilities.Mocks;
 
     using Microsoft.Extensions.DependencyInjection;
@@ -34,26 +30,27 @@ namespace DotNetNuke.Tests.Content
     public class AttachmentControllerTests
     {
         private Mock<CachingProvider> mockCache;
+        private FakeServiceProvider serviceProvider;
 
         [SetUp]
-
         public void SetUp()
         {
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddTransient<INavigationManager>(container => Mock.Of<INavigationManager>());
-            serviceCollection.AddTransient<IApplicationStatusInfo>(container => new DotNetNuke.Application.ApplicationStatusInfo(Mock.Of<IApplicationInfo>()));
-            serviceCollection.AddTransient<IHostSettingsService, HostController>();
-            Globals.DependencyProvider = serviceCollection.BuildServiceProvider();
-
             // Register MockCachingProvider
             this.mockCache = MockComponentProvider.CreateNew<CachingProvider>();
-            MockComponentProvider.CreateDataProvider().Setup(c => c.GetProviderPath()).Returns(string.Empty);
+            var dataProvider = MockComponentProvider.CreateDataProvider();
+            dataProvider.Setup(c => c.GetProviderPath()).Returns(string.Empty);
+            this.serviceProvider = FakeServiceProvider.Setup(
+                services =>
+                {
+                    services.AddSingleton(this.mockCache.Object);
+                    services.AddSingleton(dataProvider.Object);
+                });
         }
 
         [TearDown]
         public void TearDown()
         {
-            Globals.DependencyProvider = null;
+            this.serviceProvider.Dispose();
             MockComponentProvider.ResetContainer();
         }
 
@@ -73,8 +70,11 @@ namespace DotNetNuke.Tests.Content
             content.Metadata.Clear();
 
             var contentId = Util.GetContentController().AddContentItem(content);
-            Assert.AreEqual(contentId, Constants.CONTENT_AddContentItemId);
-            Assert.IsEmpty(content.Metadata);
+            Assert.Multiple(() =>
+            {
+                Assert.That(contentId, Is.EqualTo(Constants.CONTENT_AddContentItemId));
+                Assert.That(content.Metadata, Is.Empty);
+            });
 
             dataService.Setup(ds => ds.GetContentItem(It.IsAny<int>()))
                 .Returns<int>(y => MockHelper.CreateValidContentItemReader(content));
@@ -108,16 +108,22 @@ namespace DotNetNuke.Tests.Content
                         () => MockHelper.CreateMetaDataReaderWithFiles(files, new IFileInfo[0], new IFileInfo[0]));
 
             var contentItem = Util.GetContentController().GetContentItem(Constants.CONTENT_ValidContentItemId);
-            Assert.IsNotNull(contentItem);
+            Assert.That(contentItem, Is.Not.Null);
 
             var serialized = contentItem.Metadata[FileController.FilesKey];
-            Assert.IsNotEmpty(serialized);
+            Assert.Multiple(() =>
+            {
+                Assert.That(serialized, Is.Not.Empty);
 
-            Assert.IsNotEmpty(contentItem.Files);
-            Assert.AreEqual(contentItem.Files.Count, 3);
-            Assert.AreEqual(contentItem.Files[0].FileId, 0);
-            Assert.AreEqual(contentItem.Files[1].FileId, 1);
-            Assert.AreEqual(contentItem.Files[2].FileId, 2);
+                Assert.That(contentItem.Files, Is.Not.Empty);
+            });
+            Assert.That(contentItem.Files, Has.Count.EqualTo(3));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contentItem.Files[0].FileId, Is.EqualTo(0));
+                Assert.That(contentItem.Files[1].FileId, Is.EqualTo(1));
+                Assert.That(contentItem.Files[2].FileId, Is.EqualTo(2));
+            });
         }
 
         [Test]
@@ -148,11 +154,14 @@ namespace DotNetNuke.Tests.Content
             var contentController = Util.GetContentController();
 
             var contentItem = contentController.GetContentItem(Constants.CONTENT_ValidContentItemId);
-            Assert.IsNotNull(contentItem);
+            Assert.That(contentItem, Is.Not.Null);
 
             var serialized = contentItem.Metadata[FileController.FilesKey];
-            Assert.IsNull(serialized);
-            Assert.IsEmpty(contentItem.Files);
+            Assert.Multiple(() =>
+            {
+                Assert.That(serialized, Is.Null);
+                Assert.That(contentItem.Files, Is.Empty);
+            });
 
             var fileManager = ComponentFactory.GetComponent<IFileManager>();
 
@@ -163,9 +172,12 @@ namespace DotNetNuke.Tests.Content
 
             contentItem = contentController.GetContentItem(Constants.CONTENT_ValidContentItemId);
 
-            Assert.AreEqual(contentItem.Files.Count, 2);
-            Assert.AreEqual(contentItem.Files[0].FileId, 0);
-            Assert.AreEqual(contentItem.Files[1].FileId, 1);
+            Assert.That(contentItem.Files, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contentItem.Files[0].FileId, Is.EqualTo(0));
+                Assert.That(contentItem.Files[1].FileId, Is.EqualTo(1));
+            });
 
             dataService.Verify(
                 ds => ds.DeleteMetaData(It.IsAny<ContentItem>(), FileController.FilesKey, "[0]"), Times.Once());
@@ -191,11 +203,14 @@ namespace DotNetNuke.Tests.Content
             var fileManager = ComponentFactory.GetComponent<IFileManager>();
 
             var contentItem = contentController.GetContentItem(Constants.CONTENT_ValidContentItemId);
-            Assert.IsNotNull(contentItem);
+            Assert.That(contentItem, Is.Not.Null);
 
             var serialized = contentItem.Metadata[FileController.FilesKey];
-            Assert.IsNull(serialized);
-            Assert.IsEmpty(contentItem.Files);
+            Assert.Multiple(() =>
+            {
+                Assert.That(serialized, Is.Null);
+                Assert.That(contentItem.Files, Is.Empty);
+            });
 
             // Add some files.
             var fileController = ComponentFactory.GetComponent<IAttachmentController>();
@@ -204,10 +219,13 @@ namespace DotNetNuke.Tests.Content
 
             contentItem = contentController.GetContentItem(Constants.CONTENT_ValidContentItemId);
 
-            Assert.AreEqual(contentItem.Files.Count, 2);
-            Assert.AreEqual(contentItem.Files[0].FileId, 0);
-            Assert.AreEqual(contentItem.Files[1].FileId, 1);
-            Assert.IsNotEmpty(contentItem.Metadata[FileController.FilesKey]);
+            Assert.That(contentItem.Files, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(contentItem.Files[0].FileId, Is.EqualTo(0));
+                Assert.That(contentItem.Files[1].FileId, Is.EqualTo(1));
+            });
+            Assert.That(contentItem.Metadata[FileController.FilesKey], Is.Not.Empty);
 
             contentItem.Files.Clear();
 
@@ -219,7 +237,7 @@ namespace DotNetNuke.Tests.Content
             dataService.Verify(ds => ds.AddMetaData(It.IsAny<ContentItem>(), FileController.FilesKey, "[0,1]"), Times.Once());
 
             var emptyFiles = fileController.GetFilesByContent(contentItem.ContentItemId);
-            Assert.AreEqual(0, emptyFiles.Count);
+            Assert.That(emptyFiles, Is.Empty);
         }
 
         /// <remarks>This test should be moved elsewhere (cb).</remarks>

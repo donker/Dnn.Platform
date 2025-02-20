@@ -8,18 +8,18 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
     using System.Data;
     using System.IO;
     using System.Threading;
-
-    using DotNetNuke.Abstractions;
     using DotNetNuke.Abstractions.Application;
-    using DotNetNuke.Common;
+    using DotNetNuke.Application;
     using DotNetNuke.ComponentModel;
     using DotNetNuke.Data;
     using DotNetNuke.Entities.Controllers;
+    using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Services.Cache;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.Services.Search.Entities;
     using DotNetNuke.Services.Search.Internals;
+    using DotNetNuke.Tests.Utilities.Fakes;
     using DotNetNuke.Tests.Utilities.Mocks;
 
     using Microsoft.Extensions.DependencyInjection;
@@ -79,6 +79,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
         private Mock<ILocaleController> mockLocaleController;
         private Mock<ISearchHelper> mockSearchHelper;
         private Mock<IUserController> mockUserController;
+        private FakeServiceProvider serviceProvider;
 
         private IInternalSearchController internalSearchController;
         private LuceneControllerImpl luceneController;
@@ -103,12 +104,6 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
             this.mockHostController = new Mock<IHostController>();
             this.SetupHostController();
 
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddTransient<INavigationManager>(container => Mock.Of<INavigationManager>());
-            serviceCollection.AddTransient<IApplicationStatusInfo>(container => new DotNetNuke.Application.ApplicationStatusInfo(Mock.Of<IApplicationInfo>()));
-            serviceCollection.AddTransient<IHostSettingsService>(container => (IHostSettingsService)this.mockHostController.Object);
-            Globals.DependencyProvider = serviceCollection.BuildServiceProvider();
-
             this.mockDataProvider = MockComponentProvider.CreateDataProvider();
             this.mockLocaleController = MockComponentProvider.CreateLocaleController();
             this.mockCachingProvider = MockComponentProvider.CreateDataCacheProvider();
@@ -123,6 +118,19 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
                 .Returns((int portalId, int userId) => this.GetUserByIdCallback(portalId, userId));
             UserController.SetTestableInstance(this.mockUserController.Object);
 
+            this.serviceProvider = FakeServiceProvider.Setup(
+                services =>
+                {
+                    services.AddSingleton(this.mockHostController.Object);
+                    services.AddSingleton((IHostSettingsService)this.mockHostController.Object);
+                    services.AddSingleton(this.mockCachingProvider.Object);
+                    services.AddSingleton(this.mockDataProvider.Object);
+                    services.AddSingleton(this.mockLocaleController.Object);
+                    services.AddSingleton(this.mockSearchHelper.Object);
+                    services.AddSingleton(this.mockUserController.Object);
+                    services.AddSingleton<IApplicationStatusInfo>(new ApplicationStatusInfo(Mock.Of<IApplicationInfo>()));
+                });
+
             this.CreateNewLuceneControllerInstance();
         }
 
@@ -131,14 +139,13 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
         {
             this.DeleteIndexFolder();
             this.mockHostController = null;
-            Globals.DependencyProvider = null;
+            this.serviceProvider.Dispose();
             this.luceneController.Dispose();
             InternalSearchController.ClearInstance();
             UserController.ClearInstance();
             SearchHelper.ClearInstance();
             LuceneController.ClearInstance();
             this.luceneController = null;
-            Globals.DependencyProvider = null;
         }
 
         [Test]
@@ -245,7 +252,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
 
             // Assert
             var stats = this.GetSearchStatistics();
-            Assert.AreEqual(totalDocs, stats.TotalActiveDocuments);
+            Assert.That(stats.TotalActiveDocuments, Is.EqualTo(totalDocs));
 
             // Act - delete last item
             var searchDoc = new SearchDocument { ModuleDefId = totalDocs };
@@ -253,8 +260,11 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
 
             // Assert
             stats = this.GetSearchStatistics();
-            Assert.AreEqual(totalDocs - 1, stats.TotalActiveDocuments);
-            Assert.AreEqual(1, stats.TotalDeletedDocuments);
+            Assert.Multiple(() =>
+            {
+                Assert.That(stats.TotalActiveDocuments, Is.EqualTo(totalDocs - 1));
+                Assert.That(stats.TotalDeletedDocuments, Is.EqualTo(1));
+            });
 
             // Act - delete first item
             searchDoc = new SearchDocument { ModuleDefId = 1 };
@@ -262,8 +272,11 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
 
             // Assert
             stats = this.GetSearchStatistics();
-            Assert.AreEqual(totalDocs - 2, stats.TotalActiveDocuments);
-            Assert.AreEqual(2, stats.TotalDeletedDocuments);
+            Assert.Multiple(() =>
+            {
+                Assert.That(stats.TotalActiveDocuments, Is.EqualTo(totalDocs - 2));
+                Assert.That(stats.TotalDeletedDocuments, Is.EqualTo(2));
+            });
         }
 
         [Test]
@@ -291,7 +304,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
 
             // Assert
             var stats = this.GetSearchStatistics();
-            Assert.AreEqual(totalDocs, stats.TotalActiveDocuments);
+            Assert.That(stats.TotalActiveDocuments, Is.EqualTo(totalDocs));
 
             // Act - delete last item
             var searchDoc = new SearchDocument { ModuleId = totalDocs };
@@ -299,8 +312,11 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
 
             // Assert
             stats = this.GetSearchStatistics();
-            Assert.AreEqual(totalDocs - 1, stats.TotalActiveDocuments);
-            Assert.AreEqual(1, stats.TotalDeletedDocuments);
+            Assert.Multiple(() =>
+            {
+                Assert.That(stats.TotalActiveDocuments, Is.EqualTo(totalDocs - 1));
+                Assert.That(stats.TotalDeletedDocuments, Is.EqualTo(1));
+            });
 
             // Act - delete first item
             searchDoc = new SearchDocument { ModuleId = 1 };
@@ -308,8 +324,11 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
 
             // Assert
             stats = this.GetSearchStatistics();
-            Assert.AreEqual(totalDocs - 2, stats.TotalActiveDocuments);
-            Assert.AreEqual(2, stats.TotalDeletedDocuments);
+            Assert.Multiple(() =>
+            {
+                Assert.That(stats.TotalActiveDocuments, Is.EqualTo(totalDocs - 2));
+                Assert.That(stats.TotalDeletedDocuments, Is.EqualTo(2));
+            });
         }
 
         [Test]
@@ -337,7 +356,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
 
             // Assert
             var stats = this.GetSearchStatistics();
-            Assert.AreEqual(totalDocs, stats.TotalActiveDocuments);
+            Assert.That(stats.TotalActiveDocuments, Is.EqualTo(totalDocs));
 
             // Act - delete all portal 1 items
             var searchDoc = new SearchDocument { PortalId = PortalId1 };
@@ -345,8 +364,11 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
 
             // Assert - delete all portal 1
             stats = this.GetSearchStatistics();
-            Assert.AreEqual(totalDocs / 2, stats.TotalActiveDocuments);
-            Assert.AreEqual(totalDocs / 2, stats.TotalDeletedDocuments);
+            Assert.Multiple(() =>
+            {
+                Assert.That(stats.TotalActiveDocuments, Is.EqualTo(totalDocs / 2));
+                Assert.That(stats.TotalDeletedDocuments, Is.EqualTo(totalDocs / 2));
+            });
         }
 
         [Test]
@@ -375,7 +397,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
 
             // Assert
             var stats = this.GetSearchStatistics();
-            Assert.AreEqual(totalDocs, stats.TotalActiveDocuments);
+            Assert.That(stats.TotalActiveDocuments, Is.EqualTo(totalDocs));
 
             // Act - delete last item
             var searchDoc = new SearchDocument { RoleId = totalDocs };
@@ -383,8 +405,11 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
 
             // Assert
             stats = this.GetSearchStatistics();
-            Assert.AreEqual(totalDocs - 1, stats.TotalActiveDocuments);
-            Assert.AreEqual(1, stats.TotalDeletedDocuments);
+            Assert.Multiple(() =>
+            {
+                Assert.That(stats.TotalActiveDocuments, Is.EqualTo(totalDocs - 1));
+                Assert.That(stats.TotalDeletedDocuments, Is.EqualTo(1));
+            });
 
             // Act - delete first item
             searchDoc = new SearchDocument { RoleId = 1 };
@@ -392,8 +417,11 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
 
             // Assert
             stats = this.GetSearchStatistics();
-            Assert.AreEqual(totalDocs - 2, stats.TotalActiveDocuments);
-            Assert.AreEqual(2, stats.TotalDeletedDocuments);
+            Assert.Multiple(() =>
+            {
+                Assert.That(stats.TotalActiveDocuments, Is.EqualTo(totalDocs - 2));
+                Assert.That(stats.TotalDeletedDocuments, Is.EqualTo(2));
+            });
         }
 
         [Test]
@@ -420,7 +448,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
 
             // Assert
             var stats = this.GetSearchStatistics();
-            Assert.AreEqual(totalDocs, stats.TotalActiveDocuments);
+            Assert.That(stats.TotalActiveDocuments, Is.EqualTo(totalDocs));
 
             // Act - delete last item
             var searchDoc = new SearchDocument { TabId = totalDocs };
@@ -428,8 +456,11 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
 
             // Assert
             stats = this.GetSearchStatistics();
-            Assert.AreEqual(totalDocs - 1, stats.TotalActiveDocuments);
-            Assert.AreEqual(1, stats.TotalDeletedDocuments);
+            Assert.Multiple(() =>
+            {
+                Assert.That(stats.TotalActiveDocuments, Is.EqualTo(totalDocs - 1));
+                Assert.That(stats.TotalDeletedDocuments, Is.EqualTo(1));
+            });
 
             // Act - delete first item
             searchDoc = new SearchDocument { TabId = 1 };
@@ -437,8 +468,11 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
 
             // Assert
             stats = this.GetSearchStatistics();
-            Assert.AreEqual(totalDocs - 2, stats.TotalActiveDocuments);
-            Assert.AreEqual(2, stats.TotalDeletedDocuments);
+            Assert.Multiple(() =>
+            {
+                Assert.That(stats.TotalActiveDocuments, Is.EqualTo(totalDocs - 2));
+                Assert.That(stats.TotalDeletedDocuments, Is.EqualTo(2));
+            });
         }
 
         [Test]
@@ -467,7 +501,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
 
             // Assert
             var stats = this.GetSearchStatistics();
-            Assert.AreEqual(totalDocs, stats.TotalActiveDocuments);
+            Assert.That(stats.TotalActiveDocuments, Is.EqualTo(totalDocs));
 
             // Act - delete last item
             var searchDoc = new SearchDocument { AuthorUserId = totalDocs };
@@ -475,8 +509,11 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
 
             // Assert
             stats = this.GetSearchStatistics();
-            Assert.AreEqual(totalDocs - 1, stats.TotalActiveDocuments);
-            Assert.AreEqual(1, stats.TotalDeletedDocuments);
+            Assert.Multiple(() =>
+            {
+                Assert.That(stats.TotalActiveDocuments, Is.EqualTo(totalDocs - 1));
+                Assert.That(stats.TotalDeletedDocuments, Is.EqualTo(1));
+            });
 
             // Act - delete first item
             searchDoc = new SearchDocument { AuthorUserId = 1 };
@@ -484,8 +521,11 @@ namespace DotNetNuke.Tests.Core.Controllers.Search
 
             // Assert
             stats = this.GetSearchStatistics();
-            Assert.AreEqual(totalDocs - 2, stats.TotalActiveDocuments);
-            Assert.AreEqual(2, stats.TotalDeletedDocuments);
+            Assert.Multiple(() =>
+            {
+                Assert.That(stats.TotalActiveDocuments, Is.EqualTo(totalDocs - 2));
+                Assert.That(stats.TotalDeletedDocuments, Is.EqualTo(2));
+            });
         }
 
         private void CreateNewLuceneControllerInstance()

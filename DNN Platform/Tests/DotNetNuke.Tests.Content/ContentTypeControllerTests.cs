@@ -1,22 +1,18 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
-
 namespace DotNetNuke.Tests.Content
 {
     using System;
     using System.Linq;
 
-    using DotNetNuke.Abstractions;
-    using DotNetNuke.Abstractions.Application;
-    using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Content;
     using DotNetNuke.Entities.Content.Data;
-    using DotNetNuke.Entities.Controllers;
     using DotNetNuke.Services.Cache;
     using DotNetNuke.Tests.Content.Mocks;
     using DotNetNuke.Tests.Utilities;
+    using DotNetNuke.Tests.Utilities.Fakes;
     using DotNetNuke.Tests.Utilities.Mocks;
 
     using Microsoft.Extensions.DependencyInjection;
@@ -30,26 +26,27 @@ namespace DotNetNuke.Tests.Content
     public class ContentTypeControllerTests
     {
         private Mock<CachingProvider> mockCache;
+        private FakeServiceProvider serviceProvider;
 
         [SetUp]
 
         public void SetUp()
         {
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddTransient<INavigationManager>(container => Mock.Of<INavigationManager>());
-            serviceCollection.AddTransient<IApplicationStatusInfo>(container => new DotNetNuke.Application.ApplicationStatusInfo(Mock.Of<IApplicationInfo>()));
-            serviceCollection.AddTransient<IHostSettingsService, HostController>();
-            Globals.DependencyProvider = serviceCollection.BuildServiceProvider();
-
-            // Register MockCachingProvider
             this.mockCache = MockComponentProvider.CreateNew<CachingProvider>();
-            MockComponentProvider.CreateDataProvider().Setup(c => c.GetProviderPath()).Returns(string.Empty);
+            var dataProvider = MockComponentProvider.CreateDataProvider();
+            dataProvider.Setup(c => c.GetProviderPath()).Returns(string.Empty);
+            this.serviceProvider = FakeServiceProvider.Setup(
+                services =>
+                {
+                    services.AddSingleton(this.mockCache.Object);
+                    services.AddSingleton(dataProvider.Object);
+                });
         }
 
         [TearDown]
         public void TearDown()
         {
-            Globals.DependencyProvider = null;
+            this.serviceProvider.Dispose();
             MockComponentProvider.ResetContainer();
         }
 
@@ -94,7 +91,7 @@ namespace DotNetNuke.Tests.Content
             int contentTypeId = contentTypeController.AddContentType(contentType);
 
             // Assert
-            Assert.AreEqual(Constants.CONTENTTYPE_AddContentTypeId, contentTypeId);
+            Assert.That(contentTypeId, Is.EqualTo(Constants.CONTENTTYPE_AddContentTypeId));
         }
 
         [Test]
@@ -111,7 +108,7 @@ namespace DotNetNuke.Tests.Content
             contentTypeController.AddContentType(contentType);
 
             // Assert
-            Assert.AreEqual(Constants.CONTENTTYPE_AddContentTypeId, contentType.ContentTypeId);
+            Assert.That(contentType.ContentTypeId, Is.EqualTo(Constants.CONTENTTYPE_AddContentTypeId));
         }
 
         [Test]
@@ -185,8 +182,8 @@ namespace DotNetNuke.Tests.Content
             var contentTypes = contentTypeController.GetContentTypes();
 
             // Assert
-            Assert.IsNotNull(contentTypes);
-            Assert.AreEqual(0, contentTypes.Count());
+            Assert.That(contentTypes, Is.Not.Null);
+            Assert.That(contentTypes.Count(), Is.EqualTo(0));
         }
 
         [Test]
@@ -202,7 +199,7 @@ namespace DotNetNuke.Tests.Content
             var contentTypes = contentTypeController.GetContentTypes();
 
             // Assert
-            Assert.AreEqual(Constants.CONTENTTYPE_ValidContentTypeCount, contentTypes.Count());
+            Assert.That(contentTypes.Count(), Is.EqualTo(Constants.CONTENTTYPE_ValidContentTypeCount));
         }
 
         [Test]

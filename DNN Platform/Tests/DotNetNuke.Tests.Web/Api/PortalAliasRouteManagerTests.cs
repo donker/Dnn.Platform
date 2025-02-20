@@ -1,7 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
-
 namespace DotNetNuke.Tests.Web.Api
 {
     using System;
@@ -9,12 +8,10 @@ namespace DotNetNuke.Tests.Web.Api
     using System.Collections.Generic;
     using System.Linq;
 
-    using DotNetNuke.Abstractions;
-    using DotNetNuke.Abstractions.Application;
     using DotNetNuke.Abstractions.Portals;
-    using DotNetNuke.Common;
     using DotNetNuke.Common.Internal;
     using DotNetNuke.Entities.Portals;
+    using DotNetNuke.Tests.Utilities.Fakes;
     using DotNetNuke.Web.Api;
 
     using Microsoft.Extensions.DependencyInjection;
@@ -27,30 +24,25 @@ namespace DotNetNuke.Tests.Web.Api
     public class PortalAliasRouteManagerTests
     {
         private Mock<IPortalAliasService> mockPortalAliasService;
+        private FakeServiceProvider serviceProvider;
 
         [SetUp]
         public void SetUp()
         {
-            var services = new ServiceCollection();
-            var navigationManagerMock = new Mock<INavigationManager>();
-
-            var mockApplicationStatusInfo = new Mock<IApplicationStatusInfo>();
-            mockApplicationStatusInfo.Setup(info => info.Status).Returns(UpgradeStatus.Install);
-
             this.mockPortalAliasService = new Mock<IPortalAliasService>();
             this.mockPortalAliasService.As<IPortalAliasController>();
 
-            services.AddTransient<IApplicationStatusInfo>(container => mockApplicationStatusInfo.Object);
-            services.AddScoped(typeof(INavigationManager), (x) => navigationManagerMock.Object);
-            services.AddScoped<IPortalAliasService>(_ => this.mockPortalAliasService.Object);
-
-            Globals.DependencyProvider = services.BuildServiceProvider();
+            this.serviceProvider = FakeServiceProvider.Setup(
+                services =>
+                {
+                    services.AddSingleton(this.mockPortalAliasService.Object);
+                });
         }
 
         [TearDown]
         public void TearDown()
         {
-            Globals.DependencyProvider = null;
+            this.serviceProvider.Dispose();
 
             this.mockPortalAliasService = null;
 
@@ -71,7 +63,7 @@ namespace DotNetNuke.Tests.Web.Api
             string result = new PortalAliasRouteManager().GetRouteUrl(moduleFolderName, url, count);
 
             // Assert
-            Assert.AreEqual(expected, result);
+            Assert.That(result, Is.EqualTo(expected));
         }
 
         [Test]
@@ -126,7 +118,7 @@ namespace DotNetNuke.Tests.Web.Api
             List<int> prefixes = new PortalAliasRouteManager().GetRoutePrefixCounts().ToList();
 
             // Assert
-            CollectionAssert.AreEquivalent(new[] { 0 }, prefixes);
+            Assert.That(prefixes, Is.EquivalentTo(new[] { 0 }));
         }
 
         [Test]
@@ -156,7 +148,7 @@ namespace DotNetNuke.Tests.Web.Api
             List<int> prefixes = new PortalAliasRouteManager().GetRoutePrefixCounts().ToList();
 
             // Assert
-            CollectionAssert.AreEquivalent(new[] { 0 }, prefixes);
+            Assert.That(prefixes, Is.EquivalentTo(new[] { 0 }));
         }
 
         [Test]
@@ -242,7 +234,7 @@ namespace DotNetNuke.Tests.Web.Api
             List<int> prefixes = new PortalAliasRouteManager().GetRoutePrefixCounts().ToList();
 
             // Assert
-            CollectionAssert.AreEqual(new[] { 1, 0 }, prefixes);
+            Assert.That(prefixes, Is.EqualTo(new[] { 1, 0 }).AsCollection);
         }
 
         [Test]
@@ -257,7 +249,7 @@ namespace DotNetNuke.Tests.Web.Api
             var result = new PortalAliasRouteManager().GetRouteName(moduleFolderName, routeName, count);
 
             // Assert
-            Assert.AreEqual(expected, result);
+            Assert.That(result, Is.EqualTo(expected));
         }
 
         [Test]
@@ -273,7 +265,7 @@ namespace DotNetNuke.Tests.Web.Api
             var result = new PortalAliasRouteManager().GetRouteName(moduleFolderName, routeName, new PortalAliasInfo { HTTPAlias = httpAlias });
 
             // Assert
-            Assert.AreEqual(expected, result);
+            Assert.That(result, Is.EqualTo(expected));
         }
 
         [Test]
@@ -326,7 +318,7 @@ namespace DotNetNuke.Tests.Web.Api
 
             // Assert
             var expected = new Dictionary<string, object> { { "value1", 1 }, { "value2", 2 } };
-            CollectionAssert.AreEquivalent(expected, result);
+            Assert.That(result, Is.EquivalentTo(expected));
         }
 
         [Test]
@@ -343,7 +335,7 @@ namespace DotNetNuke.Tests.Web.Api
 
             // Assert
             var expected = new Dictionary<string, object> { { "prefix0", "child" } };
-            CollectionAssert.AreEquivalent(expected, result);
+            Assert.That(result, Is.EquivalentTo(expected));
         }
 
         [Test]
@@ -360,7 +352,7 @@ namespace DotNetNuke.Tests.Web.Api
 
             // Assert
             var expected = new Dictionary<string, object> { { "prefix0", "child0" }, { "prefix1", "child1" }, { "prefix2", "child2" }, { "prefix3", "child3" }, { "value1", 1 }, { "value2", 2 } };
-            CollectionAssert.AreEquivalent(expected, result);
+            Assert.That(result, Is.EquivalentTo(expected));
         }
     }
 }

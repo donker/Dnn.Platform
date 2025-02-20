@@ -1,17 +1,14 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
-
 namespace DotNetNuke.Tests.Core.Controllers.Social
 {
     using System;
     using System.Collections.Generic;
     using System.Data;
 
-    using DotNetNuke.Abstractions;
     using DotNetNuke.Abstractions.Application;
     using DotNetNuke.Abstractions.Logging;
-    using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.ComponentModel;
     using DotNetNuke.Entities.Controllers;
@@ -20,8 +17,8 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
     using DotNetNuke.Entities.Users.Social;
     using DotNetNuke.Entities.Users.Social.Data;
     using DotNetNuke.Services.Cache;
-    using DotNetNuke.Services.Log.EventLog;
     using DotNetNuke.Tests.Utilities;
+    using DotNetNuke.Tests.Utilities.Fakes;
     using DotNetNuke.Tests.Utilities.Mocks;
 
     using Microsoft.Extensions.DependencyInjection;
@@ -35,26 +32,19 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
     public class RelationshipControllerTests
     {
         private Mock<CachingProvider> mockCachingProvider;
-        private Mock<IPortalController> _portalController;
-        private Mock<IPortalGroupController> _portalGroupController;
+        private Mock<IPortalController> portalController;
+        private Mock<IPortalGroupController> portalGroupController;
 
         private DataTable dtRelationshipTypes;
         private DataTable dtRelationships;
         private DataTable dtUserRelationships;
         private DataTable dtUserRelationshipPreferences;
+        private FakeServiceProvider serviceProvider;
 
         [SetUp]
 
         public void SetUp()
         {
-            var serviceCollection = new ServiceCollection();
-            var mockApplicationStatusInfo = new Mock<IApplicationStatusInfo>();
-            mockApplicationStatusInfo.Setup(info => info.Status).Returns(UpgradeStatus.Install);
-            serviceCollection.AddTransient<IApplicationStatusInfo>(container => mockApplicationStatusInfo.Object);
-            serviceCollection.AddTransient<INavigationManager>(container => Mock.Of<INavigationManager>());
-            serviceCollection.AddTransient<IHostSettingsService, HostController>();
-            Globals.DependencyProvider = serviceCollection.BuildServiceProvider();
-
             ComponentFactory.Container = new SimpleContainer();
             var mockDataProvider = MockComponentProvider.CreateDataProvider();
             mockDataProvider.Setup(dp => dp.GetProviderPath()).Returns(string.Empty);
@@ -62,14 +52,15 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             this.mockCachingProvider = MockComponentProvider.CreateDataCacheProvider();
             MockComponentProvider.CreateEventLogController();
 
-            this._portalController = new Mock<IPortalController>();
-            PortalController.SetTestableInstance(this._portalController.Object);
+            this.portalController = new Mock<IPortalController>();
+            PortalController.SetTestableInstance(this.portalController.Object);
 
-            this._portalGroupController = new Mock<IPortalGroupController>();
-            PortalGroupController.RegisterInstance(this._portalGroupController.Object);
+            this.portalGroupController = new Mock<IPortalGroupController>();
+            PortalGroupController.RegisterInstance(this.portalGroupController.Object);
 
             var mockHostController = new Mock<IHostController>();
             mockHostController.Setup(c => c.GetString("PerformanceSetting")).Returns("0");
+            mockHostController.As<IHostSettingsService>();
             HostController.RegisterInstance(mockHostController.Object);
 
             var mockUserController = new Mock<IUserController>();
@@ -79,15 +70,31 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             this.CreateLocalizationProvider();
 
             this.SetupDataTables();
+
+            this.serviceProvider = FakeServiceProvider.Setup(
+                services =>
+                {
+                    services.AddSingleton(mockDataProvider.Object);
+                    services.AddSingleton(this.mockCachingProvider.Object);
+                    services.AddSingleton(this.portalController.Object);
+                    services.AddSingleton(this.portalGroupController.Object);
+                    services.AddSingleton(mockHostController.Object);
+                    services.AddSingleton((IHostSettingsService)mockHostController.Object);
+                    services.AddSingleton(mockUserController.Object);
+                });
         }
 
         [TearDown]
         public void TearDown()
         {
-            Globals.DependencyProvider = null;
+            this.serviceProvider.Dispose();
             ComponentFactory.Container = null;
             PortalController.ClearInstance();
             UserController.ClearInstance();
+            this.dtRelationshipTypes?.Dispose();
+            this.dtRelationships?.Dispose();
+            this.dtUserRelationships?.Dispose();
+            this.dtUserRelationshipPreferences?.Dispose();
         }
 
         [Test]
@@ -222,7 +229,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             var relationshipType = relationshipController.GetRelationshipType(relationshipTypeId);
 
             // Assert
-            Assert.AreEqual(relationshipTypeId, relationshipType.RelationshipTypeId);
+            Assert.That(relationshipType.RelationshipTypeId, Is.EqualTo(relationshipTypeId));
         }
 
         [Test]
@@ -237,7 +244,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             var relationshipType = relationshipController.GetRelationshipType(Constants.SOCIAL_InValidRelationshipType);
 
             // Assert
-            Assert.IsNull(relationshipType);
+            Assert.That(relationshipType, Is.Null);
         }
 
         [Test]
@@ -398,7 +405,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             var relationship = relationshipController.GetRelationship(relationshipId);
 
             // Assert
-            Assert.AreEqual(relationshipId, relationship.RelationshipId);
+            Assert.That(relationship.RelationshipId, Is.EqualTo(relationshipId));
         }
 
         [Test]
@@ -415,7 +422,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             var relationship = relationshipController.GetRelationship(Constants.SOCIAL_InValidRelationship);
 
             // Assert
-            Assert.IsNull(relationship);
+            Assert.That(relationship, Is.Null);
         }
 
         [Test]
@@ -441,8 +448,8 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             var relationships = relationshipController.GetRelationshipsByUserId(Constants.USER_ValidId);
 
             // Assert
-            Assert.IsInstanceOf<IList<Relationship>>(relationships);
-            Assert.AreEqual(5, relationships.Count);
+            Assert.That(relationships, Is.InstanceOf<IList<Relationship>>());
+            Assert.That(relationships, Has.Count.EqualTo(5));
         }
 
         [Test]
@@ -459,8 +466,8 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             var relationships = relationshipController.GetRelationshipsByUserId(Constants.USER_InValidId);
 
             // Assert
-            Assert.IsInstanceOf<IList<Relationship>>(relationships);
-            Assert.AreEqual(0, relationships.Count);
+            Assert.That(relationships, Is.InstanceOf<IList<Relationship>>());
+            Assert.That(relationships, Is.Empty);
         }
 
         [Test]
@@ -483,14 +490,14 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             var relationshipController = this.CreateRelationshipController(mockDataService);
 
             var mockPortalInfo = CreatePortalInfo(Constants.PORTAL_Zero, Null.NullInteger);
-            this._portalController.Setup(pc => pc.GetPortal(Constants.PORTAL_Zero)).Returns(mockPortalInfo);
+            this.portalController.Setup(pc => pc.GetPortal(Constants.PORTAL_Zero)).Returns(mockPortalInfo);
 
             // Act
             var relationships = relationshipController.GetRelationshipsByPortalId(Constants.PORTAL_Zero);
 
             // Assert
-            Assert.IsInstanceOf<IList<Relationship>>(relationships);
-            Assert.AreEqual(5, relationships.Count);
+            Assert.That(relationships, Is.InstanceOf<IList<Relationship>>());
+            Assert.That(relationships, Has.Count.EqualTo(5));
         }
 
         [Test]
@@ -513,17 +520,17 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             var relationshipController = this.CreateRelationshipController(mockDataService);
 
             var mockPortalInfo = CreatePortalInfo(Constants.PORTAL_Zero, Constants.PORTALGROUP_ValidPortalGroupId);
-            this._portalController.Setup(pc => pc.GetPortal(Constants.PORTAL_Zero)).Returns(mockPortalInfo);
+            this.portalController.Setup(pc => pc.GetPortal(Constants.PORTAL_Zero)).Returns(mockPortalInfo);
 
             List<PortalGroupInfo> portalGroups = new List<PortalGroupInfo>() { CreatePortalGroupInfo(Constants.PORTALGROUP_ValidPortalGroupId, Constants.PORTAL_Zero) }; // CreatePortalGroupInfo(Constants.PORTALGROUP_ValidPortalGroupId, Constants.PORTAL_Zero);
-            this._portalGroupController.Setup(pgc => pgc.GetPortalGroups()).Returns(portalGroups);
+            this.portalGroupController.Setup(pgc => pgc.GetPortalGroups()).Returns(portalGroups);
 
             // Act
             var relationships = relationshipController.GetRelationshipsByPortalId(Constants.PORTAL_Zero);
 
             // Assert
-            Assert.IsInstanceOf<IList<Relationship>>(relationships);
-            Assert.AreEqual(5, relationships.Count);
+            Assert.That(relationships, Is.InstanceOf<IList<Relationship>>());
+            Assert.That(relationships, Has.Count.EqualTo(5));
         }
 
         [Test]
@@ -537,14 +544,14 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             var relationshipController = this.CreateRelationshipController(mockDataService);
 
             var mockPortalInfo = CreatePortalInfo(Constants.PORTAL_Null, Null.NullInteger);
-            this._portalController.Setup(pc => pc.GetPortal(Constants.PORTAL_Null)).Returns(mockPortalInfo);
+            this.portalController.Setup(pc => pc.GetPortal(Constants.PORTAL_Null)).Returns(mockPortalInfo);
 
             // Act
             var relationships = relationshipController.GetRelationshipsByPortalId(Constants.PORTAL_Null);
 
             // Assert
-            Assert.IsInstanceOf<IList<Relationship>>(relationships);
-            Assert.AreEqual(0, relationships.Count);
+            Assert.That(relationships, Is.InstanceOf<IList<Relationship>>());
+            Assert.That(relationships, Is.Empty);
         }
 
         [Test]
@@ -688,7 +695,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             var userRelationship = relationshipController.GetUserRelationship(userRelationshipId);
 
             // Assert
-            Assert.AreEqual(userRelationshipId, userRelationship.UserRelationshipId);
+            Assert.That(userRelationship.UserRelationshipId, Is.EqualTo(userRelationshipId));
         }
 
         [Test]
@@ -705,7 +712,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             var userRelationship = relationshipController.GetUserRelationship(Constants.SOCIAL_InValidUserRelationship);
 
             // Assert
-            Assert.IsNull(userRelationship);
+            Assert.That(userRelationship, Is.Null);
         }
 
         [Test]
@@ -729,8 +736,8 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             var userRelationships = relationshipController.GetUserRelationships(user);
 
             // Assert
-            Assert.IsInstanceOf<IList<UserRelationship>>(userRelationships);
-            Assert.AreEqual(5, userRelationships.Count);
+            Assert.That(userRelationships, Is.InstanceOf<IList<UserRelationship>>());
+            Assert.That(userRelationships, Has.Count.EqualTo(5));
         }
 
         [Test]
@@ -749,8 +756,8 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             var userRelationships = relationshipController.GetUserRelationships(user);
 
             // Assert
-            Assert.IsInstanceOf<IList<UserRelationship>>(userRelationships);
-            Assert.AreEqual(0, userRelationships.Count);
+            Assert.That(userRelationships, Is.InstanceOf<IList<UserRelationship>>());
+            Assert.That(userRelationships, Is.Empty);
         }
 
         [Test]
@@ -992,7 +999,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             var userRelationship = relationshipController.InitiateUserRelationship(initiatingUser, targetUser, relationship);
 
             // Assert
-            Assert.AreEqual(userRelationship.Status, RelationshipStatus.Accepted);
+            Assert.That(userRelationship.Status, Is.EqualTo(RelationshipStatus.Accepted));
         }
 
         [Test]
@@ -1019,7 +1026,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             var userRelationship = relationshipController.InitiateUserRelationship(initiatingUser, targetUser, relationship);
 
             // Assert
-            Assert.AreEqual(userRelationship.Status, RelationshipStatus.Pending);
+            Assert.That(userRelationship.Status, Is.EqualTo(RelationshipStatus.Pending));
         }
 
         [Test]
@@ -1047,7 +1054,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             var userRelationship = relationshipController.InitiateUserRelationship(initiatingUser, targetUser, relationship);
 
             // Assert
-            Assert.AreEqual(userRelationship.Status, RelationshipStatus.Accepted);
+            Assert.That(userRelationship.Status, Is.EqualTo(RelationshipStatus.Accepted));
         }
 
         [Test]
@@ -1075,7 +1082,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Social
             var userRelationship = relationshipController.InitiateUserRelationship(initiatingUser, targetUser, relationship);
 
             // Assert
-            Assert.AreEqual(userRelationship.Status, RelationshipStatus.Pending);
+            Assert.That(userRelationship.Status, Is.EqualTo(RelationshipStatus.Pending));
         }
 
         [Test]

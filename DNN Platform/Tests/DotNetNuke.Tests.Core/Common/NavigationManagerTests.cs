@@ -1,21 +1,19 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
-
 namespace DotNetNuke.Tests.Core.Common
 {
     using System.Collections.Generic;
     using System.Linq;
 
     using DotNetNuke.Abstractions;
-    using DotNetNuke.Abstractions.Application;
     using DotNetNuke.Abstractions.Portals;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
-    using DotNetNuke.Entities.Controllers;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Tabs;
     using DotNetNuke.Services.Localization;
+    using DotNetNuke.Tests.Utilities.Fakes;
     using Microsoft.Extensions.DependencyInjection;
 
     using Moq;
@@ -32,6 +30,7 @@ namespace DotNetNuke.Tests.Core.Common
         private const string ControlKeyPattern = "&ctl={0}";
         private const string LanguagePattern = "&language={0}";
         private INavigationManager navigationManager;
+        private FakeServiceProvider serviceProvider;
 
         [OneTimeSetUp]
 
@@ -100,17 +99,19 @@ namespace DotNetNuke.Tests.Core.Common
                 return mockLocaleController.Object;
             }
 
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddTransient<INavigationManager>(container => this.navigationManager);
-            serviceCollection.AddTransient<IApplicationStatusInfo>(container => new DotNetNuke.Application.ApplicationStatusInfo(Mock.Of<IApplicationInfo>()));
-            serviceCollection.AddTransient<IHostSettingsService, HostController>();
-            Globals.DependencyProvider = serviceCollection.BuildServiceProvider();
+            this.serviceProvider = FakeServiceProvider.Setup(
+                services =>
+                {
+                    services.AddSingleton(PortalController.Instance);
+                    services.AddSingleton(TabController.Instance);
+                    services.AddSingleton(LocaleController.Instance);
+                });
         }
 
         [OneTimeTearDown]
         public void TearDown()
         {
-            Globals.DependencyProvider = null;
+            this.serviceProvider.Dispose();
             this.navigationManager = null;
             TabController.ClearInstance();
             LocaleController.ClearInstance();
@@ -122,8 +123,8 @@ namespace DotNetNuke.Tests.Core.Common
             var expected = string.Format(DefaultURLPattern, TabID);
             var actual = this.navigationManager.NavigateURL();
 
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [TestCase(1)]
@@ -142,8 +143,8 @@ namespace DotNetNuke.Tests.Core.Common
             var expected = string.Format(DefaultURLPattern, tabId);
             var actual = this.navigationManager.NavigateURL(tabId);
 
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -153,8 +154,8 @@ namespace DotNetNuke.Tests.Core.Common
             var expected = string.Format(DefaultURLPattern, customTabId);
             var actual = this.navigationManager.NavigateURL(customTabId, false);
 
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [TestCase(1)]
@@ -173,8 +174,8 @@ namespace DotNetNuke.Tests.Core.Common
             var expected = string.Format(DefaultURLPattern, tabId) + string.Format(DefaultSuperTabPattern, PortalID);
             var actual = this.navigationManager.NavigateURL(tabId, true);
 
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -193,8 +194,8 @@ namespace DotNetNuke.Tests.Core.Common
             var expected = string.Format(DefaultURLPattern, TabID) + string.Format(ControlKeyPattern, controlKey);
             var actual = this.navigationManager.NavigateURL(controlKey);
 
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -204,8 +205,8 @@ namespace DotNetNuke.Tests.Core.Common
             var expected = string.Format(DefaultURLPattern, TabID) + string.Format(ControlKeyPattern, controlKey);
             var actual = this.navigationManager.NavigateURL(controlKey, new string[0]);
 
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -218,8 +219,8 @@ namespace DotNetNuke.Tests.Core.Common
                 $"&{parameters[0]}";
             var actual = this.navigationManager.NavigateURL(controlKey, parameters);
 
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [TestCase(2)]
@@ -245,8 +246,8 @@ namespace DotNetNuke.Tests.Core.Common
                 parameters.Select(s => $"&{s}").Aggregate((x, y) => $"{x}{y}");
             var actual = this.navigationManager.NavigateURL(controlKey, parameters);
 
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [TestCase(1)]
@@ -266,8 +267,8 @@ namespace DotNetNuke.Tests.Core.Common
             var expected = string.Format(DefaultURLPattern, tabId) + string.Format(ControlKeyPattern, controlKey);
             var actual = this.navigationManager.NavigateURL(tabId, controlKey);
 
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [TestCase(1)]
@@ -286,8 +287,8 @@ namespace DotNetNuke.Tests.Core.Common
             var expected = string.Format(DefaultURLPattern, tabId);
             var actual = this.navigationManager.NavigateURL(tabId, string.Empty);
 
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [TestCase(1)]
@@ -306,8 +307,8 @@ namespace DotNetNuke.Tests.Core.Common
             var expected = string.Format(DefaultURLPattern, tabId);
             var actual = this.navigationManager.NavigateURL(tabId, string.Empty);
 
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [TestCase(0, "My-Control-Key-0")]
@@ -340,8 +341,8 @@ namespace DotNetNuke.Tests.Core.Common
 
             var actual = this.navigationManager.NavigateURL(customTabId, controlKey, parameters);
 
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [TestCase(0, "My-Control-Key-0")]
@@ -362,8 +363,8 @@ namespace DotNetNuke.Tests.Core.Common
 
             var actual = this.navigationManager.NavigateURL(tabId, controlKey, null);
 
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [TestCase(0, "My-Control-Key-0")]
@@ -384,8 +385,8 @@ namespace DotNetNuke.Tests.Core.Common
 
             var actual = this.navigationManager.NavigateURL(tabId, default(IPortalSettings), controlKey, null);
 
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [TestCase(0, "My-Control-Key-0")]
@@ -412,8 +413,8 @@ namespace DotNetNuke.Tests.Core.Common
 
             var actual = this.navigationManager.NavigateURL(tabId, mockSettings.Object, controlKey, null);
 
-            Assert.IsNotNull(actual);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.Not.Null);
+            Assert.That(actual, Is.EqualTo(expected));
         }
     }
 }

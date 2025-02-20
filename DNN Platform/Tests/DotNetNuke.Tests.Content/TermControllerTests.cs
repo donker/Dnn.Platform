@@ -1,24 +1,20 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
-
 namespace DotNetNuke.Tests.Content
 {
     using System;
     using System.Linq;
 
-    using DotNetNuke.Abstractions;
-    using DotNetNuke.Abstractions.Application;
-    using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Content;
     using DotNetNuke.Entities.Content.Data;
     using DotNetNuke.Entities.Content.Taxonomy;
-    using DotNetNuke.Entities.Controllers;
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Services.Cache;
     using DotNetNuke.Tests.Content.Mocks;
     using DotNetNuke.Tests.Utilities;
+    using DotNetNuke.Tests.Utilities.Fakes;
     using DotNetNuke.Tests.Utilities.Mocks;
 
     using Microsoft.Extensions.DependencyInjection;
@@ -32,28 +28,30 @@ namespace DotNetNuke.Tests.Content
     public class TermControllerTests
     {
         private Mock<CachingProvider> mockCache;
+        private FakeServiceProvider serviceProvider;
 
         [SetUp]
 
         public void SetUp()
         {
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddTransient<INavigationManager>(container => Mock.Of<INavigationManager>());
-            serviceCollection.AddTransient<IApplicationStatusInfo>(container => new DotNetNuke.Application.ApplicationStatusInfo(Mock.Of<IApplicationInfo>()));
-            serviceCollection.AddTransient<IHostSettingsService, HostController>();
-            Globals.DependencyProvider = serviceCollection.BuildServiceProvider();
+            var vocabularyController = MockHelper.CreateMockVocabularyController();
+            var dataProvider = MockComponentProvider.CreateDataProvider();
+            dataProvider.Setup(c => c.GetProviderPath()).Returns(string.Empty);
 
-            Mock<IVocabularyController> vocabularyController = MockHelper.CreateMockVocabularyController();
-            MockComponentProvider.CreateDataProvider().Setup(c => c.GetProviderPath()).Returns(string.Empty);
-
-            // Register MockCachingProvider
             this.mockCache = MockComponentProvider.CreateNew<CachingProvider>();
+            this.serviceProvider = FakeServiceProvider.Setup(
+                services =>
+                {
+                    services.AddSingleton(vocabularyController.Object);
+                    services.AddSingleton(dataProvider.Object);
+                    services.AddSingleton(this.mockCache.Object);
+                });
         }
 
         [TearDown]
         public void TearDown()
         {
-            Globals.DependencyProvider = null;
+            this.serviceProvider.Dispose();
             MockComponentProvider.ResetContainer();
         }
 
@@ -147,7 +145,7 @@ namespace DotNetNuke.Tests.Content
             int termId = termController.AddTerm(term);
 
             // Assert
-            Assert.AreEqual(Constants.TERM_AddTermId, termId);
+            Assert.That(termId, Is.EqualTo(Constants.TERM_AddTermId));
         }
 
         [Test]
@@ -165,7 +163,7 @@ namespace DotNetNuke.Tests.Content
             termController.AddTerm(term);
 
             // Assert
-            Assert.AreEqual(Constants.TERM_AddTermId, term.TermId);
+            Assert.That(term.TermId, Is.EqualTo(Constants.TERM_AddTermId));
         }
 
         [Test]
@@ -183,7 +181,7 @@ namespace DotNetNuke.Tests.Content
             int termId = termController.AddTerm(term);
 
             // Assert
-            Assert.AreEqual(Constants.TERM_AddTermId, termId);
+            Assert.That(termId, Is.EqualTo(Constants.TERM_AddTermId));
         }
 
         [Test]
@@ -201,7 +199,7 @@ namespace DotNetNuke.Tests.Content
             termController.AddTerm(term);
 
             // Assert
-            Assert.AreEqual(Constants.TERM_AddTermId, term.TermId);
+            Assert.That(term.TermId, Is.EqualTo(Constants.TERM_AddTermId));
         }
 
         [Test]
@@ -371,7 +369,7 @@ namespace DotNetNuke.Tests.Content
             Term term = termController.GetTerm(Constants.TERM_InValidTermId);
 
             // Assert
-            Assert.IsNull(term);
+            Assert.That(term, Is.Null);
         }
 
         [Test]
@@ -403,9 +401,12 @@ namespace DotNetNuke.Tests.Content
             // Act
             var term = termController.GetTerm(Constants.TERM_ValidTermId);
 
-            // Assert
-            Assert.AreEqual(Constants.TERM_ValidTermId, term.TermId);
-            Assert.AreEqual(Constants.TERM_ValidName, term.Name);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(term.TermId, Is.EqualTo(Constants.TERM_ValidTermId));
+                Assert.That(term.Name, Is.EqualTo(Constants.TERM_ValidName));
+            });
         }
 
         [Test]
@@ -456,12 +457,15 @@ namespace DotNetNuke.Tests.Content
             var terms = termController.GetTermsByContent(Constants.TERM_ValidContent1).ToList();
 
             // Assert
-            Assert.AreEqual(Constants.TERM_ValidCountForContent1, terms.Count);
+            Assert.That(terms, Has.Count.EqualTo(Constants.TERM_ValidCountForContent1));
 
             for (int i = 0; i < Constants.TERM_ValidCountForContent1; i++)
             {
-                Assert.AreEqual(i + Constants.TERM_ValidTermId, terms[i].TermId);
-                Assert.AreEqual(ContentTestHelper.GetTermName(i + Constants.TERM_ValidTermId), terms[i].Name);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(terms[i].TermId, Is.EqualTo(i + Constants.TERM_ValidTermId));
+                    Assert.That(terms[i].Name, Is.EqualTo(ContentTestHelper.GetTermName(i + Constants.TERM_ValidTermId)));
+                });
             }
         }
 
@@ -496,12 +500,15 @@ namespace DotNetNuke.Tests.Content
             var terms = termController.GetTermsByVocabulary(Constants.TERM_ValidVocabulary1).ToList();
 
             // Assert
-            Assert.AreEqual(Constants.TERM_ValidCountForVocabulary1, terms.Count);
+            Assert.That(terms, Has.Count.EqualTo(Constants.TERM_ValidCountForVocabulary1));
 
             for (int i = 0; i < Constants.TERM_ValidCountForVocabulary1; i++)
             {
-                Assert.AreEqual(i + Constants.TERM_ValidTermId, terms[i].TermId);
-                Assert.AreEqual(ContentTestHelper.GetTermName(i + Constants.TERM_ValidTermId), terms[i].Name);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(terms[i].TermId, Is.EqualTo(i + Constants.TERM_ValidTermId));
+                    Assert.That(terms[i].Name, Is.EqualTo(ContentTestHelper.GetTermName(i + Constants.TERM_ValidTermId)));
+                });
             }
         }
 

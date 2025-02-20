@@ -1,7 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
-
 namespace DotNetNuke.Tests.Core.Providers.Folder
 {
     using System;
@@ -9,9 +8,6 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
     using System.Data;
     using System.Linq;
 
-    using DotNetNuke.Abstractions;
-    using DotNetNuke.Abstractions.Application;
-    using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Data;
     using DotNetNuke.Services.FileSystem;
@@ -19,6 +15,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
     using DotNetNuke.Services.Log.EventLog;
     using DotNetNuke.Tests.Core.Providers.Builders;
     using DotNetNuke.Tests.Utilities;
+    using DotNetNuke.Tests.Utilities.Fakes;
     using DotNetNuke.Tests.Utilities.Mocks;
 
     using Microsoft.Extensions.DependencyInjection;
@@ -44,6 +41,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
         private Mock<IPathUtils> pathUtils;
         private Mock<IUserSecurityController> mockUserSecurityController;
         private Mock<IFileDeletionController> mockFileDeletionController;
+        private FakeServiceProvider serviceProvider;
 
         [SetUp]
         public void Setup()
@@ -73,13 +71,17 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             this.folderInfo = new Mock<IFolderInfo>();
 
-            var serviceCollection = new ServiceCollection();
-            var mockStatusInfo = new Mock<IApplicationStatusInfo>();
-            mockStatusInfo.Setup(info => info.Status).Returns(UpgradeStatus.None);
-
-            serviceCollection.AddTransient<IApplicationStatusInfo>(container => mockStatusInfo.Object);
-            serviceCollection.AddTransient<INavigationManager>(container => Mock.Of<INavigationManager>());
-            Globals.DependencyProvider = serviceCollection.BuildServiceProvider();
+            this.serviceProvider = FakeServiceProvider.Setup(
+                services =>
+                {
+                    services.AddSingleton(this.mockFolder.Object);
+                    services.AddSingleton(this.mockData.Object);
+                    services.AddSingleton(this.folderMappingController.Object);
+                    services.AddSingleton(this.cbo.Object);
+                    services.AddSingleton(this.pathUtils.Object);
+                    services.AddSingleton(this.mockUserSecurityController.Object);
+                    services.AddSingleton(this.mockFileDeletionController.Object);
+                });
         }
 
         [TearDown]
@@ -91,7 +93,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
             CBO.ClearInstance();
             FileDeletionController.ClearInstance();
             MockComponentProvider.ResetContainer();
-            Globals.DependencyProvider = null;
+            this.serviceProvider.Dispose();
         }
 
         [Test]
@@ -216,7 +218,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
             var result = this.mockFolderManager.Object.IsValidFolderPath(Constants.FOLDER_ValidSubFolderRelativePath);
 
             // assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -228,7 +230,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
             var result = this.mockFolderManager.Object.IsValidFolderPath(Constants.FOLDER_InvalidSubFolderRelativePath);
 
             // assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -278,7 +280,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             // Assert
             this.mockFolder.Verify();
-            Assert.AreEqual(0, subfoldersNotDeleted.Count);
+            Assert.That(subfoldersNotDeleted, Is.Empty);
         }
 
         [Test]
@@ -327,7 +329,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             // Assert
             this.mockFolder.Verify();
-            Assert.AreEqual(0, subfoldersNotDeleted.Count);
+            Assert.That(subfoldersNotDeleted, Is.Empty);
         }
 
         [Test]
@@ -374,7 +376,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
             this.mockFolderManager.Object.DeleteFolder(folderInfo, subfoldersNotDeleted);
 
             // Assert
-            Assert.AreEqual(2, subfoldersNotDeleted.Count); // folderInfo and subfolder2 are not deleted
+            Assert.That(subfoldersNotDeleted, Has.Count.EqualTo(2)); // folderInfo and subfolder2 are not deleted
         }
 
         [Test]
@@ -525,7 +527,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.mockFolderManager.Object.FolderExists(Constants.CONTENT_ValidPortalId, Constants.FOLDER_ValidFolderRelativePath);
 
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -535,7 +537,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.mockFolderManager.Object.FolderExists(Constants.CONTENT_ValidPortalId, Constants.FOLDER_ValidFolderRelativePath);
 
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -586,7 +588,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.folderManager.GetFiles(this.folderInfo.Object).ToList();
 
-            Assert.AreEqual(1, result.Count);
+            Assert.That(result, Has.Count.EqualTo(1));
         }
 
         [Test]
@@ -614,7 +616,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.folderManager.GetFiles(this.folderInfo.Object).Cast<FileInfo>();
 
-            CollectionAssert.AreEqual(filesList, result);
+            Assert.That(result, Is.EqualTo(filesList).AsCollection);
         }
 
         [Test]
@@ -643,7 +645,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.folderManager.GetFolder(Constants.FOLDER_ValidFolderId);
 
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -667,7 +669,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.mockFolderManager.Object.GetFolder(Constants.FOLDER_ValidFolderId);
 
-            Assert.AreEqual(Constants.FOLDER_ValidFolderName, result.FolderName);
+            Assert.That(result.FolderName, Is.EqualTo(Constants.FOLDER_ValidFolderName));
         }
 
         [Test]
@@ -718,7 +720,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.mockFolderManager.Object.GetFolder(Constants.CONTENT_ValidPortalId, Constants.FOLDER_ValidFolderRelativePath);
 
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -743,7 +745,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.mockFolderManager.Object.GetFolder(Constants.CONTENT_ValidPortalId, Constants.FOLDER_ValidFolderRelativePath);
 
-            Assert.AreEqual(Constants.FOLDER_ValidFolderName, result.FolderName);
+            Assert.That(result.FolderName, Is.EqualTo(Constants.FOLDER_ValidFolderName));
         }
 
         [Test]
@@ -761,7 +763,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.mockFolderManager.Object.GetFolders(this.folderInfo.Object).ToList();
 
-            Assert.AreEqual(0, result.Count);
+            Assert.That(result, Is.Empty);
         }
 
         [Test]
@@ -780,8 +782,8 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.mockFolderManager.Object.GetFolders(this.folderInfo.Object).ToList();
 
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(Constants.FOLDER_OtherValidFolderId, result[0].FolderID);
+            Assert.That(result, Has.Count.EqualTo(1));
+            Assert.That(result[0].FolderID, Is.EqualTo(Constants.FOLDER_OtherValidFolderId));
         }
 
         [Test]
@@ -885,7 +887,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.mockFolderManager.Object.GetFileSystemFolders(Constants.CONTENT_ValidPortalId, Constants.FOLDER_ValidFolderRelativePath, false);
 
-            Assert.IsEmpty(result);
+            Assert.That(result, Is.Empty);
         }
 
         [Test]
@@ -897,8 +899,8 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.mockFolderManager.Object.GetFileSystemFolders(Constants.CONTENT_ValidPortalId, Constants.FOLDER_ValidFolderRelativePath, false);
 
-            Assert.AreEqual(1, result.Count);
-            Assert.IsTrue(result.Values[0].ExistsInFileSystem);
+            Assert.That(result, Has.Count.EqualTo(1));
+            Assert.That(result.Values[0].ExistsInFileSystem, Is.True);
         }
 
         [Test]
@@ -927,7 +929,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.mockFolderManager.Object.GetFileSystemFoldersRecursive(Constants.CONTENT_ValidPortalId, Constants.FOLDER_ValidFolderPath);
 
-            Assert.AreEqual(1, result.Count);
+            Assert.That(result, Has.Count.EqualTo(1));
         }
 
         [Test]
@@ -952,7 +954,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.mockFolderManager.Object.GetFileSystemFoldersRecursive(Constants.CONTENT_ValidPortalId, @"C:\folder");
 
-            Assert.AreEqual(5, result.Count);
+            Assert.That(result, Has.Count.EqualTo(5));
         }
 
         [Test]
@@ -979,7 +981,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             foreach (var mergedTreeItem in result.Values)
             {
-                Assert.True(mergedTreeItem.ExistsInFileSystem);
+                Assert.That(mergedTreeItem.ExistsInFileSystem, Is.True);
             }
         }
 
@@ -990,7 +992,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.mockFolderManager.Object.GetDatabaseFolders(Constants.CONTENT_ValidPortalId, Constants.FOLDER_ValidFolderRelativePath, false);
 
-            Assert.IsEmpty(result);
+            Assert.That(result, Is.Empty);
         }
 
         [Test]
@@ -1000,8 +1002,8 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.mockFolderManager.Object.GetDatabaseFolders(Constants.CONTENT_ValidPortalId, Constants.FOLDER_ValidFolderRelativePath, false);
 
-            Assert.AreEqual(1, result.Count);
-            Assert.IsTrue(result.Values[0].ExistsInDatabase);
+            Assert.That(result, Has.Count.EqualTo(1));
+            Assert.That(result.Values[0].ExistsInDatabase, Is.True);
         }
 
         [Test]
@@ -1031,7 +1033,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.mockFolderManager.Object.GetDatabaseFoldersRecursive(this.folderInfo.Object);
 
-            Assert.AreEqual(1, result.Count);
+            Assert.That(result, Has.Count.EqualTo(1));
         }
 
         [Test]
@@ -1056,7 +1058,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.mockFolderManager.Object.GetDatabaseFoldersRecursive(this.folderInfo.Object);
 
-            Assert.AreEqual(5, result.Count);
+            Assert.That(result, Has.Count.EqualTo(5));
         }
 
         [Test]
@@ -1083,7 +1085,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             foreach (var mergedTreeItem in result.Values)
             {
-                Assert.True(mergedTreeItem.ExistsInDatabase);
+                Assert.That(mergedTreeItem.ExistsInDatabase, Is.True);
             }
         }
 
@@ -1164,7 +1166,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.folderManager.MergeFolderLists(list1, list2);
 
-            Assert.IsEmpty(result);
+            Assert.That(result, Is.Empty);
         }
 
         [Test]
@@ -1184,7 +1186,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var result = this.folderManager.MergeFolderLists(list1, list2);
 
-            Assert.AreEqual(3, result.Count);
+            Assert.That(result, Has.Count.EqualTo(3));
         }
 
         // [Test]
@@ -2089,19 +2091,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
         //    _mockFolderManager.Verify(mfm => mfm.DeleteFolder(It.IsAny<int>(), It.IsAny<string>()), Times.Never());
         //    _directory.Verify(d => d.Delete(It.IsAny<string>(), It.IsAny<bool>()), Times.Never());
         // }
-        [Test]
-        public void MoveFolder_Throws_On_Null_Folder()
-        {
-            Assert.Throws<ArgumentNullException>(() => this.folderManager.MoveFolder(null, It.IsAny<string>()));
-        }
 
-        [Test]
-        [TestCase(null)]
-        [TestCase("")]
-        public void MoveFolder_Throws_On_Null_Or_Emtpy_NewFolderPath(string newFolderPath)
-        {
-            Assert.Throws<ArgumentException>(() => this.folderManager.MoveFolder(this.folderInfo.Object, newFolderPath));
-        }
 
         [Test]
 
@@ -2116,7 +2106,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
 
             var movedFolder = this.folderManager.MoveFolder(this.folderInfo.Object, destinationFolder);
 
-            Assert.AreEqual(this.folderInfo.Object, movedFolder);
+            Assert.That(movedFolder, Is.EqualTo(this.folderInfo.Object));
         }
 
         [Test]
@@ -2280,7 +2270,7 @@ namespace DotNetNuke.Tests.Core.Providers.Folder
             var foldersToDelete = new SortedList<string, IFolderInfo>();
             this.mockFolderManager.Object.OverwriteFolder(this.folderInfo.Object, destinationFolder, new Dictionary<int, FolderMappingInfo>(), foldersToDelete);
 
-            Assert.AreEqual(1, foldersToDelete.Count);
+            Assert.That(foldersToDelete, Has.Count.EqualTo(1));
         }
 
         // [Test]

@@ -7,10 +7,7 @@ namespace DotNetNuke.Tests.Data
     using System.Collections.Generic;
     using System.Web.Caching;
 
-    using DotNetNuke.Abstractions;
-    using DotNetNuke.Abstractions.Application;
     using DotNetNuke.Collections;
-    using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Data;
     using DotNetNuke.Entities.Controllers;
@@ -18,20 +15,30 @@ namespace DotNetNuke.Tests.Data
     using DotNetNuke.Tests.Data.Fakes;
     using DotNetNuke.Tests.Data.Models;
     using DotNetNuke.Tests.Utilities;
+    using DotNetNuke.Tests.Utilities.Fakes;
     using DotNetNuke.Tests.Utilities.Mocks;
-    using Microsoft.Extensions.DependencyInjection;
+
     using Moq;
     using Moq.Protected;
+
     using NUnit.Framework;
 
     [TestFixture]
     public class RepositoryBaseTests
     {
-        // ReSharper disable InconsistentNaming
+        private FakeServiceProvider serviceProvider;
+
         [SetUp]
         public void SetUp()
         {
             MockComponentProvider.ResetContainer();
+            this.serviceProvider = FakeServiceProvider.Setup();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            this.serviceProvider.Dispose();
         }
 
         [Test]
@@ -44,7 +51,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Dog>;
-            Assert.IsNull(Util.GetPrivateMember<RepositoryBase<Dog>, CacheItemArgs>(baseRepo, "CacheArgs"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Dog>, CacheItemArgs>(baseRepo, "CacheArgs"), Is.Null);
         }
 
         [Test]
@@ -57,7 +64,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<CacheableDog>;
-            Assert.IsNotNull(Util.GetPrivateMember<RepositoryBase<CacheableDog>, CacheItemArgs>(baseRepo, "CacheArgs"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<CacheableDog>, CacheItemArgs>(baseRepo, "CacheArgs"), Is.Not.Null);
         }
 
         [Test]
@@ -70,9 +77,12 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var cacheArgs = Util.GetPrivateMember<FakeRepository<CacheableDog>, CacheItemArgs>(repo, "CacheArgs");
-            Assert.AreEqual(Constants.CACHE_DogsKey, cacheArgs.CacheKey);
-            Assert.AreEqual(Constants.CACHE_Priority, cacheArgs.CachePriority);
-            Assert.AreEqual(Constants.CACHE_TimeOut, cacheArgs.CacheTimeOut);
+            Assert.Multiple(() =>
+            {
+                Assert.That(cacheArgs.CacheKey, Is.EqualTo(Constants.CACHE_DogsKey));
+                Assert.That(cacheArgs.CachePriority, Is.EqualTo(Constants.CACHE_Priority));
+                Assert.That(cacheArgs.CacheTimeOut, Is.EqualTo(Constants.CACHE_TimeOut));
+            });
         }
 
         [Test]
@@ -85,7 +95,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Dog>;
-            Assert.IsFalse(Util.GetPrivateMember<RepositoryBase<Dog>, bool>(baseRepo, "IsCacheable"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Dog>, bool>(baseRepo, "IsCacheable"), Is.False);
         }
 
         [Test]
@@ -98,7 +108,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<CacheableDog>;
-            Assert.IsTrue(Util.GetPrivateMember<RepositoryBase<CacheableDog>, bool>(baseRepo, "IsCacheable"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<CacheableDog>, bool>(baseRepo, "IsCacheable"), Is.True);
         }
 
         [Test]
@@ -111,7 +121,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Dog>;
-            Assert.IsFalse(Util.GetPrivateMember<RepositoryBase<Dog>, bool>(baseRepo, "IsScoped"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Dog>, bool>(baseRepo, "IsScoped"), Is.False);
         }
 
         [Test]
@@ -124,7 +134,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<CacheableDog>;
-            Assert.IsFalse(Util.GetPrivateMember<RepositoryBase<CacheableDog>, bool>(baseRepo, "IsScoped"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<CacheableDog>, bool>(baseRepo, "IsScoped"), Is.False);
         }
 
         [Test]
@@ -137,7 +147,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Cat>;
-            Assert.IsTrue(Util.GetPrivateMember<RepositoryBase<Cat>, bool>(baseRepo, "IsScoped"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Cat>, bool>(baseRepo, "IsScoped"), Is.True);
         }
 
         [Test]
@@ -150,7 +160,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<CacheableCat>;
-            Assert.IsTrue(Util.GetPrivateMember<RepositoryBase<CacheableCat>, bool>(baseRepo, "IsScoped"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<CacheableCat>, bool>(baseRepo, "IsScoped"), Is.True);
         }
 
         [Test]
@@ -163,7 +173,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Dog>;
-            Assert.AreEqual(string.Empty, Util.GetPrivateMember<RepositoryBase<Dog>, string>(baseRepo, "Scope"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Dog>, string>(baseRepo, "Scope"), Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -176,7 +186,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<CacheableDog>;
-            Assert.AreEqual(string.Empty, Util.GetPrivateMember<RepositoryBase<CacheableDog>, string>(baseRepo, "Scope"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<CacheableDog>, string>(baseRepo, "Scope"), Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -189,7 +199,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Cat>;
-            Assert.AreEqual(Constants.CACHE_ScopeModule, Util.GetPrivateMember<RepositoryBase<Cat>, string>(baseRepo, "Scope"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Cat>, string>(baseRepo, "Scope"), Is.EqualTo(Constants.CACHE_ScopeModule));
         }
 
         [Test]
@@ -202,7 +212,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<CacheableCat>;
-            Assert.AreEqual(Constants.CACHE_ScopeModule, Util.GetPrivateMember<RepositoryBase<CacheableCat>, string>(baseRepo, "Scope"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<CacheableCat>, string>(baseRepo, "Scope"), Is.EqualTo(Constants.CACHE_ScopeModule));
         }
 
         [Test]
@@ -216,7 +226,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Dog>;
-            Assert.IsNull(Util.GetPrivateMember<RepositoryBase<Dog>, CacheItemArgs>(baseRepo, "CacheArgs"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Dog>, CacheItemArgs>(baseRepo, "CacheArgs"), Is.Null);
         }
 
         [Test]
@@ -230,7 +240,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Dog>;
-            Assert.IsNotNull(Util.GetPrivateMember<RepositoryBase<Dog>, CacheItemArgs>(baseRepo, "CacheArgs"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Dog>, CacheItemArgs>(baseRepo, "CacheArgs"), Is.Not.Null);
         }
 
         [Test]
@@ -244,9 +254,12 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var cacheArgs = Util.GetPrivateMember<FakeRepository<Dog>, CacheItemArgs>(repo, "CacheArgs");
-            Assert.AreEqual(Constants.CACHE_DogsKey, cacheArgs.CacheKey);
-            Assert.AreEqual(Constants.CACHE_Priority, cacheArgs.CachePriority);
-            Assert.AreEqual(Constants.CACHE_TimeOut, cacheArgs.CacheTimeOut);
+            Assert.Multiple(() =>
+            {
+                Assert.That(cacheArgs.CacheKey, Is.EqualTo(Constants.CACHE_DogsKey));
+                Assert.That(cacheArgs.CachePriority, Is.EqualTo(Constants.CACHE_Priority));
+                Assert.That(cacheArgs.CacheTimeOut, Is.EqualTo(Constants.CACHE_TimeOut));
+            });
         }
 
         [Test]
@@ -259,7 +272,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Dog>;
-            Assert.IsFalse(Util.GetPrivateMember<RepositoryBase<Dog>, bool>(baseRepo, "IsCacheable"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Dog>, bool>(baseRepo, "IsCacheable"), Is.False);
         }
 
         [Test]
@@ -273,7 +286,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Dog>;
-            Assert.IsTrue(Util.GetPrivateMember<RepositoryBase<Dog>, bool>(baseRepo, "IsCacheable"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Dog>, bool>(baseRepo, "IsCacheable"), Is.True);
         }
 
         [Test]
@@ -287,7 +300,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Dog>;
-            Assert.IsFalse(Util.GetPrivateMember<RepositoryBase<Dog>, bool>(baseRepo, "IsScoped"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Dog>, bool>(baseRepo, "IsScoped"), Is.False);
         }
 
         [Test]
@@ -301,7 +314,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Dog>;
-            Assert.IsFalse(Util.GetPrivateMember<RepositoryBase<Dog>, bool>(baseRepo, "IsScoped"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Dog>, bool>(baseRepo, "IsScoped"), Is.False);
         }
 
         [Test]
@@ -315,7 +328,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Cat>;
-            Assert.IsTrue(Util.GetPrivateMember<RepositoryBase<Cat>, bool>(baseRepo, "IsScoped"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Cat>, bool>(baseRepo, "IsScoped"), Is.True);
         }
 
         [Test]
@@ -329,7 +342,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Cat>;
-            Assert.IsTrue(Util.GetPrivateMember<RepositoryBase<Cat>, bool>(baseRepo, "IsScoped"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Cat>, bool>(baseRepo, "IsScoped"), Is.True);
         }
 
         [Test]
@@ -343,7 +356,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Dog>;
-            Assert.AreEqual(string.Empty, Util.GetPrivateMember<RepositoryBase<Dog>, string>(baseRepo, "Scope"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Dog>, string>(baseRepo, "Scope"), Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -357,7 +370,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Dog>;
-            Assert.AreEqual(string.Empty, Util.GetPrivateMember<RepositoryBase<Dog>, string>(baseRepo, "Scope"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Dog>, string>(baseRepo, "Scope"), Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -371,7 +384,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Cat>;
-            Assert.AreEqual(Constants.CACHE_ScopeModule, Util.GetPrivateMember<RepositoryBase<Cat>, string>(baseRepo, "Scope"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Cat>, string>(baseRepo, "Scope"), Is.EqualTo(Constants.CACHE_ScopeModule));
         }
 
         [Test]
@@ -385,7 +398,7 @@ namespace DotNetNuke.Tests.Data
 
             // Assert
             var baseRepo = repo as RepositoryBase<Cat>;
-            Assert.AreEqual(Constants.CACHE_ScopeModule, Util.GetPrivateMember<RepositoryBase<Cat>, string>(baseRepo, "Scope"));
+            Assert.That(Util.GetPrivateMember<RepositoryBase<Cat>, string>(baseRepo, "Scope"), Is.EqualTo(Constants.CACHE_ScopeModule));
         }
 
         [Test]
@@ -510,12 +523,6 @@ namespace DotNetNuke.Tests.Data
         public void RepositoryBase_Get_Calls_GetAllInternal_If_Cacheable_And_Cache_Expired()
         {
             // Arrange
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddTransient(container => Mock.Of<INavigationManager>());
-            serviceCollection.AddTransient(container => Mock.Of<IApplicationStatusInfo>());
-            serviceCollection.AddTransient(container => Mock.Of<IHostSettingsService>());
-            Globals.DependencyProvider = serviceCollection.BuildServiceProvider();
-
             var mockHostController = MockComponentProvider.CreateNew<IHostController>();
             mockHostController.Setup(h => h.GetString("PerformanceSetting")).Returns("3");
 
@@ -662,12 +669,6 @@ namespace DotNetNuke.Tests.Data
         public void RepositoryBase_Get_Overload_Calls_GetAllByScopeInternal_If_Cacheable_And_Cache_Expired()
         {
             // Arrange
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddTransient(container => Mock.Of<INavigationManager>());
-            serviceCollection.AddTransient(container => Mock.Of<IApplicationStatusInfo>());
-            serviceCollection.AddTransient(container => Mock.Of<IHostSettingsService>());
-            Globals.DependencyProvider = serviceCollection.BuildServiceProvider();
-
             var cacheKey = CachingProvider.GetCacheKey(string.Format(Constants.CACHE_CatsKey + "_" + Constants.CACHE_ScopeModule + "_{0}", Constants.MODULE_ValidId));
 
             var mockHostController = MockComponentProvider.CreateNew<IHostController>();
@@ -1041,12 +1042,6 @@ namespace DotNetNuke.Tests.Data
         public void RepositoryBase_GetPage_Overload_Calls_GetAllByScopeInternal_If_Cacheable_And_Cache_Expired()
         {
             // Arrange
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddTransient(container => Mock.Of<INavigationManager>());
-            serviceCollection.AddTransient(container => Mock.Of<IApplicationStatusInfo>());
-            serviceCollection.AddTransient(container => Mock.Of<IHostSettingsService>());
-            Globals.DependencyProvider = serviceCollection.BuildServiceProvider();
-
             var cacheKey = CachingProvider.GetCacheKey(string.Format(Constants.CACHE_CatsKey + "_" + Constants.CACHE_ScopeModule + "_{0}", Constants.MODULE_ValidId));
 
             var mockHostController = MockComponentProvider.CreateNew<IHostController>();

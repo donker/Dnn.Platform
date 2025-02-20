@@ -1,29 +1,24 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
-
 namespace DotNetNuke.Tests.Content
 {
     using System;
     using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Linq;
-    using System.Web;
 
-    using DotNetNuke.Abstractions;
-    using DotNetNuke.Abstractions.Application;
-    using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.ComponentModel;
     using DotNetNuke.Data;
     using DotNetNuke.Entities.Content;
     using DotNetNuke.Entities.Content.Data;
-    using DotNetNuke.Entities.Controllers;
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Services.Cache;
     using DotNetNuke.Services.Search.Entities;
     using DotNetNuke.Tests.Content.Mocks;
     using DotNetNuke.Tests.Utilities;
+    using DotNetNuke.Tests.Utilities.Fakes;
     using DotNetNuke.Tests.Utilities.Mocks;
 
     using Microsoft.Extensions.DependencyInjection;
@@ -41,6 +36,7 @@ namespace DotNetNuke.Tests.Content
         private Mock<CachingProvider> mockCache;
         private Mock<DataProvider> mockDataProvider;
         private Mock<Services.Search.Internals.ISearchHelper> mockSearchHelper;
+        private FakeServiceProvider serviceProvider;
 
         [SetUp]
 
@@ -55,21 +51,19 @@ namespace DotNetNuke.Tests.Content
             this.mockSearchHelper.Setup(x => x.GetSearchTypeByName(It.IsAny<string>())).Returns<string>(
                 (string searchTypeName) => new SearchType { SearchTypeName = searchTypeName, SearchTypeId = ModuleSearchTypeId });
 
-            var serviceCollection = new ServiceCollection();
-            var mockApplicationStatusInfo = new Mock<IApplicationStatusInfo>();
-            mockApplicationStatusInfo.Setup(info => info.Status).Returns(UpgradeStatus.Install);
-
-            serviceCollection.AddTransient<INavigationManager>(container => Mock.Of<INavigationManager>());
-            serviceCollection.AddTransient<IApplicationStatusInfo>(container => mockApplicationStatusInfo.Object);
-            serviceCollection.AddTransient<IHostSettingsService, HostController>();
-
-            Globals.DependencyProvider = serviceCollection.BuildServiceProvider();
+            this.serviceProvider = FakeServiceProvider.Setup(
+                services =>
+                {
+                    services.AddSingleton(this.mockCache.Object);
+                    services.AddSingleton(this.mockDataProvider.Object);
+                    services.AddSingleton(this.mockSearchHelper.Object);
+                });
         }
 
         [TearDown]
         public void TearDown()
         {
-            Globals.DependencyProvider = null;
+            this.serviceProvider.Dispose();
             MockComponentProvider.ResetContainer();
         }
 
@@ -121,7 +115,7 @@ namespace DotNetNuke.Tests.Content
             int contentId = controller.AddContentItem(content);
 
             // Assert
-            Assert.AreEqual(Constants.CONTENT_AddContentItemId, contentId);
+            Assert.That(contentId, Is.EqualTo(Constants.CONTENT_AddContentItemId));
         }
 
         [Test]
@@ -141,7 +135,7 @@ namespace DotNetNuke.Tests.Content
             int contentId = controller.AddContentItem(content);
 
             // Assert
-            Assert.AreEqual(Constants.CONTENT_AddContentItemId, content.ContentItemId);
+            Assert.That(content.ContentItemId, Is.EqualTo(Constants.CONTENT_AddContentItemId));
         }
 
         [Test]
@@ -269,7 +263,7 @@ namespace DotNetNuke.Tests.Content
             ContentItem content = controller.GetContentItem(Constants.CONTENT_InValidContentItemId);
 
             // Assert
-            Assert.IsNull(content);
+            Assert.That(content, Is.Null);
         }
 
         [Test]
@@ -300,10 +294,13 @@ namespace DotNetNuke.Tests.Content
             // Act
             ContentItem content = controller.GetContentItem(Constants.CONTENT_ValidContentItemId);
 
-            // Assert
-            Assert.AreEqual(Constants.CONTENT_ValidContentItemId, content.ContentItemId);
-            Assert.AreEqual(ContentTestHelper.GetContent(Constants.CONTENT_ValidContentItemId), content.Content);
-            Assert.AreEqual(ContentTestHelper.GetContentKey(Constants.CONTENT_ValidContentItemId), content.ContentKey);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(content.ContentItemId, Is.EqualTo(Constants.CONTENT_ValidContentItemId));
+                Assert.That(content.Content, Is.EqualTo(ContentTestHelper.GetContent(Constants.CONTENT_ValidContentItemId)));
+                Assert.That(content.ContentKey, Is.EqualTo(ContentTestHelper.GetContentKey(Constants.CONTENT_ValidContentItemId)));
+            });
         }
 
         [Test]
@@ -347,7 +344,7 @@ namespace DotNetNuke.Tests.Content
             IQueryable<ContentItem> contentItems = controller.GetContentItemsByTerm(Constants.TERM_UnusedName);
 
             // Assert
-            Assert.AreEqual(0, contentItems.Count());
+            Assert.That(contentItems.Count(), Is.EqualTo(0));
         }
 
         [Test]
@@ -367,7 +364,7 @@ namespace DotNetNuke.Tests.Content
             IQueryable<ContentItem> contentItems = controller.GetContentItemsByTerm(Constants.TERM_ValidName);
 
             // Assert
-            Assert.AreEqual(Constants.CONTENT_TaggedItemCount, contentItems.Count());
+            Assert.That(contentItems.Count(), Is.EqualTo(Constants.CONTENT_TaggedItemCount));
         }
 
         [Test]
@@ -382,7 +379,7 @@ namespace DotNetNuke.Tests.Content
 
             var items = controller.GetContentItemsByContentType(10).ToArray();
 
-            Assert.AreEqual(items.Length, 10);
+            Assert.That(items, Has.Length.EqualTo(10));
         }
 
         [Test]
@@ -396,7 +393,7 @@ namespace DotNetNuke.Tests.Content
 
             var items = controller.GetContentItemsByContentType(-1).ToArray();
 
-            Assert.IsEmpty(items);
+            Assert.That(items, Is.Empty);
         }
 
         [Test]
@@ -412,8 +409,11 @@ namespace DotNetNuke.Tests.Content
             var negative = controller.GetContentItemsByModuleId(-1).ToArray();
             var positive = controller.GetContentItemsByModuleId(0).ToArray();
 
-            Assert.AreEqual(negative.Length, 10);
-            Assert.AreEqual(positive.Length, 1);
+            Assert.Multiple(() =>
+            {
+                Assert.That(negative, Has.Length.EqualTo(10));
+                Assert.That(positive, Has.Length.EqualTo(1));
+            });
         }
 
         [Test]
@@ -446,7 +446,7 @@ namespace DotNetNuke.Tests.Content
             IQueryable<ContentItem> contentItems = controller.GetUnIndexedContentItems();
 
             // Assert
-            Assert.AreEqual(0, contentItems.Count());
+            Assert.That(contentItems.Count(), Is.EqualTo(0));
         }
 
         [Test]
@@ -467,10 +467,10 @@ namespace DotNetNuke.Tests.Content
             IQueryable<ContentItem> contentItems = controller.GetUnIndexedContentItems();
 
             // Assert
-            Assert.AreEqual(Constants.CONTENT_IndexedFalseItemCount, contentItems.Count());
+            Assert.That(contentItems.Count(), Is.EqualTo(Constants.CONTENT_IndexedFalseItemCount));
             foreach (ContentItem content in contentItems)
             {
-                Assert.IsFalse(content.Indexed);
+                Assert.That(content.Indexed, Is.False);
             }
         }
 
@@ -683,7 +683,7 @@ namespace DotNetNuke.Tests.Content
             var metaData = controller.GetMetaData(Constants.CONTENT_ValidContentItemId);
 
             // Assert
-            Assert.AreEqual(Constants.CONTENT_MetaDataCount, metaData.Count);
+            Assert.That(metaData, Has.Count.EqualTo(Constants.CONTENT_MetaDataCount));
         }
 
         [Test]

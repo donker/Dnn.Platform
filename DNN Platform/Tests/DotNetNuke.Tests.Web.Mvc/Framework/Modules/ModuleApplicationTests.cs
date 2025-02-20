@@ -1,7 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
-
 namespace DotNetNuke.Tests.Web.Mvc.Framework.Modules
 {
     using System;
@@ -9,10 +8,8 @@ namespace DotNetNuke.Tests.Web.Mvc.Framework.Modules
     using System.Web.Mvc;
     using System.Web.Routing;
 
-    using DotNetNuke.Abstractions;
-    using DotNetNuke.Abstractions.Application;
-    using DotNetNuke.Common;
     using DotNetNuke.Entities.Modules;
+    using DotNetNuke.Tests.Utilities.Fakes;
     using DotNetNuke.UI.Modules;
     using DotNetNuke.Web.Mvc.Framework.Controllers;
     using DotNetNuke.Web.Mvc.Framework.Modules;
@@ -29,18 +26,22 @@ namespace DotNetNuke.Tests.Web.Mvc.Framework.Modules
         private const string ActionName = "Action";
         private const string ControllerName = "Controller";
 
+        private FakeServiceProvider serviceProvider;
+
         [SetUp]
         public void Setup()
         {
-            var services = new ServiceCollection();
-            var mockApplicationStatusInfo = new Mock<IApplicationStatusInfo>();
-            mockApplicationStatusInfo.Setup(info => info.Status).Returns(UpgradeStatus.Install);
+            this.serviceProvider = FakeServiceProvider.Setup(
+                services =>
+                {
+                    services.AddSingleton<IControllerFactory, DefaultControllerFactory>();
+                });
+        }
 
-            services.AddTransient<IApplicationStatusInfo>(container => mockApplicationStatusInfo.Object);
-            services.AddTransient<INavigationManager>(container => Mock.Of<INavigationManager>());
-            services.AddSingleton<IControllerFactory, DefaultControllerFactory>();
-
-            Globals.DependencyProvider = services.BuildServiceProvider();
+        [TearDown]
+        public void TearDown()
+        {
+            this.serviceProvider.Dispose();
         }
 
         [Test]
@@ -64,7 +65,7 @@ namespace DotNetNuke.Tests.Web.Mvc.Framework.Modules
             app.Object.ExecuteRequest(CreateModuleContext(ControllerName, ActionName));
 
             // Assert
-            Assert.AreEqual(1, initCounter);
+            Assert.That(initCounter, Is.EqualTo(1));
         }
 
         [Test]
@@ -89,7 +90,7 @@ namespace DotNetNuke.Tests.Web.Mvc.Framework.Modules
 
             // Assert
             controllerFactory.Verify(f => f.CreateController(It.IsAny<RequestContext>(), ControllerName));
-            Assert.AreSame(moduleRequestContext.HttpContext, actualRequestContext.HttpContext);
+            Assert.That(actualRequestContext.HttpContext, Is.SameAs(moduleRequestContext.HttpContext));
         }
 
         [Test]
@@ -168,9 +169,12 @@ namespace DotNetNuke.Tests.Web.Mvc.Framework.Modules
             // Act
             ModuleRequestResult result = app.ExecuteRequest(moduleRequestContext);
 
-            // Assert
-            Assert.AreSame(actionResult, result.ActionResult);
-            Assert.AreSame(controllerContext, result.ControllerContext);
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(result.ActionResult, Is.SameAs(actionResult));
+                Assert.That(result.ControllerContext, Is.SameAs(controllerContext));
+            });
         }
 
         [Test]

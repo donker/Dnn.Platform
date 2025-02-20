@@ -1,37 +1,24 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
-
 namespace DotNetNuke.Tests.Core.Framework
 {
     using System;
 
-    using DotNetNuke.Abstractions;
-    using DotNetNuke.Abstractions.Application;
-    using DotNetNuke.Common;
     using DotNetNuke.Framework;
-    using DotNetNuke.Tests.Instance.Utilities;
-    using DotNetNuke.Tests.Utilities;
-
-    using Microsoft.Extensions.DependencyInjection;
-
-    using Moq;
+    using DotNetNuke.Tests.Utilities.Fakes;
 
     using NUnit.Framework;
 
     public class ServicesFrameworkTests
     {
+        private FakeServiceProvider serviceProvider;
+
         [SetUp]
         public void Setup()
         {
-            var serviceCollection = new ServiceCollection();
-            var mockApplicationStatusInfo = new Mock<IApplicationStatusInfo>();
-            mockApplicationStatusInfo.Setup(info => info.Status).Returns(UpgradeStatus.Install);
-            serviceCollection.AddTransient<IApplicationStatusInfo>(container => mockApplicationStatusInfo.Object);
-            serviceCollection.AddTransient<INavigationManager>(container => Mock.Of<INavigationManager>());
-            Globals.DependencyProvider = serviceCollection.BuildServiceProvider();
+            this.serviceProvider = FakeServiceProvider.Setup();
 
-            HttpContextHelper.RegisterMockHttpContext();
             var simulator = new Instance.Utilities.HttpSimulator.HttpSimulator("/", "c:\\");
             simulator.SimulateRequest(new Uri("http://localhost/dnn/Default.aspx"));
         }
@@ -39,8 +26,7 @@ namespace DotNetNuke.Tests.Core.Framework
         [TearDown]
         public void TearDown()
         {
-            Globals.DependencyProvider = null;
-            UnitTestHelper.ClearHttpContext();
+            this.serviceProvider.Dispose();
         }
 
         [Test]
@@ -52,14 +38,14 @@ namespace DotNetNuke.Tests.Core.Framework
             ServicesFramework.Instance.RequestAjaxAntiForgerySupport();
 
             // Assert
-            Assert.IsTrue(ServicesFrameworkInternal.Instance.IsAjaxAntiForgerySupportRequired);
+            Assert.That(ServicesFrameworkInternal.Instance.IsAjaxAntiForgerySupportRequired, Is.True);
         }
 
         [Test]
         public void NoAjaxAntiForgeryRequestMeansNotRequired()
         {
             // Assert
-            Assert.IsFalse(ServicesFrameworkInternal.Instance.IsAjaxAntiForgerySupportRequired);
+            Assert.That(ServicesFrameworkInternal.Instance.IsAjaxAntiForgerySupportRequired, Is.False);
         }
     }
 }

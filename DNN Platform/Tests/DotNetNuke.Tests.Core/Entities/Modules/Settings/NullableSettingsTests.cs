@@ -10,15 +10,11 @@ namespace DotNetNuke.Tests.Core.Entities.Modules.Settings
     using System.Globalization;
 
     using DotNetNuke.Abstractions;
-    using DotNetNuke.Abstractions.Application;
-    using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
-    using DotNetNuke.Entities.Controllers;
     using DotNetNuke.Entities.Modules.Settings;
+    using DotNetNuke.Tests.Utilities.Fakes;
 
     using Microsoft.Extensions.DependencyInjection;
-
-    using Moq;
 
     using NUnit.Framework;
 
@@ -32,22 +28,22 @@ namespace DotNetNuke.Tests.Core.Entities.Modules.Settings
             new object[] { "lorem ipsum", 456, DateTime.Now, DateTime.Today - DateTime.Now, },
         };
 
-        [SetUp]
+        private FakeServiceProvider serviceProvider;
 
+        [SetUp]
         public void Setup()
         {
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddTransient<IApplicationStatusInfo>(container => Mock.Of<IApplicationStatusInfo>());
-            serviceCollection.AddTransient<INavigationManager>(container => Mock.Of<INavigationManager>());
-            serviceCollection.AddTransient<IHostSettingsService, HostController>();
-            serviceCollection.AddTransient<ISerializationManager, SerializationManager>();
-            Globals.DependencyProvider = serviceCollection.BuildServiceProvider();
+            this.serviceProvider = FakeServiceProvider.Setup(
+                services =>
+                {
+                    services.AddSingleton<ISerializationManager, SerializationManager>();
+                });
         }
 
         [TearDown]
         public void TearDown()
         {
-            Globals.DependencyProvider = null;
+            this.serviceProvider.Dispose();
         }
 
         [Test]
@@ -281,11 +277,14 @@ namespace DotNetNuke.Tests.Core.Entities.Modules.Settings
             // Act
             var settings = settingsRepository.GetSettings(moduleInfo);
 
-            // Assert
-            Assert.AreEqual(expectedStringValue, settings.StringProperty, "The retrieved string property value is not equal to the stored one");
-            Assert.AreEqual(integerValue, settings.IntegerProperty, "The retrieved integer property value is not equal to the stored one");
-            Assert.AreEqual(datetimeValue, settings.DateTimeProperty, "The retrieved datetime property value is not equal to the stored one");
-            Assert.AreEqual(timeSpanValue, settings.TimeSpanProperty, "The retrieved timespan property value is not equal to the stored one");
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(settings.StringProperty, Is.EqualTo(expectedStringValue), "The retrieved string property value is not equal to the stored one");
+                Assert.That(settings.IntegerProperty, Is.EqualTo(integerValue), "The retrieved integer property value is not equal to the stored one");
+                Assert.That(settings.DateTimeProperty, Is.EqualTo(datetimeValue), "The retrieved datetime property value is not equal to the stored one");
+                Assert.That(settings.TimeSpanProperty, Is.EqualTo(timeSpanValue), "The retrieved timespan property value is not equal to the stored one");
+            });
             this.MockRepository.VerifyAll();
         }
 

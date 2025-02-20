@@ -1,7 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
-
 namespace DotNetNuke.Tests.Core.Entities.Modules.Settings
 {
     using System;
@@ -9,36 +8,32 @@ namespace DotNetNuke.Tests.Core.Entities.Modules.Settings
     using System.Globalization;
 
     using DotNetNuke.Abstractions;
-    using DotNetNuke.Abstractions.Application;
-    using DotNetNuke.Common;
-    using DotNetNuke.Entities.Controllers;
     using DotNetNuke.Entities.Modules.Settings;
+    using DotNetNuke.Tests.Utilities.Fakes;
 
     using Microsoft.Extensions.DependencyInjection;
-
-    using Moq;
 
     using NUnit.Framework;
 
     [TestFixture]
     public class ModuleSettingsTests : BaseSettingsTests
     {
-        [SetUp]
+        private FakeServiceProvider serviceProvider;
 
+        [SetUp]
         public void Setup()
         {
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddTransient<IApplicationStatusInfo>(container => Mock.Of<IApplicationStatusInfo>());
-            serviceCollection.AddTransient<INavigationManager>(container => Mock.Of<INavigationManager>());
-            serviceCollection.AddTransient<IHostSettingsService, HostController>();
-            serviceCollection.AddTransient<ISerializationManager, SerializationManager>();
-            Globals.DependencyProvider = serviceCollection.BuildServiceProvider();
+            this.serviceProvider = FakeServiceProvider.Setup(
+                services =>
+                {
+                    services.AddSingleton<ISerializationManager, SerializationManager>();
+                });
         }
 
         [TearDown]
         public void TearDown()
         {
-            Globals.DependencyProvider = null;
+            this.serviceProvider.Dispose();
         }
 
         [Test]
@@ -245,15 +240,18 @@ namespace DotNetNuke.Tests.Core.Entities.Modules.Settings
             // Act
             var settings = settingsRepository.GetSettings(moduleInfo);
 
-            // Assert
-            Assert.AreEqual(stringValue, settings.StringProperty, "The retrieved string property value is not equal to the stored one");
-            Assert.AreEqual(integerValue, settings.IntegerProperty, "The retrieved integer property value is not equal to the stored one");
-            Assert.AreEqual(doubleValue, settings.DoubleProperty, "The retrieved double property value is not equal to the stored one");
-            Assert.AreEqual(booleanValue, settings.BooleanProperty, "The retrieved boolean property value is not equal to the stored one");
-            Assert.AreEqual(datetimeValue, settings.DateTimeProperty, "The retrieved datetime property value is not equal to the stored one");
-            Assert.AreEqual(timeSpanValue, settings.TimeSpanProperty, "The retrieved timespan property value is not equal to the stored one");
-            Assert.AreEqual(enumValue, settings.EnumProperty, "The retrieved enum property value is not equal to the stored one");
-            Assert.AreEqual(complexValue, settings.ComplexProperty, "The retrieved complex property value is not equal to the stored one");
+            Assert.Multiple(() =>
+            {
+                // Assert
+                Assert.That(settings.StringProperty, Is.EqualTo(stringValue), "The retrieved string property value is not equal to the stored one");
+                Assert.That(settings.IntegerProperty, Is.EqualTo(integerValue), "The retrieved integer property value is not equal to the stored one");
+                Assert.That(settings.DoubleProperty, Is.EqualTo(doubleValue), "The retrieved double property value is not equal to the stored one");
+                Assert.That(settings.BooleanProperty, Is.EqualTo(booleanValue), "The retrieved boolean property value is not equal to the stored one");
+                Assert.That(settings.DateTimeProperty, Is.EqualTo(datetimeValue), "The retrieved datetime property value is not equal to the stored one");
+                Assert.That(settings.TimeSpanProperty, Is.EqualTo(timeSpanValue), "The retrieved timespan property value is not equal to the stored one");
+                Assert.That(settings.EnumProperty, Is.EqualTo(enumValue), "The retrieved enum property value is not equal to the stored one");
+                Assert.That(settings.ComplexProperty, Is.EqualTo(complexValue), "The retrieved complex property value is not equal to the stored one");
+            });
             this.MockRepository.VerifyAll();
         }
 

@@ -1,17 +1,19 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
-
 namespace DotNetNuke.Tests.Core.Controllers.Portal
 {
     using System.Collections.Generic;
     using System.IO;
     using System.Threading;
 
+    using DotNetNuke.Abstractions.Modules;
     using DotNetNuke.Abstractions.Portals.Templates;
-    using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Portals.Internal;
     using DotNetNuke.Entities.Portals.Templates;
+    using DotNetNuke.Tests.Utilities.Fakes;
+
+    using Microsoft.Extensions.DependencyInjection;
     using Moq;
     using NUnit.Framework;
 
@@ -84,19 +86,32 @@ namespace DotNetNuke.Tests.Core.Controllers.Portal
                                                                                         { "CultureCode", "en-US" },
                                                                                     };
 
-        private Mock<IPortalTemplateIO> _mockPortalTemplateIO;
+        private Mock<IPortalTemplateIO> mockPortalTemplateIO;
+
+#pragma warning disable NUnit1032 // Dispose in TearDown
+        private FakeServiceProvider serviceProvider;
+#pragma warning restore NUnit1032
 
         [SetUp]
         public void SetUp()
         {
-            this._mockPortalTemplateIO = new Mock<IPortalTemplateIO>();
-            PortalTemplateIO.SetTestableInstance(this._mockPortalTemplateIO.Object);
+            this.mockPortalTemplateIO = new Mock<IPortalTemplateIO>();
+            PortalTemplateIO.SetTestableInstance(this.mockPortalTemplateIO.Object);
+
+            this.serviceProvider = FakeServiceProvider.Setup(
+                services =>
+                {
+                    services.AddSingleton(this.mockPortalTemplateIO.Object);
+                });
         }
 
         [TearDown]
         public void TearDown()
         {
             PortalTemplateIO.ClearInstance();
+
+            // NOTE: not sure why, but disposing here causes other unrelated tests to fail
+            ////this.serviceProvider.Dispose();
         }
 
         [Test]
@@ -105,37 +120,37 @@ namespace DotNetNuke.Tests.Core.Controllers.Portal
             // Arrange
 
             // Act
-            var templates = PortalTemplateController.Instance.GetPortalTemplates();
+            var templates = CreateController().GetPortalTemplates();
 
             // Assert
-            Assert.AreEqual(0, templates.Count);
+            Assert.That(templates, Is.Empty);
         }
 
         [Test]
         public void LanguageFileWithoutATemplateIsIgnored()
         {
             // Arrange
-            this._mockPortalTemplateIO.Setup(x => x.EnumerateLanguageFiles()).Returns(this.ToEnumerable(DefaultDePath));
+            this.mockPortalTemplateIO.Setup(x => x.EnumerateLanguageFiles()).Returns(this.ToEnumerable(DefaultDePath));
 
             // Act
-            var templates = PortalTemplateController.Instance.GetPortalTemplates();
+            var templates = CreateController().GetPortalTemplates();
 
             // Assert
-            Assert.AreEqual(0, templates.Count);
+            Assert.That(templates, Is.Empty);
         }
 
         [Test]
         public void TemplatesWithNoLanguageFilesAreLoaded()
         {
             // Arrange
-            this._mockPortalTemplateIO.Setup(x => x.EnumerateTemplates()).Returns(this.ToEnumerable(StaticPath));
-            this._mockPortalTemplateIO.Setup(x => x.OpenTextReader(StaticPath)).Returns(this.CreateTemplateFileReader(StaticDescription));
+            this.mockPortalTemplateIO.Setup(x => x.EnumerateTemplates()).Returns(this.ToEnumerable(StaticPath));
+            this.mockPortalTemplateIO.Setup(x => x.OpenTextReader(StaticPath)).Returns(this.CreateTemplateFileReader(StaticDescription));
 
             // Act
-            var templates = PortalTemplateController.Instance.GetPortalTemplates();
+            var templates = CreateController().GetPortalTemplates();
 
             // Assert
-            Assert.AreEqual(1, templates.Count);
+            Assert.That(templates, Has.Count.EqualTo(1));
             AssertTemplateInfo(StaticExpectations, templates[0]);
         }
 
@@ -143,18 +158,18 @@ namespace DotNetNuke.Tests.Core.Controllers.Portal
         public void TemplateWith2Languages()
         {
             // Arrange
-            this._mockPortalTemplateIO.Setup(x => x.EnumerateTemplates()).Returns(this.ToEnumerable(DefaultPath));
-            this._mockPortalTemplateIO.Setup(x => x.EnumerateLanguageFiles()).Returns(this.ToEnumerable(DefaultDePath, DefaultUsPath));
-            this._mockPortalTemplateIO.Setup(x => x.GetLanguageFilePath(DefaultPath, "de-DE")).Returns(DefaultDePath);
-            this._mockPortalTemplateIO.Setup(x => x.OpenTextReader(DefaultDePath)).Returns(this.CreateLanguageFileReader(DefaultDeName, DefaultDeDescription));
-            this._mockPortalTemplateIO.Setup(x => x.GetLanguageFilePath(DefaultPath, "en-US")).Returns(DefaultUsPath);
-            this._mockPortalTemplateIO.Setup(x => x.OpenTextReader(DefaultUsPath)).Returns(this.CreateLanguageFileReader(DefaultName));
+            this.mockPortalTemplateIO.Setup(x => x.EnumerateTemplates()).Returns(this.ToEnumerable(DefaultPath));
+            this.mockPortalTemplateIO.Setup(x => x.EnumerateLanguageFiles()).Returns(this.ToEnumerable(DefaultDePath, DefaultUsPath));
+            this.mockPortalTemplateIO.Setup(x => x.GetLanguageFilePath(DefaultPath, "de-DE")).Returns(DefaultDePath);
+            this.mockPortalTemplateIO.Setup(x => x.OpenTextReader(DefaultDePath)).Returns(this.CreateLanguageFileReader(DefaultDeName, DefaultDeDescription));
+            this.mockPortalTemplateIO.Setup(x => x.GetLanguageFilePath(DefaultPath, "en-US")).Returns(DefaultUsPath);
+            this.mockPortalTemplateIO.Setup(x => x.OpenTextReader(DefaultUsPath)).Returns(this.CreateLanguageFileReader(DefaultName));
 
             // Act
-            var templates = PortalTemplateController.Instance.GetPortalTemplates();
+            var templates = CreateController().GetPortalTemplates();
 
             // Assert
-            Assert.AreEqual(2, templates.Count);
+            Assert.That(templates, Has.Count.EqualTo(2));
             AssertTemplateInfo(DefaultExpectationsDe, templates[0]);
             AssertTemplateInfo(DefaultExpectationsUs, templates[1]);
         }
@@ -163,20 +178,20 @@ namespace DotNetNuke.Tests.Core.Controllers.Portal
         public void TwoTemplatesAssortedLanguages()
         {
             // Arrange
-            this._mockPortalTemplateIO.Setup(x => x.EnumerateTemplates()).Returns(this.ToEnumerable(DefaultPath, AlternatePath));
-            this._mockPortalTemplateIO.Setup(x => x.EnumerateLanguageFiles()).Returns(this.ToEnumerable(DefaultDePath, DefaultUsPath, AlternateDePath));
-            this._mockPortalTemplateIO.Setup(x => x.GetLanguageFilePath(DefaultPath, "de-DE")).Returns(DefaultDePath);
-            this._mockPortalTemplateIO.Setup(x => x.OpenTextReader(DefaultDePath)).Returns(this.CreateLanguageFileReader(DefaultDeName, DefaultDeDescription));
-            this._mockPortalTemplateIO.Setup(x => x.GetLanguageFilePath(DefaultPath, "en-US")).Returns(DefaultUsPath);
-            this._mockPortalTemplateIO.Setup(x => x.OpenTextReader(DefaultUsPath)).Returns(this.CreateLanguageFileReader(DefaultName));
-            this._mockPortalTemplateIO.Setup(x => x.GetLanguageFilePath(AlternatePath, "de-DE")).Returns(AlternateDePath);
-            this._mockPortalTemplateIO.Setup(x => x.OpenTextReader(AlternateDePath)).Returns(this.CreateLanguageFileReader(AlternateDeName));
+            this.mockPortalTemplateIO.Setup(x => x.EnumerateTemplates()).Returns(this.ToEnumerable(DefaultPath, AlternatePath));
+            this.mockPortalTemplateIO.Setup(x => x.EnumerateLanguageFiles()).Returns(this.ToEnumerable(DefaultDePath, DefaultUsPath, AlternateDePath));
+            this.mockPortalTemplateIO.Setup(x => x.GetLanguageFilePath(DefaultPath, "de-DE")).Returns(DefaultDePath);
+            this.mockPortalTemplateIO.Setup(x => x.OpenTextReader(DefaultDePath)).Returns(this.CreateLanguageFileReader(DefaultDeName, DefaultDeDescription));
+            this.mockPortalTemplateIO.Setup(x => x.GetLanguageFilePath(DefaultPath, "en-US")).Returns(DefaultUsPath);
+            this.mockPortalTemplateIO.Setup(x => x.OpenTextReader(DefaultUsPath)).Returns(this.CreateLanguageFileReader(DefaultName));
+            this.mockPortalTemplateIO.Setup(x => x.GetLanguageFilePath(AlternatePath, "de-DE")).Returns(AlternateDePath);
+            this.mockPortalTemplateIO.Setup(x => x.OpenTextReader(AlternateDePath)).Returns(this.CreateLanguageFileReader(AlternateDeName));
 
             // Act
-            var templates = PortalTemplateController.Instance.GetPortalTemplates();
+            var templates = CreateController().GetPortalTemplates();
 
             // Assert
-            Assert.AreEqual(3, templates.Count);
+            Assert.That(templates, Has.Count.EqualTo(3));
             AssertTemplateInfo(DefaultExpectationsDe, templates[0]);
             AssertTemplateInfo(DefaultExpectationsUs, templates[1]);
             AssertTemplateInfo(AlternateExpectationsDe, templates[2]);
@@ -186,14 +201,14 @@ namespace DotNetNuke.Tests.Core.Controllers.Portal
         public void ResourceFileIsLocatedWhenPresent()
         {
             // Arrange
-            this._mockPortalTemplateIO.Setup(x => x.EnumerateTemplates()).Returns(this.ToEnumerable(ResourcePath));
-            this._mockPortalTemplateIO.Setup(x => x.GetResourceFilePath(ResourcePath)).Returns(ResourceFilePath);
+            this.mockPortalTemplateIO.Setup(x => x.EnumerateTemplates()).Returns(this.ToEnumerable(ResourcePath));
+            this.mockPortalTemplateIO.Setup(x => x.GetResourceFilePath(ResourcePath)).Returns(ResourceFilePath);
 
             // Act
-            var templates = PortalTemplateController.Instance.GetPortalTemplates();
+            var templates = CreateController().GetPortalTemplates();
 
             // Assert
-            Assert.AreEqual(1, templates.Count);
+            Assert.That(templates, Has.Count.EqualTo(1));
             AssertTemplateInfo(ResourceExpectations, templates[0]);
         }
 
@@ -201,16 +216,16 @@ namespace DotNetNuke.Tests.Core.Controllers.Portal
         public void SingleTemplateAndLanguage()
         {
             // Arrange
-            this._mockPortalTemplateIO.Setup(x => x.EnumerateTemplates()).Returns(this.ToEnumerable(DefaultPath));
-            this._mockPortalTemplateIO.Setup(x => x.EnumerateLanguageFiles()).Returns(this.ToEnumerable(DefaultDePath));
-            this._mockPortalTemplateIO.Setup(x => x.GetLanguageFilePath(DefaultPath, "de-DE")).Returns(DefaultDePath);
-            this._mockPortalTemplateIO.Setup(x => x.OpenTextReader(DefaultDePath)).Returns(this.CreateLanguageFileReader(DefaultDeName, DefaultDeDescription));
+            this.mockPortalTemplateIO.Setup(x => x.EnumerateTemplates()).Returns(this.ToEnumerable(DefaultPath));
+            this.mockPortalTemplateIO.Setup(x => x.EnumerateLanguageFiles()).Returns(this.ToEnumerable(DefaultDePath));
+            this.mockPortalTemplateIO.Setup(x => x.GetLanguageFilePath(DefaultPath, "de-DE")).Returns(DefaultDePath);
+            this.mockPortalTemplateIO.Setup(x => x.OpenTextReader(DefaultDePath)).Returns(this.CreateLanguageFileReader(DefaultDeName, DefaultDeDescription));
 
             // Act
-            var templates = PortalTemplateController.Instance.GetPortalTemplates();
+            var templates = CreateController().GetPortalTemplates();
 
             // Assert
-            Assert.AreEqual(1, templates.Count);
+            Assert.That(templates, Has.Count.EqualTo(1));
             AssertTemplateInfo(DefaultExpectationsDe, templates[0]);
         }
 
@@ -218,13 +233,13 @@ namespace DotNetNuke.Tests.Core.Controllers.Portal
         public void ATemplateCanBeLoadedDirectly()
         {
             // Arrange
-            this._mockPortalTemplateIO.Setup(x => x.EnumerateTemplates()).Returns(this.ToEnumerable(DefaultPath));
-            this._mockPortalTemplateIO.Setup(x => x.EnumerateLanguageFiles()).Returns(this.ToEnumerable(DefaultDePath));
-            this._mockPortalTemplateIO.Setup(x => x.GetLanguageFilePath(DefaultPath, "de-DE")).Returns(DefaultDePath);
-            this._mockPortalTemplateIO.Setup(x => x.OpenTextReader(DefaultDePath)).Returns(this.CreateLanguageFileReader(DefaultDeName, DefaultDeDescription));
+            this.mockPortalTemplateIO.Setup(x => x.EnumerateTemplates()).Returns(this.ToEnumerable(DefaultPath));
+            this.mockPortalTemplateIO.Setup(x => x.EnumerateLanguageFiles()).Returns(this.ToEnumerable(DefaultDePath));
+            this.mockPortalTemplateIO.Setup(x => x.GetLanguageFilePath(DefaultPath, "de-DE")).Returns(DefaultDePath);
+            this.mockPortalTemplateIO.Setup(x => x.OpenTextReader(DefaultDePath)).Returns(this.CreateLanguageFileReader(DefaultDeName, DefaultDeDescription));
 
             // Act
-            var template = PortalTemplateController.Instance.GetPortalTemplate(DefaultPath, "de-DE");
+            var template = CreateController().GetPortalTemplate(DefaultPath, "de-DE");
 
             // Assert
             AssertTemplateInfo(DefaultExpectationsDe, template);
@@ -234,30 +249,35 @@ namespace DotNetNuke.Tests.Core.Controllers.Portal
         public void GetPortalTemplateReturnsNullIfCultureDoesNotMatch()
         {
             // Arrange
-            this._mockPortalTemplateIO.Setup(x => x.EnumerateTemplates()).Returns(this.ToEnumerable(DefaultPath));
-            this._mockPortalTemplateIO.Setup(x => x.EnumerateLanguageFiles()).Returns(this.ToEnumerable(DefaultDePath));
-            this._mockPortalTemplateIO.Setup(x => x.GetLanguageFilePath(DefaultPath, "de-DE")).Returns(DefaultDePath);
-            this._mockPortalTemplateIO.Setup(x => x.OpenTextReader(DefaultDePath)).Returns(this.CreateLanguageFileReader(DefaultDeName, DefaultDeDescription));
+            this.mockPortalTemplateIO.Setup(x => x.EnumerateTemplates()).Returns(this.ToEnumerable(DefaultPath));
+            this.mockPortalTemplateIO.Setup(x => x.EnumerateLanguageFiles()).Returns(this.ToEnumerable(DefaultDePath));
+            this.mockPortalTemplateIO.Setup(x => x.GetLanguageFilePath(DefaultPath, "de-DE")).Returns(DefaultDePath);
+            this.mockPortalTemplateIO.Setup(x => x.OpenTextReader(DefaultDePath)).Returns(this.CreateLanguageFileReader(DefaultDeName, DefaultDeDescription));
 
             // Act
-            var template = PortalTemplateController.Instance.GetPortalTemplate(DefaultPath, "de");
+            var template = CreateController().GetPortalTemplate(DefaultPath, "de");
 
             // Assert
-            Assert.IsNull(template);
+            Assert.That(template, Is.Null);
         }
 
         [Test]
         public void GetPortalTemplateCanReturnAStaticTemplate()
         {
             // Arrange
-            this._mockPortalTemplateIO.Setup(x => x.EnumerateTemplates()).Returns(this.ToEnumerable(StaticPath));
-            this._mockPortalTemplateIO.Setup(x => x.OpenTextReader(StaticPath)).Returns(this.CreateTemplateFileReader(StaticDescription));
+            this.mockPortalTemplateIO.Setup(x => x.EnumerateTemplates()).Returns(this.ToEnumerable(StaticPath));
+            this.mockPortalTemplateIO.Setup(x => x.OpenTextReader(StaticPath)).Returns(this.CreateTemplateFileReader(StaticDescription));
 
             // Act
-            var template = PortalTemplateController.Instance.GetPortalTemplate(StaticPath, "en-US");
+            var template = CreateController().GetPortalTemplate(StaticPath, "en-US");
 
             // Assert
             AssertTemplateInfo(StaticExpectations, template);
+        }
+
+        private static PortalTemplateController CreateController()
+        {
+            return new PortalTemplateController(Mock.Of<IBusinessControllerProvider>());
         }
 
         private static void AssertTemplateInfo(Dictionary<string, string> expectations, IPortalTemplateInfo templateInfo)
@@ -280,7 +300,7 @@ namespace DotNetNuke.Tests.Core.Controllers.Portal
             }
             else
             {
-                Assert.AreEqual(expected, value, string.Format("Checking value of " + key));
+                Assert.That(value, Is.EqualTo(expected), string.Format("Checking value of " + key));
             }
         }
 

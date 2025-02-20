@@ -1,18 +1,36 @@
-﻿namespace Dnn.PersonaBar.Security.Tests.Checks
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information
+namespace Dnn.PersonaBar.Security.Tests.Checks
 {
     using System;
     using System.Linq;
 
     using Dnn.PersonaBar.Security.Components;
     using Dnn.PersonaBar.Security.Components.Checks;
-    using DotNetNuke.Common.Internal;
     using DotNetNuke.Maintenance.Telerik;
+    using DotNetNuke.Tests.Utilities.Fakes;
+
     using Moq;
     using NUnit.Framework;
 
     [TestFixture]
     public class CheckTelerikPresenceTests
     {
+        private FakeServiceProvider serviceProvider;
+
+        [SetUp]
+        public void Setup()
+        {
+            this.serviceProvider = FakeServiceProvider.Setup();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            this.serviceProvider.Dispose();
+        }
+
         [Test]
         public void Execute_WhenError_ReturnsUnverified()
         {
@@ -28,10 +46,13 @@
             // act
             var result = sut.Execute();
 
-            // assert
-            Assert.AreEqual(SeverityEnum.Unverified, result.Severity);
-            Assert.AreEqual(1, result.Notes.Count());
-            Assert.IsTrue(result.Notes.First() == "An internal error occurred. See logs for details.");
+            Assert.Multiple(() =>
+            {
+                // assert
+                Assert.That(result.Severity, Is.EqualTo(SeverityEnum.Unverified));
+                Assert.That(result.Notes.Count(), Is.EqualTo(1));
+                Assert.That(result.Notes.First() == "An internal error occurred. See logs for details.", Is.True);
+            });
         }
 
         [Test]
@@ -57,10 +78,13 @@
             // act
             var result = sut.Execute();
 
-            // assert
-            Assert.AreEqual(SeverityEnum.Failure, result.Severity);
-            Assert.AreEqual(1, result.Notes.Count());
-            Assert.IsTrue(result.Notes.First().Contains("* DotNetNuke.Modules.Mod3.dll"));
+            Assert.Multiple(() =>
+            {
+                // assert
+                Assert.That(result.Severity, Is.EqualTo(SeverityEnum.Failure));
+                Assert.That(result.Notes.Count(), Is.EqualTo(1));
+                Assert.That(result.Notes.First().Contains("* DotNetNuke.Modules.Mod3.dll"), Is.True);
+            });
         }
 
         [Test]
@@ -82,9 +106,12 @@
             // act
             var result = sut.Execute();
 
-            // assert
-            Assert.AreEqual(SeverityEnum.Failure, result.Severity);
-            Assert.AreEqual(1, result.Notes.Count());
+            Assert.Multiple(() =>
+            {
+                // assert
+                Assert.That(result.Severity, Is.EqualTo(SeverityEnum.Failure));
+                Assert.That(result.Notes.Count(), Is.EqualTo(1));
+            });
         }
 
         [Test]
@@ -102,9 +129,12 @@
             // act
             var result = sut.Execute();
 
-            // assert
-            Assert.AreEqual(SeverityEnum.Pass, result.Severity);
-            Assert.AreEqual(0, result.Notes.Count());
+            Assert.Multiple(() =>
+            {
+                // assert
+                Assert.That(result.Severity, Is.EqualTo(SeverityEnum.Pass));
+                Assert.That(result.Notes.Count(), Is.EqualTo(0));
+            });
         }
     }
 }

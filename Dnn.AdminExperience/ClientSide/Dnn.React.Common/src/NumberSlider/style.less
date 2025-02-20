@@ -13,33 +13,33 @@
         }
     }
     .slider {
-        background: #c6c6c6;
+        background: var(--dnn-color-surface, #c6c6c6);
         height: 10px;
-        border: 1px solid #6891a7;
+        border: 1px solid var(--dnn-color-primary-light, #6891a7);
         border-radius: 10px;
         width: 100%;
         float: left;
         margin-top: 2px;
-        .handle {
+        .thumb {
             width: 20px;
             height: 20px;
             border-radius: 100%;
-            background: #fff;
-            border: 1px solid #bfbfbf;
+            background: var(--dnn-color-background, #fff);
+            border: 1px solid var(--dnn-color-primary-light, #bfbfbf);
             top: -6px;
             & > div {
                 position: absolute;
                 top: -100%;
-                background: #fff;
+                background: var(--dnn-color-background, #fff);
                 left: 50%;
                 transform: translate(-50%, 0);
             }
         }
-        .bar {
+        .track {
             height: 100%;
-            &.bar-0 {
+            &.track-0 {
                 border-radius: 10px;
-                background: #0087c6;
+                background: var(--dnn-color-primary, #0087c6);
             }
         }
     }

@@ -1,15 +1,12 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
-
 namespace DotNetNuke.Tests.Web.Mvc.Framework
 {
     using System.Linq;
     using System.Web.Mvc;
 
-    using DotNetNuke.Abstractions;
-    using DotNetNuke.Abstractions.Application;
-    using DotNetNuke.Common;
+    using DotNetNuke.Tests.Utilities.Fakes;
     using DotNetNuke.Web.Mvc.Framework;
     using DotNetNuke.Web.Mvc.Framework.Controllers;
     using DotNetNuke.Web.Mvc.Framework.Modules;
@@ -24,18 +21,22 @@ namespace DotNetNuke.Tests.Web.Mvc.Framework
     [TestFixture]
     public class ModuleDelegatingViewEngineTests
     {
+        private FakeServiceProvider serviceProvider;
+
         [SetUp]
         public void Setup()
         {
-            var services = new ServiceCollection();
-            var mockApplicationStatusInfo = new Mock<IApplicationStatusInfo>();
-            mockApplicationStatusInfo.Setup(info => info.Status).Returns(UpgradeStatus.Install);
+            this.serviceProvider = FakeServiceProvider.Setup(
+                services =>
+                {
+                    services.AddSingleton<IControllerFactory, DefaultControllerFactory>();
+                });
+        }
 
-            services.AddTransient<IApplicationStatusInfo>(container => mockApplicationStatusInfo.Object);
-            services.AddTransient<INavigationManager>(container => Mock.Of<INavigationManager>());
-            services.AddSingleton<IControllerFactory, DefaultControllerFactory>();
-
-            Globals.DependencyProvider = services.BuildServiceProvider();
+        [TearDown]
+        public void TearDown()
+        {
+            this.serviceProvider.Dispose();
         }
 
         [Test]
@@ -65,9 +66,12 @@ namespace DotNetNuke.Tests.Web.Mvc.Framework
 
             // Assert
             mockEngines.Verify(e => e.FindPartialView(context, viewName));
-            Assert.AreEqual("foo", engineResult.SearchedLocations.ElementAt(0));
-            Assert.AreEqual("bar", engineResult.SearchedLocations.ElementAt(1));
-            Assert.AreEqual("baz", engineResult.SearchedLocations.ElementAt(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(engineResult.SearchedLocations.ElementAt(0), Is.EqualTo("foo"));
+                Assert.That(engineResult.SearchedLocations.ElementAt(1), Is.EqualTo("bar"));
+                Assert.That(engineResult.SearchedLocations.ElementAt(2), Is.EqualTo("baz"));
+            });
         }
 
         [Test]
@@ -98,9 +102,12 @@ namespace DotNetNuke.Tests.Web.Mvc.Framework
 
             // Assert
             mockEngines.Verify(e => e.FindView(context, viewName, masterName));
-            Assert.AreEqual("foo", engineResult.SearchedLocations.ElementAt(0));
-            Assert.AreEqual("bar", engineResult.SearchedLocations.ElementAt(1));
-            Assert.AreEqual("baz", engineResult.SearchedLocations.ElementAt(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(engineResult.SearchedLocations.ElementAt(0), Is.EqualTo("foo"));
+                Assert.That(engineResult.SearchedLocations.ElementAt(1), Is.EqualTo("bar"));
+                Assert.That(engineResult.SearchedLocations.ElementAt(2), Is.EqualTo("baz"));
+            });
         }
 
         [Test]
@@ -183,9 +190,12 @@ namespace DotNetNuke.Tests.Web.Mvc.Framework
             var engineResult = viewEngine.FindView(context, "Foo", "Bar", true);
 
             // Assert
-            Assert.IsNotNull(engineResult);
-            Assert.IsNull(engineResult.View);
-            Assert.AreEqual(0, engineResult.SearchedLocations.Count());
+            Assert.That(engineResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(engineResult.View, Is.Null);
+                Assert.That(engineResult.SearchedLocations.Count(), Is.EqualTo(0));
+            });
         }
 
         [Test]
@@ -203,9 +213,12 @@ namespace DotNetNuke.Tests.Web.Mvc.Framework
             var engineResult = viewEngine.FindPartialView(context, "Foo", true);
 
             // Assert
-            Assert.IsNotNull(engineResult);
-            Assert.IsNull(engineResult.View);
-            Assert.AreEqual(0, engineResult.SearchedLocations.Count());
+            Assert.That(engineResult, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(engineResult.View, Is.Null);
+                Assert.That(engineResult.SearchedLocations.Count(), Is.EqualTo(0));
+            });
         }
 
         private static void SetupMockModuleApplication(ControllerContext context, ViewEngineCollection engines)
