@@ -60,7 +60,6 @@ namespace DotNetNuke.Framework.Controllers
         {
             this.NavigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
 
-            // this.ContentSecurityPolicy = Globals.DependencyProvider.GetRequiredService<IContentSecurityPolicy>();
             this.ContentSecurityPolicy = csp;
         }
 
