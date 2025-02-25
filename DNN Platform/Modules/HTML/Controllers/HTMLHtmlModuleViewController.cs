@@ -5,42 +5,30 @@
 namespace DotNetNuke.Modules.Html.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
-    using System.Net.NetworkInformation;
-    using System.Web;
-    using System.Web.Mvc;
 
     using DotNetNuke.Abstractions;
-    using DotNetNuke.Common;
-    using DotNetNuke.Entities.Content.Workflow.Entities;
+    using DotNetNuke.ContentSecurityPolicy;
+    using DotNetNuke.Entities.Content.Workflow;
     using DotNetNuke.Entities.Modules;
-    using DotNetNuke.Entities.Modules.Actions;
-    using DotNetNuke.Entities.Modules.Settings;
-    using DotNetNuke.Framework.JavaScriptLibraries;
     using DotNetNuke.Modules.Html;
-    using DotNetNuke.Modules.Html.Components;
     using DotNetNuke.Modules.Html.Models;
-    using DotNetNuke.Mvc;
-    using DotNetNuke.Services.Exceptions;
-    using DotNetNuke.Services.Localization;
     using DotNetNuke.Services.Personalization;
     using DotNetNuke.UI.Modules;
-    using DotNetNuke.Web.Client.ClientResourceManagement;
-    using DotNetNuke.Web.Mvc;
     using DotNetNuke.Web.MvcPipeline.Controllers;
-    using DotNetNuke.Website.Controllers;
-    using Microsoft.Extensions.DependencyInjection;
 
     public class HTMLHtmlModuleViewController : ModuleViewControllerBase
     {
-        private readonly INavigationManager navigationManager;
         private readonly HtmlTextController htmlTextController;
+        private readonly INavigationManager navigationManager;
+        private readonly IContentSecurityPolicy contentSecurityPolicy;
+        private readonly IWorkflowManager workflowManager;
 
-        public HTMLHtmlModuleViewController()
+        public HTMLHtmlModuleViewController(IContentSecurityPolicy csp, INavigationManager navigationManager, IWorkflowManager workflowManager)
         {
-            this.navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
+            this.navigationManager = navigationManager;
+            this.workflowManager = workflowManager;
+            this.contentSecurityPolicy = csp;
             this.htmlTextController = new HtmlTextController(this.navigationManager);
         }
 
@@ -76,21 +64,18 @@ namespace DotNetNuke.Modules.Html.Controllers
                     {
                         // get content
                         var objHTML = new HtmlTextController(this.navigationManager);
+                        var workflow = this.workflowManager.GetWorkflow(workflowID);
                         HtmlTextInfo objContent = objHTML.GetTopHtmlText(module.ModuleID, false, workflowID);
-                        var objWorkflow = new WorkflowStateController();
-                        if (objContent.StateID == objWorkflow.GetFirstWorkflowStateID(workflowID))
+                        if (objContent.StateID == workflow.FirstState.StateID)
                         {
                             // if not direct publish workflow
-                            if (objWorkflow.GetWorkflowStates(workflowID).Count > 1)
+                            if (workflow.States.Count() > 1)
                             {
                                 // publish content
-                                objContent.StateID = objWorkflow.GetNextWorkflowStateID(objContent.WorkflowID, objContent.StateID);
+                                objContent.StateID = workflow.LastState.StateID;
 
                                 // save the content
                                 objHTML.UpdateHtmlText(objContent, objHTML.GetMaximumVersionHistory(this.PortalSettings.PortalId));
-
-                                // refresh page
-                                // this.Response.Redirect(this.navigationManager.NavigateURL(), true);
                             }
                         }
                     }

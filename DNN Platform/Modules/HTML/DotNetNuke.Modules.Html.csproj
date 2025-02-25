@@ -144,6 +144,7 @@
     <Compile Include="Controllers\HTMLMyWorkViewController.cs" />
     <Compile Include="Controllers\HTMLEditHTMLViewController.cs" />
     <Compile Include="Controllers\HTMLHtmlModuleViewController.cs" />
+    <Compile Include="Controllers\WorkFlowType.cs" />
     <Compile Include="Models\EditHtmlViewModel.cs" />
     <Compile Include="Controllers\DNN_HTMLController.cs" />
     <Compile Include="Components\HtmlModuleBase.cs">
@@ -161,8 +162,6 @@
     <Compile Include="Components\HtmlTextUserInfo.cs" />
     <Compile Include="Models\HtmlModuleSettingsModel.cs" />
     <Compile Include="Models\HtmlTextUserModel.cs" />
-    <Compile Include="Components\WorkflowStateController.cs" />
-    <Compile Include="Components\WorkflowStateInfo.cs" />
     <Compile Include="Components\WorkflowStatePermissionCollection.cs" />
     <Compile Include="Components\WorkflowStatePermissionController.cs" />
     <Compile Include="Components\WorkflowStatePermissionInfo.cs" />

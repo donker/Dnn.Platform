@@ -108,6 +108,7 @@
     <Compile Include="Controllers\ModuleSettingsViewController.cs" />
     <Compile Include="DnnMvcPipelineDependencyResolver.cs" />
     <Compile Include="Extensions\StartupExtensions.cs" />
+    <Compile Include="Framework\PageModelFactory.cs" />
     <Compile Include="HtmlHelpers.cs" />
     <Compile Include="Models\ContainerModel.cs" />
     <Compile Include="Exceptions\AccesDeniedException.cs" />

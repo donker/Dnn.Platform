@@ -60,9 +60,38 @@ namespace DotNetNuke.Entities.Urls
 
         internal static bool IsMvc(UrlAction result, NameValueCollection queryStringCol, HttpContext context, int tabId, int portalId)
         {
-            var mvcCtls = new[] { "Module", "Terms", "Privacy" };
             bool mvcCtl = false;
+            var skinSrc = string.Empty;
+
+            if (context.Items.Contains("PortalSettings"))
+            {
+                var ps = (PortalSettings)context.Items["PortalSettings"];
+                if (ps != null)
+                {
+                    skinSrc = PortalSettings.Current.ActiveTab.SkinSrc;
+                    if (string.IsNullOrEmpty(skinSrc))
+                    {
+                        skinSrc = PortalSettings.Current.DefaultPortalSkin;
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(skinSrc) && tabId > 0 && portalId > -1)
+            {
+                var tab = TabController.Instance.GetTab(tabId, portalId, false);
+                if (tab != null)
+                {
+                    skinSrc = tab.SkinSrc;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(skinSrc))
+            {
+                mvcCtl = skinSrc.ToLowerInvariant().StartsWith("[m]");
+            }
+
             /*
+            var mvcCtls = new[] { "Module", "Terms", "Privacy" };
             bool mvcSkin = false;
             if (context.Items.Contains("PortalSettings"))
             {
@@ -73,7 +102,6 @@ namespace DotNetNuke.Entities.Urls
                             PortalSettings.Current.ActiveTab.SkinSrc.EndsWith("mvc");
                 }
             }
-            */
 
             if (result.RewritePath.Contains("&ctl="))
             {
@@ -114,6 +142,8 @@ namespace DotNetNuke.Entities.Urls
 
             mvcCtl = mvcCtl && !result.RewritePath.Contains("mvcpage=no") && queryStringCol["mvcpage"] != "no";
             mvcCtl = mvcCtl || result.RewritePath.Contains("mvcpage=yes") || queryStringCol["mvcpage"] == "yes";
+                        */
+
             return mvcCtl;
         }
 

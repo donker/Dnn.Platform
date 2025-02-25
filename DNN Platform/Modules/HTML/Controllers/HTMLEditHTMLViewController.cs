@@ -5,49 +5,32 @@
 namespace DotNetNuke.Modules.Html.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Net.NetworkInformation;
-    using System.Web;
-    using System.Web.Mvc;
 
     using DotNetNuke.Abstractions;
-    using DotNetNuke.Common;
     using DotNetNuke.ContentSecurityPolicy;
+    using DotNetNuke.Entities.Content.Workflow;
     using DotNetNuke.Entities.Content.Workflow.Entities;
     using DotNetNuke.Entities.Modules;
-    using DotNetNuke.Entities.Modules.Settings;
-    using DotNetNuke.Framework.JavaScriptLibraries;
     using DotNetNuke.Modules.Html;
-    using DotNetNuke.Modules.Html.Components;
     using DotNetNuke.Modules.Html.Models;
-    using DotNetNuke.Mvc;
-    using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.Web.Client.ClientResourceManagement;
-    using DotNetNuke.Web.Mvc;
-
-    // using DotNetNuke.Web.Mvc;
     using DotNetNuke.Web.MvcPipeline.Controllers;
-    using DotNetNuke.Website.Controllers;
-    using Microsoft.Extensions.DependencyInjection;
-
-    using static DotNetNuke.Modules.Html.Controllers.DNN_HTMLController;
 
     public class HTMLEditHTMLViewController : ModuleViewControllerBase
     {
-        private readonly INavigationManager navigationManager;
         private readonly HtmlTextController htmlTextController;
-        private readonly WorkflowStateController workflowStateController = new WorkflowStateController();
+        private readonly INavigationManager navigationManager;
         private readonly IContentSecurityPolicy contentSecurityPolicy;
+        private readonly IWorkflowManager workflowManager;
 
-        public HTMLEditHTMLViewController(IContentSecurityPolicy csp)
+        public HTMLEditHTMLViewController(IContentSecurityPolicy csp, INavigationManager navigationManager, IWorkflowManager workflowManager)
         {
-            this.navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
+            this.navigationManager = navigationManager;
+            this.workflowManager = workflowManager;
             this.htmlTextController = new HtmlTextController(this.navigationManager);
-
-            // this.contentSecurityPolicy = Globals.DependencyProvider.GetRequiredService<IContentSecurityPolicy>();
             this.contentSecurityPolicy = csp;
         }
 
@@ -76,7 +59,8 @@ namespace DotNetNuke.Modules.Html.Controllers
                     model.EditorContent = html;
                 }
 
-                var workflowStates = this.workflowStateController.GetWorkflowStates(workflowID);
+                var workflow = this.workflowManager.GetWorkflow(workflowID);
+                var workflowStates = workflow.States.ToList();
                 var maxVersions = this.htmlTextController.GetMaximumVersionHistory(this.PortalSettings.PortalId);
 
                 model.MaxVersions = maxVersions;
@@ -88,7 +72,7 @@ namespace DotNetNuke.Modules.Html.Controllers
                 }
                 else
                 {
-                    this.PopulateModelWithInitialContent(model, workflowStates[0] as WorkflowStateInfo);
+                    this.PopulateModelWithInitialContent(model, workflow);
                 }
 
                 model.ShowPublishOption = model.WorkflowType != WorkflowType.DirectPublish;
@@ -126,10 +110,10 @@ namespace DotNetNuke.Modules.Html.Controllers
             // model.Content = this.FormatContent(htmlContent.Content);
         }
 
-        private void PopulateModelWithInitialContent(EditHtmlViewModel model, WorkflowStateInfo firstState)
+        private void PopulateModelWithInitialContent(EditHtmlViewModel model, Workflow workFlow)
         {
             // model.EditorContent = this.LocalizeString("AddContent");
-            model.CurrentWorkflowInUse = firstState.WorkflowName;
+            model.CurrentWorkflowInUse = workFlow.WorkflowName;
             model.ShowCurrentWorkflowState = false;
             model.ShowCurrentVersion = false;
         }

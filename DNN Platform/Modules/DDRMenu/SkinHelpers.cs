@@ -17,6 +17,7 @@ namespace DotNetNuke.Web.DDRMenu
     using DotNetNuke.Web.DDRMenu.Localisation;
     using DotNetNuke.Web.DDRMenu.TemplateEngine;
     using DotNetNuke.Web.MvcPipeline.Models;
+    using Microsoft.Extensions.DependencyInjection;
 
     public static class SkinHelpers
     {
@@ -56,7 +57,7 @@ namespace DotNetNuke.Web.DDRMenu
             {
                 menu.RootNode =
                     new MenuNode(
-                        Localiser.LocaliseDNNNodeCollection(
+                        DotNetNuke.Common.Globals.GetCurrentServiceProvider().GetRequiredService<ILocaliser>().LocaliseDNNNodeCollection(
                             Navigation.GetNavigationNodes(
                                 clientID,
                                 Navigation.ToolTipSource.None,

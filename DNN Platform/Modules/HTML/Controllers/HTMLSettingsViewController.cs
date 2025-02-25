@@ -14,6 +14,8 @@ namespace DotNetNuke.Modules.Html.Controllers
 
     using DotNetNuke.Abstractions;
     using DotNetNuke.Common;
+    using DotNetNuke.ContentSecurityPolicy;
+    using DotNetNuke.Entities.Content.Workflow;
     using DotNetNuke.Entities.Content.Workflow.Entities;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Modules.Settings;
@@ -33,13 +35,16 @@ namespace DotNetNuke.Modules.Html.Controllers
     public class HTMLSettingsViewController : ModuleControllerBase
     {
         private readonly INavigationManager navigationManager;
+        private readonly IContentSecurityPolicy contentSecurityPolicy;
+        private readonly IWorkflowManager workflowManager;
         private readonly HtmlTextController htmlTextController;
-        private readonly WorkflowStateController workflowStateController = new WorkflowStateController();
         private readonly HtmlModuleSettingsRepository settingsRepository;
 
-        public HTMLSettingsViewController()
+        public HTMLSettingsViewController(IContentSecurityPolicy csp, INavigationManager navigationManager, IWorkflowManager workflowManager)
         {
-            this.navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
+            this.navigationManager = navigationManager;
+            this.workflowManager = workflowManager;
+            this.contentSecurityPolicy = csp;
             this.htmlTextController = new HtmlTextController(this.navigationManager);
             this.settingsRepository = new HtmlModuleSettingsRepository();
         }
@@ -57,7 +62,7 @@ namespace DotNetNuke.Modules.Html.Controllers
                 ReplaceTokens = moduleSettings.ReplaceTokens,
                 UseDecorate = moduleSettings.UseDecorate,
                 SearchDescLength = moduleSettings.SearchDescLength,
-                Workflows = this.GetWorkflows(), // Récupérer les workflows disponibles
+                Workflows = this.GetWorkflows().ToList(), // Récupérer les workflows disponibles
                 ApplyTo = workflow.Key,
                 SelectedWorkflow = workflow.Value.ToString(),
             };
@@ -65,11 +70,9 @@ namespace DotNetNuke.Modules.Html.Controllers
             return this.PartialView(this.ActiveModule, "LoadSettings", model);
         }
 
-        private List<WorkflowStateInfo> GetWorkflows()
+        private IEnumerable<Workflow> GetWorkflows()
         {
-            // Récupérer les workflows disponibles
-            var workflows = this.workflowStateController.GetWorkflows(this.ActiveModule.PortalID);
-            return workflows.Cast<WorkflowStateInfo>().Where(w => !w.IsDeleted).ToList(); // Filtrer les workflows non supprimés
+            return this.workflowManager.GetWorkflows(this.ActiveModule.PortalID);
         }
     }
 }

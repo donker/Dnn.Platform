@@ -18,6 +18,7 @@ namespace DotNetNuke.Web.MvcPipeline.Skins
     using DotNetNuke.Entities.Icons;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Portals;
+    using DotNetNuke.Framework;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.Web.Client;
     using DotNetNuke.Web.Client.ClientResourceManagement;
@@ -48,7 +49,7 @@ namespace DotNetNuke.Web.MvcPipeline.Skins
         {
             var navigationManager = helper.ViewData.Model.NavigationManager;
             var nonce = helper.ViewData.Model.ContentSecurityPolicy.Nonce;
-            Framework.ServicesFramework.Instance.RequestAjaxAntiForgerySupport();
+            ServicesFramework.Instance.RequestAjaxAntiForgerySupport();
             MvcClientResourceManager.RegisterStyleSheet(helper.ViewContext, "~/Resources/Search/SearchSkinObjectPreview.css", FileOrder.Css.ModuleCss);
             var htmlAttributes = new Dictionary<string, string>
             {

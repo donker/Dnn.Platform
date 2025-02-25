@@ -3,12 +3,10 @@
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Modules.Html
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Web;
 
     using DotNetNuke.Abstractions;
+    using DotNetNuke.Entities.Content.Workflow;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Modules.Actions;
     using DotNetNuke.Security;
@@ -20,6 +18,7 @@ namespace DotNetNuke.Modules.Html
     public class HtmlModuleControl : ModuleControlBase, IActionable
     {
         private readonly INavigationManager navigationManager;
+        private readonly IWorkflowManager workflowManager = WorkflowManager.Instance;
 
         // private bool editorEnabled;
         private int workflowID;
@@ -51,17 +50,17 @@ namespace DotNetNuke.Modules.Html
 
                 // get the content
                 var objHTML = new HtmlTextController(this.navigationManager);
-                var objWorkflow = new WorkflowStateController();
                 this.workflowID = objHTML.GetWorkflow(this.ModuleId, this.TabId, this.PortalId).Value;
+                var workflow = this.workflowManager.GetWorkflow(this.workflowID);
 
                 HtmlTextInfo objContent = objHTML.GetTopHtmlText(this.ModuleId, false, this.workflowID);
                 if (objContent != null)
                 {
                     // if content is in the first state
-                    if (objContent.StateID == objWorkflow.GetFirstWorkflowStateID(this.workflowID))
+                    if (objContent.StateID == workflow.FirstState.StateID)
                     {
                         // if not direct publish workflow
-                        if (objWorkflow.GetWorkflowStates(this.workflowID).Count > 1)
+                        if (workflow.States.Count() > 1)
                         {
                             // add publish action
                             actions.Add(
@@ -80,7 +79,7 @@ namespace DotNetNuke.Modules.Html
                     else
                     {
                         // if the content is not in the last state of the workflow then review is required
-                        if (objContent.StateID != objWorkflow.GetLastWorkflowStateID(this.workflowID))
+                        if (objContent.StateID != workflow.LastState.StateID)
                         {
                             // if the user has permissions to review the content
                             if (WorkflowStatePermissionController.HasWorkflowStatePermission(WorkflowStatePermissionController.GetWorkflowStatePermissions(objContent.StateID), "REVIEW"))

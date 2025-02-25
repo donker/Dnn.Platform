@@ -38,6 +38,7 @@ namespace DotNetNuke.Web.MvcPipeline.Models
     using DotNetNuke.Web.Client.ClientResourceManagement;
     using DotNetNuke.Web.MvcPipeline.Controllers;
     using DotNetNuke.Web.MvcPipeline.Exceptions;
+    using Microsoft.Extensions.DependencyInjection;
 
     public class SkinModel
     {
@@ -456,7 +457,6 @@ namespace DotNetNuke.Web.MvcPipeline.Models
             this.PortalSettings.ActiveTab.Panes.Add("HeaderPane");
             this.PortalSettings.ActiveTab.Panes.Add("ContentPane");
             this.PortalSettings.ActiveTab.Panes.Add("ContentPaneLower");
-
             /*
             // iterate page controls
             foreach (Control ctlControl in this.Controls)
@@ -648,7 +648,8 @@ namespace DotNetNuke.Web.MvcPipeline.Models
         private bool ProcessModule(ModuleInfo module)
         {
             var success = true;
-            if (ModuleInjectionManager.CanInjectModule(module, this.PortalSettings))
+            var x = Globals.GetCurrentServiceProvider().GetService<ModuleInjectionManager>();
+            if (x.CanInjectModule(module, this.PortalSettings))
             {
                 // We need to ensure that Content Item exists since in old versions Content Items are not needed for modules
                 this.EnsureContentItemForModule(module);

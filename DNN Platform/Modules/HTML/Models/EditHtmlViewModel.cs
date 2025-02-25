@@ -7,10 +7,8 @@ namespace DotNetNuke.Modules.Html.Models
     using System.Collections.Generic;
     using System.Web.Mvc;
 
-    using DotNetNuke.Web.Mvc.Page;
+    using DotNetNuke.Modules.Html.Controllers;
     using DotNetNuke.Web.MvcPipeline.Models;
-
-    using static DotNetNuke.Modules.Html.Controllers.DNN_HTMLController;
 
     public class EditHtmlViewModel : ModuleModelBase
     {
@@ -21,7 +19,7 @@ namespace DotNetNuke.Modules.Html.Models
 
         public bool UseDecorate { get; set; }
 
-       // public List<ToolbarButtonViewModel> ToolbarButtons { get; set; }
+        // public List<ToolbarButtonViewModel> ToolbarButtons { get; set; }
         public string CurrentView { get; set; }
 
         public bool ShowEditView { get; set; }

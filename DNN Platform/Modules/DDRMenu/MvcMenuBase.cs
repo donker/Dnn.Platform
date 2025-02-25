@@ -24,6 +24,7 @@ namespace DotNetNuke.Web.DDRMenu
     using DotNetNuke.Web.DDRMenu.DNNCommon;
     using DotNetNuke.Web.DDRMenu.Localisation;
     using DotNetNuke.Web.DDRMenu.TemplateEngine;
+    using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>Base class for multiple DDR Menu classes.</summary>
     public class MvcMenuBase
@@ -125,7 +126,7 @@ namespace DotNetNuke.Web.DDRMenu
             {
 #pragma warning disable CS0618 // Type or member is obsolete
                 // TODO: In Dnn v11, replace this to use IPortalSettings private field instantiate in constructor
-                new Localiser(this.HostPortalSettings.PortalId).LocaliseNode(this.RootNode);
+                DotNetNuke.Common.Globals.GetCurrentServiceProvider().GetRequiredService<ILocaliser>().LocaliseNode(this.RootNode, this.HostPortalSettings.PortalId);
 #pragma warning restore CS0618 // Type or member is obsolete
             }
 

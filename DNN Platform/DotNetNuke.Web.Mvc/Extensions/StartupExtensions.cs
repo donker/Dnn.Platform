@@ -8,6 +8,7 @@ namespace DotNetNuke.Web.Mvc.Extensions
     using DotNetNuke.DependencyInjection.Extensions;
     using DotNetNuke.Instrumentation;
     using DotNetNuke.Web.Mvc.Framework.Controllers;
+
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -31,17 +32,6 @@ namespace DotNetNuke.Web.Mvc.Extensions
             {
                 services.TryAddTransient(controller);
             }
-
-            /*
-            var mvcControllerTypes = allTypes.Types
-                .Where(
-                    type => typeof(IMvcController).IsAssignableFrom(type) &&
-                            type is { IsClass: true, IsAbstract: false });
-            foreach (var controller in mvcControllerTypes)
-            {
-                services.TryAddTransient(controller);
-            }
-            */
         }
     }
 }

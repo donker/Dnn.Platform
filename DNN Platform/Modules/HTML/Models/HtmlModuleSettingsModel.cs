@@ -6,9 +6,8 @@ namespace DotNetNuke.Modules.Html.Models
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
 
-    using DotNetNuke.Modules.Html;
+    using DotNetNuke.Entities.Content.Workflow.Entities;
     using DotNetNuke.Web.MvcPipeline.Models;
 
     public class HtmlModuleSettingsModel : ModuleSettingsModel
@@ -22,7 +21,7 @@ namespace DotNetNuke.Modules.Html.Models
         [Display(Name = "plSearchDescLength")] // ID de Settings.ascx
         public int SearchDescLength { get; set; }
 
-        public List<WorkflowStateInfo> Workflows { get; set; }
+        public List<Workflow> Workflows { get; set; }
 
         [Display(Name = "plWorkflow")] // ID de Settings.ascx
         public string SelectedWorkflow { get; set; }
