@@ -34,6 +34,7 @@ namespace DotNetNuke.UI.Skins
         private static readonly Regex GdirRegex = new Regex("\\[g]", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         private static readonly Regex SdirRegex = new Regex("\\[s]", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         private static readonly Regex LdirRegex = new Regex("\\[l]", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        private static readonly Regex MdirRegex = new Regex("\\[m]", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         public static string RootSkin
         {
@@ -177,6 +178,9 @@ namespace DotNetNuke.UI.Skins
                         break;
                     case "[l]": // to be compliant with all versions
                         strSkinSrc = LdirRegex.Replace(strSkinSrc, portalSettings.HomeDirectory);
+                        break;
+                    case "[m]":
+                        strSkinSrc = MdirRegex.Replace(strSkinSrc, Globals.ThemePath);
                         break;
                 }
             }

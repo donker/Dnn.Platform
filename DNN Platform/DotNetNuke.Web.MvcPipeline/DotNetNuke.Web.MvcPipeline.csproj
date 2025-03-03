@@ -108,7 +108,14 @@
     <Compile Include="Controllers\ModuleSettingsViewController.cs" />
     <Compile Include="DnnMvcPipelineDependencyResolver.cs" />
     <Compile Include="Extensions\StartupExtensions.cs" />
+    <Compile Include="Framework\ContainerModelFactory.cs" />
+    <Compile Include="Framework\IContainerModelFactory.cs" />
+    <Compile Include="Framework\IPageModelFactory.cs" />
+    <Compile Include="Framework\IPaneModelFactory.cs" />
+    <Compile Include="Framework\ISkinModelFactory.cs" />
     <Compile Include="Framework\PageModelFactory.cs" />
+    <Compile Include="Framework\PaneModelFactory.cs" />
+    <Compile Include="Framework\SkinModelFactory.cs" />
     <Compile Include="HtmlHelpers.cs" />
     <Compile Include="Models\ContainerModel.cs" />
     <Compile Include="Exceptions\AccesDeniedException.cs" />
@@ -123,6 +130,7 @@
     <Compile Include="Models\ModuleSettingsMvcViewModel.cs" />
     <Compile Include="Models\PageModel.cs" />
     <Compile Include="Models\PaneModel.cs" />
+    <Compile Include="Models\RegisteredStylesheet.cs" />
     <Compile Include="Models\SkinModel.cs" />
     <Compile Include="Models\TabModel.cs" />
     <Compile Include="ModuleControl\ModuleControlBase.cs" />

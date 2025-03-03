@@ -9,8 +9,8 @@ namespace DotNetNuke.Web.MvcPipeline
     using DotNetNuke.Common;
     using DotNetNuke.DependencyInjection;
     using DotNetNuke.Web.Mvc.Extensions;
+    using DotNetNuke.Web.MvcPipeline.Framework;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
 
     public class Startup : IDnnStartup
     {
@@ -18,6 +18,10 @@ namespace DotNetNuke.Web.MvcPipeline
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvcControllers();
+            services.AddTransient<IPageModelFactory, PageModelFactory>();
+            services.AddTransient<ISkinModelFactory, SkinModelFactory>();
+            services.AddTransient<IPaneModelFactory, PaneModelFactory>();
+            services.AddTransient<IContainerModelFactory, ContainerModelFactory>();
 
             DependencyResolver.SetResolver(new DnnMvcPipelineDependencyResolver(Globals.DependencyProvider));
         }

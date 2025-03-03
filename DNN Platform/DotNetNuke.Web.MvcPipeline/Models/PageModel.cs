@@ -42,7 +42,6 @@ namespace DotNetNuke.Web.MvcPipeline.Models
 
         public string MetaRobots { get; set; }
 
-        // public bool EditMode { get; set; }
         public Dictionary<string, string> StartupScripts { get; set; }
 
         public bool IsEditMode { get; set; }

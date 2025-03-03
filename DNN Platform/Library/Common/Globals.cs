@@ -385,6 +385,21 @@ namespace DotNetNuke.Common
             }
         }
 
+        /// <summary>Gets the theme path.</summary>
+        /// <value>ApplicationPath + "/Themes/".</value>
+        public static string ThemePath
+        {
+            get
+            {
+                if (hostPath == null)
+                {
+                    hostPath = ApplicationPath + "/Themes/";
+                }
+
+                return hostPath;
+            }
+        }
+
         /// <summary>Gets the install map path.</summary>
         /// <value>server map path of InstallPath.</value>
         public static string InstallMapPath
