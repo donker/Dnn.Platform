@@ -137,5 +137,13 @@ namespace Dnn.ContactList.Api
                 rep.Update(contact);
             }
         }
+
+        public void InitializePortal(int portalId)
+        {
+            using (var context = DataContext.Instance())
+            {
+                context.Execute(System.Data.CommandType.StoredProcedure, "{databaseOwner}{objectQualifier}Dnn_Contacts_Initialize", portalId);
+            }
+        }
     }
 }

@@ -60,6 +60,12 @@ namespace Dnn.ContactList.Api
         /// <param name="contact">The contact to update</param>
         /// <param name="userId">The Id of the user making the update</param>
         void UpdateContact(Contact contact, int userId);
+
+        /// <summary>
+        /// Initialize portal with a set of contacts
+        /// </summary>
+        /// <param name="portalId">Portal ID</param>
+        void InitializePortal(int portalId);
     }
 }
 

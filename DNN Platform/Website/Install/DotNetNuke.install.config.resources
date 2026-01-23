@@ -83,7 +83,7 @@
   <desktopmodules/>
   <portals>
     <portal>
-      <portalname>My Website</portalname>
+      <portalname>Demo Website</portalname>
       <administrator>
         <firstname>Administrator</firstname>
         <lastname>Account</lastname>
@@ -91,9 +91,9 @@
         <password>dnnadmin</password>
         <email>admin@changeme.invalid</email>
       </administrator>
-      <description>My Website</description>
+      <description>Demo Website</description>
       <keywords>DotNetNuke, DNN, Content, Management, CMS</keywords>
-      <templatefile>Default Website.template</templatefile>
+      <templatefile>MvcPipelineDemo.template</templatefile>
       <portalaliases>
         <portalalias></portalalias>
       </portalaliases>

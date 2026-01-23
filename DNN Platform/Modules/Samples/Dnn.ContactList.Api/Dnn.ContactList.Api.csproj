@@ -23,6 +23,7 @@
     <ProjectReference Include="..\..\..\Library\DotNetNuke.Library.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Web" />
   </ItemGroup>
