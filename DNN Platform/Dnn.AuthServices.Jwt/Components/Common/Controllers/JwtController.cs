@@ -96,7 +96,7 @@ namespace Dnn.AuthServices.Jwt.Components.Common.Controllers
         {
             if (!JwtAuthMessageHandler.IsEnabled)
             {
-                Logger.LogTrace(this.SchemeType + " is not registered/enabled in web.config file");
+                Logger.LogTrace("{SchemeType} is not registered/enabled in web.config file", this.SchemeType);
                 return null;
             }
 
