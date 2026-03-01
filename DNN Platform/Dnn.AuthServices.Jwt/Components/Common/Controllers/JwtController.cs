@@ -47,8 +47,8 @@ namespace Dnn.AuthServices.Jwt.Components.Common.Controllers
         /// <summary>Initializes static members of the <see cref="JwtController"/> class.</summary>
         static JwtController()
         {
-            ValidateConfiguration();
             Logger = DnnLoggingController.GetLogger<JwtController>();
+            ValidateConfiguration();
         }
 
         /// <inheritdoc />
