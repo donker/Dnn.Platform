@@ -6,10 +6,10 @@
   <ItemGroup>
     <PackageVersion Include="AngleSharp" Version="1.4.0" />
     <PackageVersion Include="AngleSharp.Css" Version="1.0.0-beta.159" />
-    <PackageVersion Include="BouncyCastle.Cryptography" Version="2.5.1" />
+    <PackageVersion Include="BouncyCastle.Cryptography" Version="2.6.2" />
     <PackageVersion Include="Cake.BuildSystems.Module" Version="9.0.0" />
     <PackageVersion Include="Cake.FileHelpers" Version="7.0.0" />
-    <PackageVersion Include="Cake.Frosting" Version="6.0.0" />
+    <PackageVersion Include="Cake.Frosting" Version="6.1.0" />
     <PackageVersion Include="Cake.Frosting.Git" Version="5.0.1" />
     <PackageVersion Include="Cake.Frosting.Issues.MsBuild" Version="5.9.1" />
     <PackageVersion Include="Cake.Issues" Version="5.9.1" />
@@ -51,7 +51,7 @@
     <PackageVersion Include="Microsoft.Web.Administration" Version="11.1.0" />
     <PackageVersion Include="Microsoft.Web.Infrastructure" Version="2.0.0" />
     <PackageVersion Include="Moq" Version="4.20.72" />
-    <PackageVersion Include="MimeKit" Version="4.10.0" />
+    <PackageVersion Include="MimeKit" Version="4.15.1" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageVersion Include="NUnit" Version="4.5.0" />
     <PackageVersion Include="NUnit.Analyzers" Version="4.11.2" />
