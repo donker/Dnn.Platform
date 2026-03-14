@@ -4,8 +4,6 @@
 
 namespace DotNetNuke.Web.MvcPipeline.Modules
 {
-    using System;
-    using System.Collections.Generic;
     using System.Web;
     using System.Web.Mvc;
 
@@ -21,9 +19,9 @@ namespace DotNetNuke.Web.MvcPipeline.Modules
         /// </summary>
         /// <param name="htmlHelper">The HTML helper instance.</param>
         /// <param name="message">The message text to display.</param>
-        /// <param name="messageType">The type of message (affects CSS classes).</param>
+        /// <param name="messageType">The type of message (affects CSS classes). Default is <see cref="ModuleMessageType.Info"/>.</param>
         /// <param name="heading">Optional heading text.</param>
-        /// <param name="autoScroll">Whether to automatically scroll to the message.</param>
+        /// <param name="autoScroll">Whether to automatically scroll to the message. Default is <c>true</c>.</param>
         /// <param name="htmlAttributes">Additional HTML attributes for the panel.</param>
         /// <returns>HTML string for the skin message panel.</returns>
         public static IHtmlString ModuleMessage(
@@ -85,6 +83,11 @@ namespace DotNetNuke.Web.MvcPipeline.Modules
         /// <summary>
         /// Convenience method for creating an info message.
         /// </summary>
+        /// <param name="htmlHelper">The HTML helper instance.</param>
+        /// <param name="message">The message text to display.</param>
+        /// <param name="heading">Optional heading text.</param>
+        /// <param name="autoScroll">Whether to automatically scroll to the message. Default is <c>true</c>.</param>
+        /// <returns>HTML string for the skin message panel with info styling.</returns>
         public static IHtmlString ModuleInfoMessage(this HtmlHelper htmlHelper, string message, string heading = null, bool autoScroll = true)
         {
             return htmlHelper.ModuleMessage(message, ModuleMessageType.Info, heading, autoScroll);
@@ -93,6 +96,11 @@ namespace DotNetNuke.Web.MvcPipeline.Modules
         /// <summary>
         /// Convenience method for creating a success message.
         /// </summary>
+        /// <param name="htmlHelper">The HTML helper instance.</param>
+        /// <param name="message">The message text to display.</param>
+        /// <param name="heading">Optional heading text.</param>
+        /// <param name="autoScroll">Whether to automatically scroll to the message. Default is <c>true</c>.</param>
+        /// <returns>HTML string for the skin message panel with success styling.</returns>
         public static IHtmlString ModuleSuccessMessage(this HtmlHelper htmlHelper, string message, string heading = null, bool autoScroll = true)
         {
             return htmlHelper.ModuleMessage(message, ModuleMessageType.Success, heading, autoScroll);
@@ -101,6 +109,11 @@ namespace DotNetNuke.Web.MvcPipeline.Modules
         /// <summary>
         /// Convenience method for creating a warning message.
         /// </summary>
+        /// <param name="htmlHelper">The HTML helper instance.</param>
+        /// <param name="message">The message text to display.</param>
+        /// <param name="heading">Optional heading text.</param>
+        /// <param name="autoScroll">Whether to automatically scroll to the message. Default is <c>true</c>.</param>
+        /// <returns>HTML string for the skin message panel with warning styling.</returns>
         public static IHtmlString ModuleWarningMessage(this HtmlHelper htmlHelper, string message, string heading = null, bool autoScroll = true)
         {
             return htmlHelper.ModuleMessage(message, ModuleMessageType.Warning, heading, autoScroll);
@@ -109,11 +122,21 @@ namespace DotNetNuke.Web.MvcPipeline.Modules
         /// <summary>
         /// Convenience method for creating an error message.
         /// </summary>
+        /// <param name="htmlHelper">The HTML helper instance.</param>
+        /// <param name="message">The message text to display.</param>
+        /// <param name="heading">Optional heading text.</param>
+        /// <param name="autoScroll">Whether to automatically scroll to the message. Default is <c>true</c>.</param>
+        /// <returns>HTML string for the skin message panel with error styling.</returns>
         public static IHtmlString ModuleErrorMessage(this HtmlHelper htmlHelper, string message, string heading = null, bool autoScroll = true)
         {
             return htmlHelper.ModuleMessage(message, ModuleMessageType.Error, heading, autoScroll);
         }
 
+        /// <summary>
+        /// Gets the DNN form CSS class name for the specified message type.
+        /// </summary>
+        /// <param name="messageType">The type of message (Info, Success, Warning, or Error).</param>
+        /// <returns>The CSS class name (e.g. dnnFormInfo, dnnFormSuccess, dnnFormWarning, dnnFormError).</returns>
         private static string GetMessageCssClass(ModuleMessageType messageType)
         {
             switch (messageType)
@@ -130,6 +153,10 @@ namespace DotNetNuke.Web.MvcPipeline.Modules
             }
         }
 
+        /// <summary>
+        /// Generates jQuery script that scrolls the page to the first form message when the document is ready.
+        /// </summary>
+        /// <returns>JavaScript string to register for execution.</returns>
         private static string GenerateScrollScript()
         {
             return $@"

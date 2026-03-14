@@ -5,19 +5,10 @@
 namespace DotNetNuke.Web.MvcPipeline.ModuleControl
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Security.Claims;
-    using System.Security.Principal;
-    using System.Text;
-    using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
-    using System.Web.Mvc.Html;
-    using System.Web.Routing;
 
     using DotNetNuke.Web.MvcPipeline.ModuleControl.Razor;
-    using DotNetNuke.Web.MvcPipeline.Modules;
 
     /// <summary>
     /// Base class for Razor-based MVC module controls.
@@ -56,7 +47,7 @@ namespace DotNetNuke.Web.MvcPipeline.ModuleControl
         }
 
         /// <summary>
-        /// Gets the <see cref="Http.HttpContext"/>.
+        /// Gets the <see cref="HttpContext"/>.
         /// </summary>
         public HttpContextBase HttpContext => this.ViewContext.HttpContext;
 
@@ -111,7 +102,7 @@ namespace DotNetNuke.Web.MvcPipeline.ModuleControl
         {
             if (content == null)
             {
-                throw new ArgumentNullException("content");
+                throw new ArgumentNullException(nameof(content));
             }
 
             return new ContentRazorModuleResult(content);
@@ -127,7 +118,7 @@ namespace DotNetNuke.Web.MvcPipeline.ModuleControl
         {
             if (message == null)
             {
-                throw new ArgumentNullException("message");
+                throw new ArgumentNullException(nameof(message));
             }
 
             return new ErrorRazorModuleResult(heading, message);

@@ -1,15 +1,13 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
 namespace DotNetNuke.Web.MvcPipeline.Models
 {
     using System.Collections.Generic;
-    using System.IO;
+
     using DotNetNuke.Abstractions.Application;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Portals;
-    using DotNetNuke.UI.Modules;
-    using DotNetNuke.Web.MvcPipeline.Skins;
 
     /// <summary>
     /// Represents the data and behavior required to render a module container.
@@ -56,23 +54,6 @@ namespace DotNetNuke.Web.MvcPipeline.Models
         }
 
         /// <summary>
-        /// Gets the module control instance associated with this container.
-        /// </summary>
-        public IModuleControl ModuleControl
-        {
-            get
-            {
-                IModuleControl moduleControl = null;
-                if (this.ModuleHost != null)
-                {
-                    moduleControl = this.ModuleHost.ModuleControl;
-                }
-
-                return moduleControl;
-            }
-        }
-
-        /// <summary>
         /// Gets the HTML identifier assigned to the container.
         /// </summary>
         public string ID { get; internal set; }
@@ -95,13 +76,7 @@ namespace DotNetNuke.Web.MvcPipeline.Models
         /// <summary>
         /// Gets the Razor view path that corresponds to the container control.
         /// </summary>
-        public string ContainerRazorFile
-        {
-            get
-            {
-                return this.ContainerRazorPath + Path.GetFileName(this.ContainerSrc).Replace(".ascx", ".cshtml");
-            }
-        }
+        public string ContainerRazorFile { get; internal set; }
 
         /// <summary>
         /// Gets the module configuration for this container.
@@ -115,7 +90,7 @@ namespace DotNetNuke.Web.MvcPipeline.Models
         }
 
         /// <summary>
-        /// Gets the value indicating whether the container is rendered in edit mode.
+        /// Gets a value indicating whether the container is rendered in edit mode.
         /// </summary>
         public bool EditMode { get; internal set; }
 

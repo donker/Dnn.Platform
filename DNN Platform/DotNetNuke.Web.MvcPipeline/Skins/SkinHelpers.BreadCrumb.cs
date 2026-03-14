@@ -9,13 +9,11 @@ namespace DotNetNuke.Web.MvcPipeline.Skins
     using System.Web;
     using System.Web.Mvc;
 
-    using DotNetNuke.Abstractions;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Tabs;
     using DotNetNuke.Web.MvcPipeline.Models;
-    using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
     /// Skin helper methods for rendering breadcrumb navigation.
@@ -53,13 +51,17 @@ namespace DotNetNuke.Web.MvcPipeline.Skins
             int profileUserId = Null.NullInteger;
             if (!string.IsNullOrEmpty(request.Params["UserId"]))
             {
+#pragma warning disable CA1806 // Ne pas ignorer les résultats des méthodes
                 int.TryParse(request.Params["UserId"], out profileUserId);
+#pragma warning restore CA1806 // Ne pas ignorer les résultats des méthodes
             }
 
             int groupId = Null.NullInteger;
             if (!string.IsNullOrEmpty(request.Params["GroupId"]))
             {
+#pragma warning disable CA1806 // Ne pas ignorer les résultats des méthodes
                 int.TryParse(request.Params["GroupId"], out groupId);
+#pragma warning restore CA1806 // Ne pas ignorer les résultats des méthodes
             }
 
             if (showRoot)

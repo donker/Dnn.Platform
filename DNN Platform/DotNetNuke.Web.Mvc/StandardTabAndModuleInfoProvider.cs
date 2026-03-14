@@ -24,19 +24,19 @@ namespace DotNetNuke.Web.Mvc
         private const string MonikerSettingsKey = "Moniker";
         private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(StandardTabAndModuleInfoProvider));
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool TryFindTabId(HttpRequestBase request, out int tabId)
         {
             return TryFindTabId(request, out tabId, true);
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool TryFindModuleId(HttpRequestBase request, out int moduleId)
         {
             return TryFindModuleId(request, out moduleId, true);
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool TryFindModuleInfo(HttpRequestBase request, out ModuleInfo moduleInfo)
         {
             int tabId, moduleId;
@@ -97,6 +97,11 @@ namespace DotNetNuke.Web.Mvc
             if (requestBase.Headers[key] != null)
             {
                 value = requestBase.Headers[key];
+            }
+
+            if (requestBase.Form[key] != null)
+            {
+                value = requestBase.Form[key];
             }
 
             if (string.IsNullOrEmpty(value) && requestBase.Url != null)

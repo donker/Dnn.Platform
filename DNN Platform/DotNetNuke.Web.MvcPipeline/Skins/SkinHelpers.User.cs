@@ -10,7 +10,6 @@ namespace DotNetNuke.Web.MvcPipeline.Skins
     using System.Web;
     using System.Web.Mvc;
 
-    using DotNetNuke.Abstractions;
     using DotNetNuke.Abstractions.Application;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
@@ -47,8 +46,7 @@ namespace DotNetNuke.Web.MvcPipeline.Skins
         /// <returns>An HTML string representing the user UI or an empty string when not visible.</returns>
         public static IHtmlString User(this HtmlHelper<PageModel> helper, string cssClass = "SkinObject", string text = "", string url = "", bool showUnreadMessages = true, bool showAvatar = true, bool legacyMode = true, bool showInErrorPage = false)
         {
-            // TODO: CSP - enable when CSP implementation is ready
-            var nonce = string.Empty; // helper.ViewData.Model.ContentSecurityPolicy.Nonce;
+            var nonce = helper.ViewData.Model.ContentSecurityPolicy.Nonce;
             var portalSettings = PortalSettings.Current;
             var navigationManager = helper.ViewData.Model.NavigationManager;
             var portalController = GetDependencyProvider(helper).GetRequiredService<IPortalController>();
@@ -64,10 +62,12 @@ namespace DotNetNuke.Web.MvcPipeline.Skins
             if (!string.IsNullOrEmpty(text))
             {
                 registerText = text;
+#pragma warning disable CA1310 // Spécifier StringComparison à des fins de précision
                 if (text.IndexOf("src=") != -1)
                 {
                     registerText = text.Replace("src=\"", "src=\"" + portalSettings.ActiveTab.SkinPath);
                 }
+#pragma warning restore CA1310 // Spécifier StringComparison à des fins de précision
             }
 
             if (legacyMode)
@@ -169,6 +169,7 @@ namespace DotNetNuke.Web.MvcPipeline.Skins
                         if (showUnreadMessages)
                         {
                             var effectivePortalId = PortalController.GetEffectivePortalId(portalController, appStatus, portalGroupController, userInfo.PortalID);
+
                             // Create Messages
                             var unreadMessages = InternalMessagingController.Instance.CountUnreadMessages(userInfo.UserID, effectivePortalId);
 

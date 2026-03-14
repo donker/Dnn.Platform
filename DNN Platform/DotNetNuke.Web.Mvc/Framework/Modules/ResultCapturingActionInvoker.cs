@@ -8,17 +8,11 @@ namespace DotNetNuke.Web.Mvc.Framework.Modules
     using System.Collections.Generic;
     using System.Web.Mvc;
 
-    using DotNetNuke.Entities.Modules;
-    using DotNetNuke.Services.Localization;
-    using DotNetNuke.UI.Modules;
-    using DotNetNuke.Web.Mvc.Framework.Controllers;
-    using DotNetNuke.Web.Mvc.Routing;
-
     public class ResultCapturingActionInvoker : ControllerActionInvoker
     {
         public ActionResult ResultOfLastInvoke { get; set; }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         protected override ActionExecutedContext InvokeActionMethodWithFilters(ControllerContext controllerContext, IList<IActionFilter> filters, ActionDescriptor actionDescriptor, IDictionary<string, object> parameters)
         {
             var context = base.InvokeActionMethodWithFilters(controllerContext, filters, actionDescriptor, parameters);
@@ -26,7 +20,7 @@ namespace DotNetNuke.Web.Mvc.Framework.Modules
             return context;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         protected override ExceptionContext InvokeExceptionFilters(ControllerContext controllerContext, IList<IExceptionFilter> filters, Exception exception)
         {
             var context = base.InvokeExceptionFilters(controllerContext, filters, exception);
@@ -34,18 +28,13 @@ namespace DotNetNuke.Web.Mvc.Framework.Modules
             return context;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         protected override void InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
         {
             // Do not invoke the action.  Instead, store it for later retrieval
             if (this.ResultOfLastInvoke == null)
             {
                 this.ResultOfLastInvoke = actionResult;
-            }
-
-            if (controllerContext.RouteData.Values.ContainsKey("mvcpage"))
-            {
-                base.InvokeActionResult(controllerContext, actionResult);
             }
         }
     }

@@ -9,14 +9,17 @@ namespace DotNetNuke.Modules.Html.Controls
     using System.Linq;
     using System.Web.UI.WebControls;
 
-    using DNNConnect.CKEditorProvider.Utilities;
     using DotNetNuke.Abstractions;
+    using DotNetNuke.Abstractions.Application;
+    using DotNetNuke.Abstractions.Portals;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Content.Workflow;
     using DotNetNuke.Entities.Content.Workflow.Entities;
     using DotNetNuke.Entities.Modules;
+    using DotNetNuke.Entities.Portals;
     using DotNetNuke.Modules.Html;
+    using DotNetNuke.Modules.Html.Components;
     using DotNetNuke.Modules.Html.Models;
     using DotNetNuke.Security;
     using DotNetNuke.Services.Localization;
@@ -24,18 +27,32 @@ namespace DotNetNuke.Modules.Html.Controls
     using DotNetNuke.Web.MvcPipeline.ModuleControl.Page;
     using DotNetNuke.Web.MvcPipeline.ModuleControl.Razor;
 
-    using Microsoft.Extensions.DependencyInjection;
-
     public class EditHTMLControl : RazorModuleControlBase, IPageContributor
     {
         private readonly INavigationManager navigationManager;
         private readonly HtmlTextController htmlTextController;
         private readonly IWorkflowManager workflowManager = WorkflowManager.Instance;
+        private readonly IPortalAliasService portalAliasService;
+        private readonly IPortalController portalController;
+        private readonly IApplicationStatusInfo appStatus;
+        private readonly IHostSettings hostSettings;
+        private readonly HtmlModuleSettingsRepository settingsRepository;
 
-        public EditHTMLControl()
+        public EditHTMLControl(
+            INavigationManager navigationManager,
+            IPortalAliasService portalAliasService,
+            IPortalController portalController,
+            IApplicationStatusInfo appStatus,
+            IHostSettings hostSettings,
+            HtmlModuleSettingsRepository settingsRepository)
         {
-            this.navigationManager = Globals.DependencyProvider.GetRequiredService<INavigationManager>();
-            this.htmlTextController = new HtmlTextController(this.navigationManager);
+            this.navigationManager = navigationManager;
+            this.portalAliasService = portalAliasService;
+            this.portalController = portalController;
+            this.appStatus = appStatus;
+            this.hostSettings = hostSettings;
+            this.settingsRepository = settingsRepository;
+            this.htmlTextController = new HtmlTextController(this.navigationManager, this.portalAliasService, this.portalController, this.appStatus, this.hostSettings, this.settingsRepository);
         }
 
         public override string ControlName => "EditHtml";
@@ -48,6 +65,10 @@ namespace DotNetNuke.Modules.Html.Controls
             context.ClientResourceController.CreateStylesheet("~/Portals/_default/Skins/_default/WebControlSkin/Default/GridView.default.css").Register();
             context.ClientResourceController.CreateScript("~/Resources/Shared/scripts/jquery/jquery.form.min.js").Register();
             context.ClientResourceController.CreateScript("~/DesktopModules/HTML/js/edit.js").Register();
+
+            context.ContentSecurityPolicy.StyleSource.AddInline();
+            context.ContentSecurityPolicy.ScriptSource.AddSelf().AddInline();
+            context.ContentSecurityPolicy.ImgSource.AddScheme("data:");
         }
 
         public override IRazorModuleResult Invoke()
@@ -133,11 +154,6 @@ namespace DotNetNuke.Modules.Html.Controls
             }
 
             return this.View(model);
-
-            // TODO: CSP - enable when CSP implementation is ready
-            // this.contentSecurityPolicy.StyleSource.AddInline();
-            // this.contentSecurityPolicy.ScriptSource.AddSelf().AddInline();
-            // this.contentSecurityPolicy.ImgSource.AddScheme("data:");
         }
 
         private void PopulateModelWithContent(EditHtmlViewModel model, HtmlTextInfo htmlContent)

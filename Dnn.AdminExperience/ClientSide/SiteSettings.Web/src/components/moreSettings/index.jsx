@@ -76,24 +76,8 @@ class MoreSettingsPanelBody extends Component {
     componentDidUpdate(prevProps) {
         const { props } = this;
         if (props.otherSettings) {
-            let portalIdChanged = false;
-            let cultureCodeChanged = false;
-            if (
-                props.portalId === undefined ||
-                prevProps.portalId === props.portalId
-            ) {
-                portalIdChanged = false;
-            } else {
-                portalIdChanged = true;
-            }
-            if (
-                props.cultureCode === undefined ||
-                prevProps.cultureCode === props.cultureCode
-            ) {
-                cultureCodeChanged = false;
-            } else {
-                cultureCodeChanged = true;
-            }
+            let portalIdChanged = props.portalId !== undefined && prevProps.portalId !== props.portalId;
+            let cultureCodeChanged = props.cultureCode !== undefined && prevProps.cultureCode !== props.cultureCode;
 
             if (portalIdChanged || cultureCodeChanged) {
                 this.loadData();
@@ -307,6 +291,7 @@ class MoreSettingsPanelBody extends Component {
         const options = [];
         options.push({ value: "webforms", label: resx.get("WebForms") });
         options.push({ value: "mvc", label: resx.get("Mvc") });
+        options.push({ value: "auto", label: resx.get("Auto") });                
         return options;
     }
     

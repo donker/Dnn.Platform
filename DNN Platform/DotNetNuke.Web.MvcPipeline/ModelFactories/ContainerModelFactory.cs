@@ -1,10 +1,11 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
 
 namespace DotNetNuke.Web.MvcPipeline.ModelFactories
 {
     using System;
+    using System.IO;
 
     using DotNetNuke.Abstractions.Application;
     using DotNetNuke.Abstractions.ClientResources;
@@ -45,6 +46,9 @@ namespace DotNetNuke.Web.MvcPipeline.ModelFactories
             container.ContainerSrc = containerSrc;
             container.ContainerPath = SkinController.FormatSkinPath(containerSrc);
             container.ContainerRazorPath = SkinHelpers.SkinPathToRazorPath(SkinController.FormatSkinPath(containerPath));
+            container.ContainerRazorFile = string.IsNullOrEmpty(containerSrc)
+                ? null
+                : container.ContainerRazorPath + Path.GetFileName(containerSrc).Replace(".ascx", ".cshtml");
             container = this.ProcessModule(container, portalSettings);
             return container;
         }
@@ -88,10 +92,10 @@ namespace DotNetNuke.Web.MvcPipeline.ModelFactories
 
             var showMessage = false;
             var adminMessage = Null.NullString;
-            if (viewRoles.Equals(portalSettings.AdministratorRoleName, StringComparison.InvariantCultureIgnoreCase)
-                            && (moduleEditRoles.Equals(portalSettings.AdministratorRoleName, StringComparison.InvariantCultureIgnoreCase)
+            if (viewRoles.Equals(portalSettings.AdministratorRoleName, StringComparison.OrdinalIgnoreCase)
+                            && (moduleEditRoles.Equals(portalSettings.AdministratorRoleName, StringComparison.OrdinalIgnoreCase)
                                     || string.IsNullOrEmpty(moduleEditRoles))
-                            && pageEditRoles.Equals(portalSettings.AdministratorRoleName, StringComparison.InvariantCultureIgnoreCase))
+                            && pageEditRoles.Equals(portalSettings.AdministratorRoleName, StringComparison.OrdinalIgnoreCase))
             {
                 adminMessage = Localization.GetString("ModuleVisibleAdministrator.Text");
                 showMessage = !container.ModuleConfiguration.HideAdminBorder && !Globals.IsAdminControl();
