@@ -49,6 +49,12 @@ internal static partial class LoggerMessages
     [LoggerMessage(1_400, LogLevel.Trace, "Query: {Query}\n{Explanation}")]
     public static partial void LuceneControllerSearchResultExplanation(this ILogger logger, Query query, string explanation);
 
+    [LoggerMessage(1_401, LogLevel.Debug, "Compacting Search Index - started")]
+    public static partial void LuceneControllerCompactingSearchIndexStarted(this ILogger logger);
+
+    [LoggerMessage(1_402, LogLevel.Debug, "Compacting Search Index - finished")]
+    public static partial void LuceneControllerCompactingSearchIndexFinished(this ILogger logger);
+
     [LoggerMessage(1_500, LogLevel.Debug, "Container.ProcessModule Start (TabId:{TabId},ModuleID: {DesktopModuleId}): Module FriendlyName: '{ModuleFriendlyName}')")]
     public static partial void ContainerProcessModuleStart(this ILogger logger, int tabId, int desktopModuleId, string moduleFriendlyName);
 
@@ -93,4 +99,10 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(EventId = 2_300, Level = LogLevel.Debug)]
     public static partial void CaptchaControlDecryptException(this ILogger logger, ArgumentException exception);
+
+    [LoggerMessage(2_400, LogLevel.Debug, "GetExecutingServerName: {ExecutingServerName}")]
+    public static partial void ServerControllerGetExecutingServerName(this ILogger logger, string executingServerName);
+
+    [LoggerMessage(2_401, LogLevel.Debug, "GetServerName: {ServerName}")]
+    public static partial void ServerControllerGetServerName(this ILogger logger, string serverName);
 }

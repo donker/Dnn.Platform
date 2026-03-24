@@ -159,7 +159,7 @@ namespace DotNetNuke.Services.Log.EventLog
             }
             catch (FileNotFoundException exc)
             {
-                Logger.LogControlleronfigFileNotFound(exc);
+                Logger.LogControllerConfigFileNotFound(exc);
                 using var xmlReader = XmlReader.Create(fallbackConfigFile, new XmlReaderSettings { XmlResolver = null, });
                 xmlDoc.Load(xmlReader);
             }

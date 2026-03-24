@@ -286,7 +286,7 @@ namespace DotNetNuke.Services.Search.Internals
             {
                 if (doWait)
                 {
-                    Logger.Debug("Compacting Search Index - started");
+                    Logger.LuceneControllerCompactingSearchIndexStarted();
                 }
 
                 this.CheckDisposed();
@@ -297,7 +297,7 @@ namespace DotNetNuke.Services.Search.Internals
                 if (doWait)
                 {
                     this.Commit();
-                    Logger.Debug("Compacting Search Index - finished");
+                    Logger.LuceneControllerCompactingSearchIndexFinished();
                 }
 
                 return true;
