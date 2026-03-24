@@ -38,6 +38,7 @@ namespace DotNetNuke.Web.InternalServices
     using DotNetNuke.Web.Api.Internal;
 
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
 
     /// <summary>A web API for the control bar.</summary>
     /// <param name="businessControllerProvider">The business controller provider.</param>
@@ -54,7 +55,7 @@ namespace DotNetNuke.Web.InternalServices
         : DnnApiController
     {
         private const string DefaultExtensionImage = "icon_extensions_32px.png";
-        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(ControlBarController));
+        private static readonly ILogger Logger = DnnLoggingController.GetLogger<ControlBarController>();
         private readonly IBusinessControllerProvider businessControllerProvider = businessControllerProvider ?? Globals.GetCurrentServiceProvider().GetRequiredService<IBusinessControllerProvider>();
         private readonly PersonalizationController personalizationController = personalizationController ?? Globals.GetCurrentServiceProvider().GetRequiredService<PersonalizationController>();
         private readonly IApplicationStatusInfo appStatus = appStatus ?? Globals.GetCurrentServiceProvider().GetRequiredService<IApplicationStatusInfo>();

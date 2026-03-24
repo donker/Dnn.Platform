@@ -17,11 +17,13 @@ namespace DotNetNuke.Services.Scheduling
     using DotNetNuke.Entities.Host;
     using DotNetNuke.Instrumentation;
     using DotNetNuke.Services.Log.EventLog;
+
+    using Microsoft.Extensions.Logging;
     using Microsoft.VisualBasic;
 
     internal static class Scheduler
     {
-        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(Scheduler));
+        private static readonly ILogger Logger = DnnLoggingController.GetLogger(typeof(Scheduler));
 
         internal static class CoreScheduler
         {

@@ -15,6 +15,7 @@ namespace DotNetNuke.Web.UI.WebControls.Internal.PropertyEditorControls
     using DotNetNuke.UI.WebControls;
 
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
 
     /// <summary>
     /// The DateEditControl control provides a standard UI component for editing
@@ -26,7 +27,7 @@ namespace DotNetNuke.Web.UI.WebControls.Internal.PropertyEditorControls
     [ToolboxData("<{0}:DateTimeEditControl runat=server></{0}:DateTimeEditControl>")]
     public class DateTimeEditControl : EditControl
     {
-        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(DateTimeEditControl));
+        private static readonly ILogger Logger = DnnLoggingController.GetLogger<DateTimeEditControl>();
         private DnnDateTimePicker dateControl;
 
         /// <inheritdoc />

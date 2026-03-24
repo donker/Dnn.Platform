@@ -39,6 +39,7 @@ namespace DotNetNuke.Web.InternalServices
     using DotNetNuke.Web.Api.Internal;
 
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
 
     using FileInfo = DotNetNuke.Services.FileSystem.FileInfo;
 
@@ -46,7 +47,7 @@ namespace DotNetNuke.Web.InternalServices
     [DnnAuthorize]
     public class FileUploadController : DnnApiController
     {
-        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(FileUploadController));
+        private static readonly ILogger Logger = DnnLoggingController.GetLogger<FileUploadController>();
         private static readonly Regex UserFolderEx = new Regex(@"users/\d+/\d+/(\d+)/", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly List<string> ImageExtensions = Globals.ImageFileTypes.Split(',').ToList();
 

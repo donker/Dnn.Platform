@@ -34,6 +34,8 @@ namespace Dnn.PersonaBar.SiteSettings.Services
     using DotNetNuke.Services.Log.EventLog;
     using DotNetNuke.Web.Api;
 
+    using Microsoft.Extensions.Logging;
+
     [MenuPermission(Scope = ServiceScope.Admin)]
     public class LanguagesController : PersonaBarApiController
     {
@@ -55,7 +57,7 @@ namespace Dnn.PersonaBar.SiteSettings.Services
 
         private const string AuthFailureMessage = "Authorization has been denied for this request.";
 
-        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(LanguagesController));
+        private static readonly ILogger Logger = DnnLoggingController.GetLogger<LanguagesController>();
 
         private static readonly string[] RootFolders =
         [

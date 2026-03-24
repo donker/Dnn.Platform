@@ -28,6 +28,7 @@ namespace DotNetNuke.Modules.CoreMessaging.Services
     using DotNetNuke.Web.Api;
 
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
 
     /// <summary>Provides messaging web services.</summary>
     /// <param name="portalController">The portal controller.</param>
@@ -40,7 +41,7 @@ namespace DotNetNuke.Modules.CoreMessaging.Services
     public class MessagingServiceController(IPortalController portalController, IApplicationStatusInfo appStatus, IPortalGroupController portalGroupController, IHostSettings hostSettings)
         : DnnApiController
     {
-        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(MessagingServiceController));
+        private static readonly ILogger Logger = DnnLoggingController.GetLogger<MessagingServiceController>();
         private readonly IPortalController portalController = portalController ?? HttpContextSource.Current.GetScope().ServiceProvider.GetRequiredService<IPortalController>();
         private readonly IApplicationStatusInfo appStatus = appStatus ?? HttpContextSource.Current.GetScope().ServiceProvider.GetRequiredService<IApplicationStatusInfo>();
         private readonly IPortalGroupController portalGroupController = portalGroupController ?? HttpContextSource.Current.GetScope().ServiceProvider.GetRequiredService<IPortalGroupController>();

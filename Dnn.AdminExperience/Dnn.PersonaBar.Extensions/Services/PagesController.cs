@@ -37,6 +37,8 @@ namespace Dnn.PersonaBar.Pages.Services
     using DotNetNuke.Web.Api;
     using DotNetNuke.Web.UI.WebControls;
 
+    using Microsoft.Extensions.Logging;
+
     using Localization = Dnn.PersonaBar.Pages.Components.Localization;
 
     /// <summary>API controller for the Pages persona bar module.</summary>
@@ -45,7 +47,7 @@ namespace Dnn.PersonaBar.Pages.Services
     public class PagesController : PersonaBarApiController
     {
         private const string LocalResourceFile = Library.Constants.PersonaBarRelativePath + "Modules/Dnn.Pages/App_LocalResources/Pages.resx";
-        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(PagesController));
+        private static readonly ILogger Logger = DnnLoggingController.GetLogger<PagesController>();
         private readonly IPagesController pagesController;
 
         private readonly IBulkPagesController bulkPagesController;
