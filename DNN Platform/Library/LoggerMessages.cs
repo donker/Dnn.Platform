@@ -5,6 +5,9 @@
 namespace DotNetNuke;
 
 using System;
+using System.Data.SqlClient;
+using System.IO;
+using System.Threading;
 
 using Lucene.Net.Search;
 
@@ -66,4 +69,28 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(1_603, LogLevel.Debug, "ModuleControlFactory.LoadSettingsControl End (TabId:{TabId},ModuleId:{ModuleId}): ModuleControlSource:{ModuleControlSource}")]
     public static partial void ModuleControlFactoryLoadSettingsControlEnd(this ILogger logger, int tabId, int moduleId, string moduleControlSource);
+
+    [LoggerMessage(EventId = 1_700, Level = LogLevel.Debug)]
+    public static partial void DataProviderSqlExceptionFromAddPropertyDefinition(this ILogger logger, SqlException exception);
+
+    [LoggerMessage(EventId = 1_800, Level = LogLevel.Debug)]
+    public static partial void LogControllerConfigFileNotFound(this ILogger logger, FileNotFoundException exception);
+
+    [LoggerMessage(EventId = 1_801, Level = LogLevel.Debug)]
+    public static partial void LogControllerFailureToWriteToLogFile(this ILogger logger, IOException exception);
+
+    [LoggerMessage(EventId = 1_900, Level = LogLevel.Debug)]
+    public static partial void PurgeModuleCachePurgeNotSupportedException(this ILogger logger, NotSupportedException exception);
+
+    [LoggerMessage(EventId = 2_000, Level = LogLevel.Debug)]
+    public static partial void PurgeOutputCachePurgeNotSupportedException(this ILogger logger, NotSupportedException exception);
+
+    [LoggerMessage(EventId = 2_100, Level = LogLevel.Debug)]
+    public static partial void UserProfilePageHandlerException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 2_200, Level = LogLevel.Debug)]
+    public static partial void ModuleHostThreadAbortException(this ILogger logger, ThreadAbortException exception);
+
+    [LoggerMessage(EventId = 2_300, Level = LogLevel.Debug)]
+    public static partial void CaptchaControlDecryptException(this ILogger logger, ArgumentException exception);
 }

@@ -32,7 +32,7 @@ namespace DotNetNuke.UI.WebControls
 
     /// <summary>The CaptchaControl control provides a Captcha Challenge control.</summary>
     [ToolboxData("<{0}:CaptchaControl Runat=\"server\" CaptchaHeight=\"100px\" CaptchaWidth=\"300px\" />")]
-    public class CaptchaControl : WebControl, INamingContainer, IPostBackDataHandler
+    public partial class CaptchaControl : WebControl, INamingContainer, IPostBackDataHandler
     {
         internal const string KEY = "captcha";
         private const int EXPIRATIONDEFAULT = 120;
@@ -674,7 +674,7 @@ namespace DotNetNuke.UI.WebControls
             }
             catch (ArgumentException exc)
             {
-                Logger.Debug(exc);
+                Logger.CaptchaControlDecryptException(exc);
             }
 
             return decryptedText;

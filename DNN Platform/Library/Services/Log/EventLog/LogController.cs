@@ -28,7 +28,7 @@ namespace DotNetNuke.Services.Log.EventLog
     using Microsoft.Extensions.Logging;
 
     /// <inheritdoc cref="ILogController" />
-    public class LogController : ServiceLocator<ILogController, LogController>, ILogController
+    public partial class LogController : ServiceLocator<ILogController, LogController>, ILogController
     {
         private const int WriterLockTimeout = 10000; // milliseconds
         private static readonly ILogger Logger = DnnLoggingController.GetLogger<LogController>();
@@ -159,7 +159,7 @@ namespace DotNetNuke.Services.Log.EventLog
             }
             catch (FileNotFoundException exc)
             {
-                Logger.Debug(exc);
+                Logger.LogControlleronfigFileNotFound(exc);
                 using var xmlReader = XmlReader.Create(fallbackConfigFile, new XmlReaderSettings { XmlResolver = null, });
                 xmlDoc.Load(xmlReader);
             }
@@ -414,7 +414,7 @@ namespace DotNetNuke.Services.Log.EventLog
                     }
                     catch (IOException exc)
                     {
-                        Logger.Debug(exc);
+                        Logger.LogControllerFailureToWriteToLogFile(exc);
                         Thread.Sleep(1);
                     }
                 }

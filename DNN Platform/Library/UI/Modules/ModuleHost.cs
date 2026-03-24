@@ -39,7 +39,7 @@ namespace DotNetNuke.UI.Modules
     using Globals = DotNetNuke.Common.Globals;
 
     /// <summary>ModuleHost hosts a Module Control (or its cached Content).</summary>
-    public sealed class ModuleHost : Panel
+    public sealed partial class ModuleHost : Panel
     {
         private const string DefaultCssProvider = "DnnPageHeaderProvider";
         private const string DefaultJsProvider = "DnnBodyProvider";
@@ -286,7 +286,7 @@ namespace DotNetNuke.UI.Modules
             }
             catch (ThreadAbortException exc)
             {
-                Logger.Debug(exc);
+                Logger.ModuleHostThreadAbortException(exc);
 
                 Thread.ResetAbort();
             }
