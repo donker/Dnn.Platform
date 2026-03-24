@@ -32,7 +32,7 @@ namespace DotNetNuke.Services.Search.Internals
     using Localization = DotNetNuke.Services.Localization.Localization;
 
     /// <summary>  The Impl Controller class for Lucene.</summary>
-    internal class LuceneControllerImpl : ILuceneController, IDisposable
+    internal partial class LuceneControllerImpl : ILuceneController, IDisposable
     {
         private const string DefaultSearchFolder = @"App_Data\Search";
         private const string WriteLockFile = "write.lock";
@@ -187,10 +187,9 @@ namespace DotNetNuke.Services.Search.Internals
                     searcher.Search(searchContext.LuceneQuery.Query, null, searchSecurityTrimmer);
                     luceneResults.TotalHits = searchSecurityTrimmer.TotalHits;
 
-                    if (Logger.IsDebugEnabled)
+                    if (Logger.IsEnabled(LogLevel.Trace))
                     {
-                        var sb = GetSearcResultExplanation(searchContext.LuceneQuery, searchSecurityTrimmer.ScoreDocs, searcher);
-                        Logger.Trace(sb);
+                        Logger.LuceneControllerSearchResultExplanation(searchContext.LuceneQuery.Query, GetSearchResultExplanation(searchContext.LuceneQuery, searchSecurityTrimmer.ScoreDocs, searcher));
                     }
 
                     // Page doesn't exist
@@ -420,10 +419,9 @@ namespace DotNetNuke.Services.Search.Internals
             return this.reader.GetSearcher();
         }
 
-        private static StringBuilder GetSearcResultExplanation(LuceneQuery luceneQuery, IEnumerable<ScoreDoc> scoreDocs, IndexSearcher searcher)
+        private static string GetSearchResultExplanation(LuceneQuery luceneQuery, IEnumerable<ScoreDoc> scoreDocs, IndexSearcher searcher)
         {
             var sb = new StringBuilder();
-            sb.AppendLine("Query: " + luceneQuery.Query.ToString());
             foreach (var match in scoreDocs)
             {
                 var explanation = searcher.Explain(luceneQuery.Query, match.Doc);
@@ -433,7 +431,7 @@ namespace DotNetNuke.Services.Search.Internals
                 sb.AppendLine(explanation.ToString());
             }
 
-            return sb;
+            return sb.ToString();
         }
 
         private static string GetHighlightedText(FastVectorHighlighter highlighter, FieldQuery fieldQuery, IndexSearcher searcher, ScoreDoc match, string tag, int length)
