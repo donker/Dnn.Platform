@@ -18,7 +18,7 @@ namespace DotNetNuke.Web.Common.Internal
     using Microsoft.Extensions.Logging;
 
     /// <summary>Watches <c>bin</c> folder and root files and unloads the app domain proactively when they change.</summary>
-    internal static class DotNetNukeShutdownOverload
+    internal static partial class DotNetNukeShutdownOverload
     {
         private static readonly ILogger Logger = DnnLoggingController.GetLogger(typeof(DotNetNukeShutdownOverload));
 
@@ -140,7 +140,7 @@ namespace DotNetNuke.Web.Common.Internal
             }
         }
 
-        private static void ShceduleShutdown()
+        private static void ScheduleShutdown()
         {
             // no need for locking; worst case is timer extended a bit more
             if (handleShutdowns && !shutdownInprogress)
@@ -154,61 +154,61 @@ namespace DotNetNuke.Web.Common.Internal
 
         private static void WatcherOnChanged(object sender, FileSystemEventArgs e)
         {
-            if (Logger.IsInfoEnabled && !e.FullPath.EndsWith(".log.resources", StringComparison.OrdinalIgnoreCase))
+            if (!e.FullPath.EndsWith(".log.resources", StringComparison.OrdinalIgnoreCase))
             {
-                Logger.Info($"Watcher Activity: {e.ChangeType}. Path: {e.FullPath}");
+                Logger.ShutdownOverloadWatcherActivity(e.ChangeType, e.FullPath);
             }
 
             if (handleShutdowns && !shutdownInprogress && (e.FullPath ?? string.Empty).StartsWith(binFolder, StringComparison.OrdinalIgnoreCase))
             {
-                ShceduleShutdown();
+                ScheduleShutdown();
             }
         }
 
         private static void WatcherOnCreated(object sender, FileSystemEventArgs e)
         {
-            if (Logger.IsInfoEnabled && !e.FullPath.EndsWith(".log.resources", StringComparison.OrdinalIgnoreCase))
+            if (!e.FullPath.EndsWith(".log.resources", StringComparison.OrdinalIgnoreCase))
             {
-                Logger.Info($"Watcher Activity: {e.ChangeType}. Path: {e.FullPath}");
+                Logger.ShutdownOverloadWatcherActivity(e.ChangeType, e.FullPath);
             }
 
             if (handleShutdowns && !shutdownInprogress && (e.FullPath ?? string.Empty).StartsWith(binFolder, StringComparison.OrdinalIgnoreCase))
             {
-                ShceduleShutdown();
+                ScheduleShutdown();
             }
         }
 
         private static void WatcherOnRenamed(object sender, RenamedEventArgs e)
         {
-            if (Logger.IsInfoEnabled && !e.FullPath.EndsWith(".log.resources", StringComparison.OrdinalIgnoreCase))
+            if (!e.FullPath.EndsWith(".log.resources", StringComparison.OrdinalIgnoreCase))
             {
-                Logger.Info($"Watcher Activity: {e.ChangeType}. New Path: {e.FullPath}. Old Path: {e.OldFullPath}");
+                Logger.ShutdownOverloadWatcherRenamedActivity(e.ChangeType, e.FullPath, e.OldFullPath);
             }
 
             if (handleShutdowns && !shutdownInprogress && (e.FullPath ?? string.Empty).StartsWith(binFolder, StringComparison.OrdinalIgnoreCase))
             {
-                ShceduleShutdown();
+                ScheduleShutdown();
             }
         }
 
         private static void WatcherOnDeleted(object sender, FileSystemEventArgs e)
         {
-            if (Logger.IsInfoEnabled && !e.FullPath.EndsWith(".log.resources", StringComparison.OrdinalIgnoreCase))
+            if (!e.FullPath.EndsWith(".log.resources", StringComparison.OrdinalIgnoreCase))
             {
-                Logger.Info($"Watcher Activity: {e.ChangeType}. Path: {e.FullPath}");
+                Logger.ShutdownOverloadWatcherActivity(e.ChangeType, e.FullPath);
             }
 
             if (handleShutdowns && !shutdownInprogress && (e.FullPath ?? string.Empty).StartsWith(binFolder, StringComparison.OrdinalIgnoreCase))
             {
-                ShceduleShutdown();
+                ScheduleShutdown();
             }
         }
 
         private static void WatcherOnError(object sender, ErrorEventArgs e)
         {
-            if (Logger.IsInfoEnabled)
+            if (Logger.IsEnabled(LogLevel.Information))
             {
-                Logger.Info("Watcher Activity: N/A. Error: " + e.GetException());
+                Logger.ShutdownOverloadWatcherError(e.GetException());
             }
         }
     }
