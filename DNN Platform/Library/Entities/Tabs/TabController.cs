@@ -2560,7 +2560,7 @@ namespace DotNetNuke.Entities.Tabs
         {
             try
             {
-                Logger.TraceFormat(CultureInfo.InvariantCulture, "Localizing TabId: {0}, TabPath: {1}, Locale: {2}", originalTab.TabID, originalTab.TabPath, locale.Code);
+                Logger.TabControllerLocalizingTab(originalTab.TabID, originalTab.TabPath, locale.Code);
                 var defaultLocale = LocaleController.Instance.GetDefaultLocale(originalTab.PortalID);
 
                 // First Clone the Tab

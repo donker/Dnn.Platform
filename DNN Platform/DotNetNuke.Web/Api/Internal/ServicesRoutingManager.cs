@@ -170,7 +170,7 @@ namespace DotNetNuke.Web.Api.Internal
                 this.LocateServicesAndMapRoutes();
             }
 
-            Logger.TraceFormat(CultureInfo.InvariantCulture, "Registered a total of {0} routes", this.routes.Count);
+            Logger.ServicesRoutingManagerRegisteredRoutes(this.routes.Count);
         }
 
         /// <summary>Determines whether the given <paramref name="type"/> is a valid <see cref="IServiceRouteMapper"/>.</summary>

@@ -20,7 +20,8 @@ namespace DotNetNuke.Web.Mvc.Routing
 
     using Microsoft.Extensions.Logging;
 
-    public sealed class MvcRoutingManager : IMapRoute, IRoutingManager
+    /// <summary>An <see cref="IRoutingManager"/> for MVC extensions.</summary>
+    public sealed partial class MvcRoutingManager : IMapRoute, IRoutingManager
     {
         private static readonly ILogger Logger = DnnLoggingController.GetLogger<MvcRoutingManager>();
         private readonly RouteCollection routes;
@@ -109,7 +110,7 @@ namespace DotNetNuke.Web.Mvc.Routing
                 this.LocateServicesAndMapRoutes();
             }
 
-            Logger.TraceFormat(CultureInfo.InvariantCulture, "Registered a total of {0} routes", this.routes.Count);
+            Logger.MvcRoutingManagerRegisteredRoutes(this.routes.Count);
         }
 
         internal static bool IsValidServiceRouteMapper(Type t)

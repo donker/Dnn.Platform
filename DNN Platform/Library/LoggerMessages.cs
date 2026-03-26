@@ -10,6 +10,7 @@ using System.IO;
 using System.Threading;
 
 using DotNetNuke.Services.Log.EventLog;
+using DotNetNuke.Services.Upgrade.Internals.Steps;
 
 using Lucene.Net.Search;
 
@@ -170,4 +171,25 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(3_200, LogLevel.Trace, "TabIndexer: Search document for metaData added for page [{Title} tid:{TabId}]")]
     public static partial void TabIndexerPageMetadataDocumentAdded(this ILogger logger, string title, int tabId);
+
+    [LoggerMessage(3_300, LogLevel.Trace, "Localizing TabId: {TabId}, TabPath: {TabPath}, Locale: {Locale}")]
+    public static partial void TabControllerLocalizingTab(this ILogger logger, int tabId, string tabPath, string locale);
+
+    [LoggerMessage(3_400, LogLevel.Trace, "Adding FcnMode : {ErrorMessage}")]
+    public static partial void AddFcnModeStepAddingFcnMode(this ILogger logger, string errorMessage);
+
+    [LoggerMessage(3_500, LogLevel.Trace, "FilePermissionCheck - {Details}")]
+    public static partial void FilePermissionCheckStepCheck(this ILogger logger, string details);
+
+    [LoggerMessage(3_600, LogLevel.Trace, "FilePermissionCheck Status - {Status}")]
+    public static partial void FilePermissionCheckStepStatus(this ILogger logger, StepStatus status);
+
+    [LoggerMessage(3_700, LogLevel.Trace, "Adding InstallVersion : {ErrorMessage}")]
+    public static partial void InstallVersionStepAddingInstallVersion(this ILogger logger, string errorMessage);
+
+    [LoggerMessage(3_800, LogLevel.Trace, "GetUpgradedScripts databaseVersion:{DatabaseVersion} applicationVersion:{ApplicationVersion}")]
+    public static partial void UpgradeGetUpgradedScripts(this ILogger logger, Version databaseVersion, Version applicationVersion);
+
+    [LoggerMessage(3_801, LogLevel.Trace, "GetUpgradedScripts including {File}")]
+    public static partial void UpgradeGetUpgradedScriptsIncluding(this ILogger logger, string file);
 }

@@ -855,7 +855,7 @@ namespace DotNetNuke.Services.Upgrade
             string[] files = Directory.GetFiles(providerPath, "*." + DefaultProvider);
             Array.Sort(files); // The order of the returned file names is not guaranteed on certain NAS systems; use the Sort method if a specific sort order is required.
 
-            Logger.TraceFormat(CultureInfo.InvariantCulture, "GetUpgradedScripts databaseVersion:{0} applicationVersion:{1}", databaseVersion, ApplicationVersion);
+            Logger.UpgradeGetUpgradedScripts(databaseVersion, ApplicationVersion);
 
             foreach (string file in files)
             {
@@ -878,7 +878,7 @@ namespace DotNetNuke.Services.Upgrade
                                 scriptFiles.AddRange(incrementalFiles);
                             }
 
-                            Logger.TraceFormat(CultureInfo.InvariantCulture, "GetUpgradedScripts including {0}", file);
+                            Logger.UpgradeGetUpgradedScriptsIncluding(file);
                         }
 
                         if (version == databaseVersion && version <= ApplicationVersion && GetFileName(file).Length == 9 + DefaultProvider.Length)
@@ -889,7 +889,7 @@ namespace DotNetNuke.Services.Upgrade
                                 scriptFiles.AddRange(incrementalFiles);
                             }
 
-                            Logger.TraceFormat(CultureInfo.InvariantCulture, "GetUpgradedScripts including {0}", file);
+                            Logger.UpgradeGetUpgradedScriptsIncluding(file);
                         }
 
                         ////else
@@ -2126,12 +2126,11 @@ namespace DotNetNuke.Services.Upgrade
 
         protected static bool IsLanguageEnabled(int portalid, string code)
         {
-            Locale enabledLanguage;
-            return LocaleController.Instance.GetLocales(portalid).TryGetValue(code, out enabledLanguage);
+            return LocaleController.Instance.GetLocales(portalid).TryGetValue(code, out _);
         }
 
         /// <summary>AddModuleControl adds a new Module Control to the system.</summary>
-        /// <param name="moduleDefId">The Module Definition Id.</param>
+        /// <param name="moduleDefId">The Module Definition ID.</param>
         /// <param name="controlKey">The key for this control in the Definition.</param>
         /// <param name="controlTitle">The title of this control.</param>
         /// <param name="controlSrc">Te source of ths control.</param>

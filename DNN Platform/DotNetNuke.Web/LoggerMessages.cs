@@ -68,4 +68,7 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(7_000_601, LogLevel.Trace, "Mapping route: {OldRouteName} @ {OldRouteUrl}")]
     public static partial void ServicesRoutingManagerMappingOldRoute(this ILogger logger, string oldRouteName, string oldRouteUrl);
+
+    [LoggerMessage(7_000_602, LogLevel.Trace, "Registered a total of {Count} routes")]
+    public static partial void ServicesRoutingManagerRegisteredRoutes(this ILogger logger, int count);
 }
