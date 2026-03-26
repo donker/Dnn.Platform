@@ -233,9 +233,9 @@ namespace DotNetNuke.Services.Scheduling
         public virtual void AddLogNote(string notes)
         {
             this.logNotes.Append(notes);
-            if (TracelLogger.IsTraceEnabled)
+            if (TracelLogger.IsEnabled(LogLevel.Trace))
             {
-                TracelLogger.Trace(notes.Replace(@"<br/>", Environment.NewLine));
+                TracelLogger.ScheduleHistoryItemLogNote(notes.Replace("<br/>", Environment.NewLine));
             }
         }
 

@@ -29,7 +29,7 @@ namespace DotNetNuke.Web.Api.Internal
     using Microsoft.Extensions.Logging;
 
     /// <summary>Allows registering web API routes.</summary>
-    public sealed class ServicesRoutingManager : IMapRoute, IRoutingManager
+    public sealed partial class ServicesRoutingManager : IMapRoute, IRoutingManager
     {
         private static readonly ILogger Logger = DnnLoggingController.GetLogger<ServicesRoutingManager>();
         private readonly IServiceProvider serviceProvider;
@@ -92,10 +92,7 @@ namespace DotNetNuke.Web.Api.Internal
                 var routeUrl = this.portalAliasRouteManager.GetRouteUrl(moduleFolderName, url, count);
                 var route = this.MapHttpRouteWithNamespace(fullRouteName, routeUrl, defaults, constraints, namespaces);
                 mappedRoutes.Add(route);
-                if (Logger.IsTraceEnabled)
-                {
-                    Logger.Trace("Mapping route: " + fullRouteName + " @ " + routeUrl);
-                }
+                Logger.ServicesRoutingManagerMappingRoute(fullRouteName, routeUrl);
 
                 // compatible with old service path: DesktopModules/{namespace}/API/{controller}/{action}.
                 var oldRouteName = $"{fullRouteName}-old";
@@ -106,10 +103,7 @@ namespace DotNetNuke.Web.Api.Internal
 
                 var oldRoute = this.MapHttpRouteWithNamespace(oldRouteName, oldRouteUrl, defaults, constraints, namespaces);
                 mappedRoutes.Add(oldRoute);
-                if (Logger.IsTraceEnabled)
-                {
-                    Logger.Trace("Mapping route: " + oldRouteName + " @ " + oldRouteUrl);
-                }
+                Logger.ServicesRoutingManagerMappingOldRoute(oldRouteName, oldRouteUrl);
             }
 
             return mappedRoutes;

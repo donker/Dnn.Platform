@@ -39,6 +39,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(1_201, LogLevel.Debug, "ScheduleHistoryItem.Succeeded Info (ScheduledTask End): {FriendlyName}")]
     public static partial void ScheduleHistoryItemSucceededEnd(this ILogger logger, string friendlyName);
 
+    [LoggerMessage(1_202, LogLevel.Trace, "{Notes}")]
+    public static partial void ScheduleHistoryItemLogNote(this ILogger logger, string notes);
+
     [LoggerMessage(EventId = 1300, Level = LogLevel.Debug)]
     public static partial void SchedulerReaderLockRequestTimeout(this ILogger logger, Exception exception);
 
@@ -155,4 +158,16 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(2_905, LogLevel.Information, "Finished WebServerMonitor")]
     public static partial void WebServerMonitorFinishedWebServerMonitor(this ILogger logger);
+
+    [LoggerMessage(3_000, LogLevel.Trace, "Action succeeded - {Description}")]
+    public static partial void RetryableActionSucceeded(this ILogger logger, string description);
+
+    [LoggerMessage(3_001, LogLevel.Trace, "Retrying action {RetriesRemaining} - {Description}")]
+    public static partial void RetryableActionRetrying(this ILogger logger, int retriesRemaining, string description);
+
+    [LoggerMessage(3_100, LogLevel.Trace, "ModuleIndexer: {Count} search documents found for module [{DesktopModuleName} mid:{ModuleId}]")]
+    public static partial void ModuleIndexerSearchDocumentsFoundForModule(this ILogger logger, int count, string desktopModuleName, int moduleId);
+
+    [LoggerMessage(3_200, LogLevel.Trace, "TabIndexer: Search document for metaData added for page [{Title} tid:{TabId}]")]
+    public static partial void TabIndexerPageMetadataDocumentAdded(this ILogger logger, string title, int tabId);
 }
