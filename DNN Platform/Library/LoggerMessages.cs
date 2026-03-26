@@ -9,6 +9,8 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Threading;
 
+using DotNetNuke.Services.Log.EventLog;
+
 using Lucene.Net.Search;
 
 using Microsoft.Extensions.Logging;
@@ -81,6 +83,9 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(EventId = 1_800, Level = LogLevel.Debug)]
     public static partial void LogControllerConfigFileNotFound(this ILogger logger, FileNotFoundException exception);
+
+    [LoggerMessage(1_801, LogLevel.Information, "{LogInfo}")]
+    public static partial void LogControllerLogInfo(this ILogger logger, LogInfo logInfo);
 
     [LoggerMessage(EventId = 1_801, Level = LogLevel.Debug)]
     public static partial void LogControllerFailureToWriteToLogFile(this ILogger logger, IOException exception);

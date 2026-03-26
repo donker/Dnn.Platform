@@ -24,6 +24,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(7_000_102, LogLevel.Information, "Watcher Activity: N/A. Error:")]
     public static partial void ShutdownOverloadWatcherError(this ILogger logger, Exception exception);
 
+    [LoggerMessage(EventId = 7_000_103, Level = LogLevel.Information)]
+    public static partial void ShutdownOverloadInitializeFcnSettingsException(this ILogger logger, Exception exception);
+
     [LoggerMessage(7_000_200, LogLevel.Information, "Application Starting ({ElapsedSinceAppStart})")]
     public static partial void ApplicationStarting(this ILogger logger, TimeSpan elapsedSinceAppStart);
 

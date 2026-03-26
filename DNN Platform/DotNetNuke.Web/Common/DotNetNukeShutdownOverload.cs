@@ -74,7 +74,7 @@ namespace DotNetNuke.Web.Common.Internal
             }
             catch (Exception e)
             {
-                Logger.Info(e);
+                Logger.ShutdownOverloadInitializeFcnSettingsException(e);
             }
         }
 

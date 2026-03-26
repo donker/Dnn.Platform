@@ -54,7 +54,7 @@ namespace Dnn.PersonaBar.Security.Services
 
     /// <summary>Provides REST APIs to manage security settings.</summary>
     [MenuPermission(MenuName = Components.Constants.MenuName)]
-    public class SecurityController : PersonaBarApiController
+    public partial class SecurityController : PersonaBarApiController
     {
         private const string BULLETINXMLNODEPATH = "//channel/item";
         private const string UserRequestIPHeaderSettingName = "UserRequestIPHeader";
@@ -304,18 +304,20 @@ namespace Dnn.PersonaBar.Security.Services
         {
             try
             {
-                var ipf = new IPFilterInfo();
-                ipf.IPAddress = request.IPAddress;
-                ipf.SubnetMask = request.SubnetMask;
-                ipf.RuleType = request.RuleType;
-                ipf.Notes = request.Notes;
+                var ipf = new IPFilterInfo
+                {
+                    IPAddress = request.IPAddress,
+                    SubnetMask = request.SubnetMask,
+                    RuleType = request.RuleType,
+                    Notes = request.Notes,
+                };
 
-                if ((ipf.IPAddress == "127.0.0.1" || ipf.IPAddress == "localhost" || ipf.IPAddress == "::1" || ipf.IPAddress == "*") && ipf.RuleType == 2)
+                if (ipf.IPAddress is "127.0.0.1" or "localhost" or "::1" or "*" && ipf.RuleType == 2)
                 {
                     return this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, Localization.GetString("CannotDeleteLocalhost.Text", Components.Constants.LocalResourcesFile));
                 }
 
-                if (IPFilterController.Instance.IsAllowableDeny(HttpContext.Current.Request.UserHostAddress, ipf) == false)
+                if (!IPFilterController.Instance.IsAllowableDeny(HttpContext.Current.Request.UserHostAddress, ipf))
                 {
                     return this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, Localization.GetString("CannotDeleteIPInUse.Text", Components.Constants.LocalResourcesFile));
                 }
@@ -334,7 +336,7 @@ namespace Dnn.PersonaBar.Security.Services
             }
             catch (ArgumentException exc)
             {
-                Logger.Info(exc);
+                Logger.SecurityControllerUpdateIpFilterArgumentException(exc);
                 return this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, exc.Message);
             }
             catch (Exception exc)

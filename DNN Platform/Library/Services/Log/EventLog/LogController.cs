@@ -55,7 +55,7 @@ namespace DotNetNuke.Services.Log.EventLog
             ILogInfo theLogInfo = logInfo;
             if (this.appStatus.Status == UpgradeStatus.Install)
             {
-                Logger.Info(logInfo);
+                Logger.LogControllerLogInfo(logInfo);
             }
             else
             {
