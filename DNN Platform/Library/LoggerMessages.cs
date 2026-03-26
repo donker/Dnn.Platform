@@ -113,4 +113,46 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(2_500, LogLevel.Information, "Application shutting down. Reason: {Reason}")]
     public static partial void InitializeApplicationShuttingDown(this ILogger logger, string reason);
+
+    [LoggerMessage(2_501, LogLevel.Information, "Application shutting down. Reason: {Reason}\nASP.NET Shutdown Info: {ShutdownMessage}\n{ShutdownStack}")]
+    public static partial void InitializeApplicationShuttingDownWithInfo(this ILogger logger, string reason, string shutdownMessage, string shutdownStack);
+
+    [LoggerMessage(2_502, LogLevel.Information, "UnderConstruction page was shown because application needs to be installed, and both the AutoUpgrade and UseWizard AppSettings in web.config are false. Use /install/install.aspx?mode=install to install application. ")]
+    public static partial void InitializeUnderConstructionPageShownBecauseInstallationNeeded(this ILogger logger);
+
+    [LoggerMessage(2_503, LogLevel.Information, "UnderConstruction page was shown because application needs to be upgraded, and both the AutoUpgrade and UseInstallWizard AppSettings in web.config are false. Use /install/install.aspx?mode=upgrade to upgrade application. ")]
+    public static partial void InitializeUnderConstructionPageShownBecauseUpgradeNeeded(this ILogger logger);
+
+    [LoggerMessage(2_504, LogLevel.Information, "Application Initializing")]
+    public static partial void InitializeApplicationInitializing(this ILogger logger);
+
+    [LoggerMessage(2_505, LogLevel.Information, "Application Initialized")]
+    public static partial void InitializeApplicationInitialized(this ILogger logger);
+
+    [LoggerMessage(2_600, LogLevel.Information, "{RootPath} does not exist. ")]
+    public static partial void FileSystemUtilsFolderDoesNotExist(this ILogger logger, string rootPath);
+
+    [LoggerMessage(2_700, LogLevel.Information, "{Message}")]
+    public static partial void FolderManagerInvalidFileExtensionException(this ILogger logger, string message);
+
+    [LoggerMessage(2_800, LogLevel.Information, "{Message}")]
+    public static partial void InstallLoggerLogInfo(this ILogger logger, string message);
+
+    [LoggerMessage(2_900, LogLevel.Information, "Starting WebServerMonitor")]
+    public static partial void WebServerMonitorStartingWebServerMonitor(this ILogger logger);
+
+    [LoggerMessage(2_901, LogLevel.Information, "Starting UpdateCurrentServerActivity")]
+    public static partial void WebServerMonitorStartingUpdateCurrentServerActivity(this ILogger logger);
+
+    [LoggerMessage(2_902, LogLevel.Information, "Starting RemoveInActiveServers")]
+    public static partial void WebServerMonitorStartingRemoveInActiveServers(this ILogger logger);
+
+    [LoggerMessage(2_903, LogLevel.Information, "Finished RemoveInActiveServers")]
+    public static partial void WebServerMonitorFinishedRemoveInActiveServers(this ILogger logger);
+
+    [LoggerMessage(2_904, LogLevel.Information, "Finished UpdateCurrentServerActivity")]
+    public static partial void WebServerMonitorFinishedUpdateCurrentServerActivity(this ILogger logger);
+
+    [LoggerMessage(2_905, LogLevel.Information, "Finished WebServerMonitor")]
+    public static partial void WebServerMonitorFinishedWebServerMonitor(this ILogger logger);
 }

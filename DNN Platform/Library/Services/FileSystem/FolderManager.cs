@@ -40,7 +40,7 @@ namespace DotNetNuke.Services.FileSystem
     using Localization = DotNetNuke.Services.Localization.Localization;
 
     /// <summary>Exposes methods to manage folders.</summary>
-    public class FolderManager : ComponentBase<IFolderManager, FolderManager>, IFolderManager
+    public partial class FolderManager : ComponentBase<IFolderManager, FolderManager>, IFolderManager
     {
         private const string DefaultUsersFoldersPath = "Users";
         private const string DefaultMappedPathSetting = "DefaultMappedPath";
@@ -1774,7 +1774,7 @@ namespace DotNetNuke.Services.FileSystem
                         }
                         catch (InvalidFileExtensionException ex)
                         {
-                            Logger.Info(ex.Message);
+                            Logger.FolderManagerInvalidFileExtensionException(ex.Message);
                         }
                         catch (Exception ex)
                         {

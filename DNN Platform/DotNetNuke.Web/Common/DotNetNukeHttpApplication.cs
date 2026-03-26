@@ -133,7 +133,7 @@ namespace DotNetNuke.Web.Common.Internal
 
         private void Application_End(object sender, EventArgs eventArgs)
         {
-            Logger.Info("Application Ending");
+            Logger.ApplicationEnding();
 
             try
             {
@@ -177,7 +177,7 @@ namespace DotNetNuke.Web.Common.Internal
             }
 
             Logger.Trace("End Dumping all Application Errors");
-            Logger.Info("Application Ended");
+            Logger.ApplicationEnded();
         }
 
         private void Application_Start(object sender, EventArgs eventArgs)

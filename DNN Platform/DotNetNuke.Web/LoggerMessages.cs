@@ -27,9 +27,21 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 7_000_103, Level = LogLevel.Information)]
     public static partial void ShutdownOverloadInitializeFcnSettingsException(this ILogger logger, Exception exception);
 
+    [LoggerMessage(7_000_104, LogLevel.Information, "fileChangesMonitor is null")]
+    public static partial void ShutdownOverloadFileChangesMonitorIsNull(this ILogger logger);
+
+    [LoggerMessage(7_000_105, LogLevel.Information, "FCNMode = {fcnMode} (Modes: NotSet/Default=0, Disabled=1, Single=2)")]
+    public static partial void ShutdownOverloadFileChangeNotificationMode(this ILogger logger, object fcnMode);
+
     [LoggerMessage(7_000_200, LogLevel.Information, "Application Starting ({ElapsedSinceAppStart})")]
     public static partial void ApplicationStarting(this ILogger logger, TimeSpan elapsedSinceAppStart);
 
     [LoggerMessage(7_000_201, LogLevel.Information, "Application Started ({ElapsedSinceAppStart})")]
     public static partial void ApplicationStarted(this ILogger logger, TimeSpan elapsedSinceAppStart);
+
+    [LoggerMessage(7_000_202, LogLevel.Information, "Application Ending")]
+    public static partial void ApplicationEnding(this ILogger logger);
+
+    [LoggerMessage(7_000_203, LogLevel.Information, "Application Ended")]
+    public static partial void ApplicationEnded(this ILogger logger);
 }

@@ -42,7 +42,7 @@ namespace DotNetNuke.Web.Common.Internal
 
                 if (fileChangesMonitor == null)
                 {
-                    Logger.Info("fileChangesMonitor is null");
+                    Logger.ShutdownOverloadFileChangesMonitorIsNull();
 
                     ////AddSiteFilesMonitoring(true);
                 }
@@ -53,7 +53,7 @@ namespace DotNetNuke.Web.Common.Internal
                         .GetField("_FCNMode", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.IgnoreCase)
                         .GetValue(fileChangesMonitor);
 
-                    Logger.Info("FCNMode = " + fcnVal + " (Modes: NotSet/Default=0, Disabled=1, Single=2)");
+                    Logger.ShutdownOverloadFileChangeNotificationMode(fcnVal);
 
                     var dirMonCompletion = typeof(HttpRuntime).Assembly.GetType("System.Web.DirMonCompletion");
                     var dirMonCount = (int)dirMonCompletion.InvokeMember(

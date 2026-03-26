@@ -607,7 +607,7 @@ namespace DotNetNuke.Common.Utilities
             strRoot = FixPath(strRoot);
             if (string.IsNullOrEmpty(strRoot) || !Directory.Exists(strRoot))
             {
-                Logger.Info($"{strRoot} does not exist. ");
+                Logger.FileSystemUtilsFolderDoesNotExist(strRoot);
                 return;
             }
 
@@ -624,7 +624,7 @@ namespace DotNetNuke.Common.Utilities
                 }
                 catch (Exception ex)
                 {
-                    Logger.Info($"{strRoot} does not exist.");
+                    Logger.FileSystemUtilsFolderDoesNotExist(strRoot);
                     Logger.Error(ex);
                 }
             }
@@ -636,7 +636,7 @@ namespace DotNetNuke.Common.Utilities
             }
             catch (Exception ex)
             {
-                Logger.Info($"{strRoot} does not exist.");
+                Logger.FileSystemUtilsFolderDoesNotExist(strRoot);
                 Logger.Error(ex);
             }
         }
@@ -650,7 +650,7 @@ namespace DotNetNuke.Common.Utilities
             strRoot = FixPath(strRoot);
             if (string.IsNullOrEmpty(strRoot) || !await Directory.ExistsAsync(strRoot))
             {
-                Logger.Info($"{strRoot} does not exist. ");
+                Logger.FileSystemUtilsFolderDoesNotExist(strRoot);
                 return;
             }
 
@@ -669,7 +669,7 @@ namespace DotNetNuke.Common.Utilities
                 }
                 catch (Exception ex)
                 {
-                    Logger.Info($"{strRoot} does not exist.");
+                    Logger.FileSystemUtilsFolderDoesNotExist(strRoot);
                     Logger.Error(ex);
                 }
             }
@@ -681,7 +681,7 @@ namespace DotNetNuke.Common.Utilities
             }
             catch (Exception ex)
             {
-                Logger.Info($"{strRoot} does not exist.");
+                Logger.FileSystemUtilsFolderDoesNotExist(strRoot);
                 Logger.Error(ex);
             }
         }
@@ -692,7 +692,7 @@ namespace DotNetNuke.Common.Utilities
         {
             if (string.IsNullOrWhiteSpace(path) || !Directory.Exists(path))
             {
-                Logger.Info($"{path} does not exist.");
+                Logger.FileSystemUtilsFolderDoesNotExist(path);
                 return;
             }
 
@@ -728,7 +728,7 @@ namespace DotNetNuke.Common.Utilities
         {
             if (string.IsNullOrWhiteSpace(path) || !await Directory.ExistsAsync(path))
             {
-                Logger.Info($"{path} does not exist.");
+                Logger.FileSystemUtilsFolderDoesNotExist(path);
                 return;
             }
 

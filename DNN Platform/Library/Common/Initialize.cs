@@ -173,9 +173,7 @@ namespace DotNetNuke.Common
                         null,
                         CultureInfo.InvariantCulture) as string;
 
-                    Logger.Info("Application shutting down. Reason: " + shutdownDetail
-                                + Environment.NewLine + "ASP.NET Shutdown Info: " + shutDownMessage
-                                + Environment.NewLine + shutDownStack);
+                    Logger.InitializeApplicationShuttingDownWithInfo(shutdownDetail, shutDownMessage, shutDownStack);
                 }
             }
             catch (Exception exc)
@@ -304,7 +302,7 @@ namespace DotNetNuke.Common
                     {
                         CreateUnderConstructionPage(server);
                         retValue = "~/Install/UnderConstruction.htm";
-                        Logger.Info("UnderConstruction page was shown because application needs to be installed, and both the AutoUpgrade and UseWizard AppSettings in web.config are false. Use /install/install.aspx?mode=install to install application. ");
+                        LoggerMessages.InitializeUnderConstructionPageShownBecauseInstallationNeeded(Logger);
                     }
 
                     break;
@@ -317,7 +315,7 @@ namespace DotNetNuke.Common
                     {
                         CreateUnderConstructionPage(server);
                         retValue = "~/Install/UnderConstruction.htm";
-                        Logger.Info("UnderConstruction page was shown because application needs to be upgraded, and both the AutoUpgrade and UseInstallWizard AppSettings in web.config are false. Use /install/install.aspx?mode=upgrade to upgrade application. ");
+                        LoggerMessages.InitializeUnderConstructionPageShownBecauseUpgradeNeeded(Logger);
                     }
 
                     break;
@@ -454,7 +452,7 @@ namespace DotNetNuke.Common
                 return redirect;
             }
 
-            Logger.Info("Application Initializing");
+            LoggerMessages.InitializeApplicationInitializing(Logger);
 
             // Set globals
             Globals.IISAppName = request.ServerVariables["APPL_MD_PATH"];
@@ -484,7 +482,7 @@ namespace DotNetNuke.Common
             // Set Flag so we can determine the first Page Request after Application Start
             app.Context.Items.Add("FirstRequest", true);
 
-            Logger.Info("Application Initialized");
+            LoggerMessages.InitializeApplicationInitialized(Logger);
 
             initialized = true;
 
