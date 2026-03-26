@@ -44,7 +44,7 @@ namespace DotNetNuke.Web.Common.Internal
     using Microsoft.Extensions.Logging;
 
     /// <summary>DotNetNuke Http Application. It will handle Start, End, BeginRequest, Error event for whole application.</summary>
-    public class DotNetNukeHttpApplication : HttpApplication
+    public partial class DotNetNukeHttpApplication : HttpApplication
     {
         private static readonly ILogger Logger = DnnLoggingController.GetLogger<DotNetNukeHttpApplication>();
 
@@ -182,12 +182,12 @@ namespace DotNetNuke.Web.Common.Internal
 
         private void Application_Start(object sender, EventArgs eventArgs)
         {
-            Logger.InfoFormat(CultureInfo.InvariantCulture, "Application Starting ({0})", Globals.ElapsedSinceAppStart); // just to start the timer
+            Logger.ApplicationStarting(Globals.ElapsedSinceAppStart); // just to start the timer
 
             var name = Config.GetSetting("ServerName");
             Globals.ServerName = string.IsNullOrEmpty(name) ? Dns.GetHostName() : name;
 
-            Logger.InfoFormat(CultureInfo.InvariantCulture, "Application Started ({0})", Globals.ElapsedSinceAppStart); // just to start the timer
+            Logger.ApplicationStarted(Globals.ElapsedSinceAppStart); // just to start the timer
             DotNetNukeShutdownOverload.InitializeFcnSettings(new ApplicationStatusInfo(new Application()));
 
             // register the assembly-lookup to correct the breaking rename in DNN 9.2

@@ -105,4 +105,7 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(2_401, LogLevel.Debug, "GetServerName: {ServerName}")]
     public static partial void ServerControllerGetServerName(this ILogger logger, string serverName);
+
+    [LoggerMessage(2_500, LogLevel.Information, "Application shutting down. Reason: {Reason}")]
+    public static partial void InitializeApplicationShuttingDown(this ILogger logger, string reason);
 }

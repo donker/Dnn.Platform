@@ -19,7 +19,8 @@ namespace Dnn.PersonaBar.Library.AppEvents
 
     using Microsoft.Extensions.Logging;
 
-    public class EventsController : ServiceLocator<IEventsController, EventsController>, IEventsController
+    /// <summary>The default <see cref="IEventsController"/> implementation.</summary>
+    public partial class EventsController : ServiceLocator<IEventsController, EventsController>, IEventsController
     {
         private static readonly ILogger Logger = DnnLoggingController.GetLogger<EventsController>();
 
@@ -139,12 +140,7 @@ namespace Dnn.PersonaBar.Library.AppEvents
 
             if (!matched)
             {
-                Logger.InfoFormat(
-                    CultureInfo.InvariantCulture,
-                    "Type \"{0}\"'s version ({1}) doesn't match current version({2}) so ignored",
-                    t.FullName,
-                    typeVersion,
-                    currentVersion);
+                Logger.EventsControllerVersionMismatch(t.FullName, typeVersion, currentVersion);
             }
 
             return matched;

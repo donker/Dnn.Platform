@@ -32,7 +32,7 @@ namespace DotNetNuke.Common
     using SchedulerMode = DotNetNuke.Abstractions.Application.SchedulerMode;
 
     /// <summary>The Object to initialize application.</summary>
-    public class Initialize
+    public partial class Initialize
     {
         private static readonly ILogger Logger = DnnLoggingController.GetLogger<Initialize>();
         private static readonly object InitializeLock = new object();
@@ -153,7 +153,7 @@ namespace DotNetNuke.Common
                         null,
                         CultureInfo.InvariantCulture) is not HttpRuntime runtime)
                 {
-                    Logger.InfoFormat(CultureInfo.InvariantCulture, "Application shutting down. Reason: {0}", shutdownDetail);
+                    Logger.InitializeApplicationShuttingDown(shutdownDetail);
                 }
                 else
                 {
