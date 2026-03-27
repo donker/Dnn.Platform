@@ -14,6 +14,15 @@ internal static partial class LoggerMessages
     [LoggerMessage(6_000_000, LogLevel.Information, "Type \"{TypeFullName}\"'s version ({TypeVersion}) doesn't match current version({CurrentVersion}) so ignored")]
     public static partial void EventsControllerVersionMismatch(this ILogger logger, string typeFullName, Version typeVersion, Version currentVersion);
 
+    [LoggerMessage(6_000_001, LogLevel.Error, "{TypeFullName}.ApplicationStart threw an exception.")]
+    public static partial void EventsControllerApplicationStartThrewAnException(this ILogger logger, Exception exception, string typeFullName);
+
+    [LoggerMessage(6_000_002, LogLevel.Error, "{TypeFullName}.ApplicationEnd threw an exception.")]
+    public static partial void EventsControllerApplicationEndThrewAnException(this ILogger logger, Exception exception, string typeFullName);
+
+    [LoggerMessage(6_000_003, LogLevel.Error, "Unable to create {TypeFullName} while calling Application start implementors.")]
+    public static partial void EventsControllerUnableToCreateAppEventHandler(this ILogger logger, Exception exception, string typeFullName);
+
     [LoggerMessage(6_000_100, LogLevel.Warning, "No instance of type '{TypeFullName}' and name '{Name}' is registered in the IOC container.")]
     public static partial void IocUtilNoInstanceOfTypeAndNameIsRegisteredInTheIocContainer(this ILogger logger, string typeFullName, string name);
 }

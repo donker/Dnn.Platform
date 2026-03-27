@@ -8,11 +8,14 @@ using System;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Threading;
+using System.Web.UI;
 
 using DotNetNuke.Abstractions.Application;
 using DotNetNuke.Services.FileSystem;
 using DotNetNuke.Services.Log.EventLog;
+using DotNetNuke.Services.Search.Entities;
 using DotNetNuke.Services.Upgrade.Internals.Steps;
 
 using Lucene.Net.Search;
@@ -97,6 +100,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 1_801, Level = LogLevel.Debug)]
     public static partial void LogControllerFailureToWriteToLogFile(this ILogger logger, IOException exception);
 
+    [LoggerMessage(1_802, LogLevel.Error, "filePath={FilePath}, header={Header}, message={Message}")]
+    public static partial void LogControllerRaiseError(this ILogger logger, string filePath, string header, string message);
+
     [LoggerMessage(EventId = 1_900, Level = LogLevel.Debug)]
     public static partial void PurgeModuleCachePurgeNotSupportedException(this ILogger logger, NotSupportedException exception);
 
@@ -145,6 +151,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(2_600, LogLevel.Information, "{RootPath} does not exist. ")]
     public static partial void FileSystemUtilsFolderDoesNotExist(this ILogger logger, string rootPath);
 
+    [LoggerMessage(2_601, LogLevel.Error, "Reading from {FilePath} didn't read all data in buffer. Requested to read {BufferLength} bytes, but was read {ReadCount} bytes")]
+    public static partial void FileSystemUtilsAddToZipDidNotReadAllDataInBuffer(this ILogger logger, string filePath, long bufferLength, int readCount);
+
     [LoggerMessage(2_700, LogLevel.Information, "{Message}")]
     public static partial void FolderManagerInvalidFileExtensionException(this ILogger logger, string message);
 
@@ -171,6 +180,9 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(2_905, LogLevel.Information, "Finished WebServerMonitor")]
     public static partial void WebServerMonitorFinishedWebServerMonitor(this ILogger logger);
+
+    [LoggerMessage(2_906, LogLevel.Error, "Error in WebServerMonitor: {Message}. {StackTrace}")]
+    public static partial void WebServerMonitorErrorInWebServerMonitor(this ILogger logger, Exception exception, string message, string stackTrace);
 
     [LoggerMessage(3_000, LogLevel.Trace, "Action succeeded - {Description}")]
     public static partial void RetryableActionSucceeded(this ILogger logger, string description);
@@ -300,4 +312,22 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(5_500, LogLevel.Warning, "Ignoring invalid cleanup folder path '{Path}' in package '{PackageName}'.")]
     public static partial void CleanupInstallerIgnoringInvalidCleanupFolderPath(this ILogger logger, string path, string packageName);
+
+    [LoggerMessage(5_600, LogLevel.Error, "Invalid data type {DataTypeId} for profile property {PropertyName}")]
+    public static partial void UserProfileInvalidDataType(this ILogger logger, int dataTypeId, string propertyName);
+
+    [LoggerMessage(5_700, LogLevel.Error, "Error localizing module, moduleId: {ModuleId}")]
+    public static partial void ModuleControllerErrorLocalizingModule(this ILogger logger, Exception exception, int moduleId);
+
+    [LoggerMessage(5_800, LogLevel.Error, "WebResponse exception: {ResponseContent}")]
+    public static partial void OAuthClientBaseWebResponseException(this ILogger logger, WebException exception, string responseContent);
+
+    [LoggerMessage(5_900, LogLevel.Error, "FriendlyMessage=\"{FriendlyMessage}\" ctrl=\"{Control}\"")]
+    public static partial void ExceptionsProcessModuleLoadException(this ILogger logger, Exception exception, string friendlyMessage, Control control);
+
+    [LoggerMessage(6_000, LogLevel.Error, "Error has occurred getting PageUrl for {TabName}")]
+    public static partial void CoreSitemapProviderErrorGettingPageUrl(this ILogger logger, Exception exception, string tabName);
+
+    [LoggerMessage(6_100, LogLevel.Error, "Search Document error: {SearchDocument}")]
+    public static partial void InternalSearchControllerSearchDocumentError(this ILogger logger, Exception exception, SearchDocument searchDocument);
 }

@@ -293,7 +293,7 @@ namespace DotNetNuke.Services.Exceptions
                 ProcessPageLoadException(exc2);
             }
 
-            Logger.ErrorFormat(CultureInfo.InvariantCulture, "FriendlyMessage=\"{0}\" ctrl=\"{1}\" exc=\"{2}\"", friendlyMessage, ctrl, exc);
+            Logger.ExceptionsProcessModuleLoadException(exc, friendlyMessage, ctrl);
         }
 
         /// <summary>Processes the page load exception.</summary>

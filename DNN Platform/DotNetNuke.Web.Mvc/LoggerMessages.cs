@@ -4,6 +4,8 @@
 
 namespace DotNetNuke.Web.Mvc;
 
+using System;
+
 using Microsoft.Extensions.Logging;
 
 /// <summary>Extension methods for <see cref="ILogger"/> for pre-defined logging messages.</summary>
@@ -14,6 +16,12 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(1_000_001, LogLevel.Trace, "Mapping route: {FullRouteName} @ {RouteUrl}")]
     public static partial void MvcRoutingManagerMappingRoute(this ILogger logger, string fullRouteName, string routeUrl);
+
+    [LoggerMessage(1_000_002, LogLevel.Error, "{FullTypeName}.RegisterRoutes threw an exception.")]
+    public static partial void MvcRoutingManagerRegisterRoutesThrewException(this ILogger logger, Exception exception, string fullTypeName);
+
+    [LoggerMessage(1_000_002, LogLevel.Error, "Unable to create {fullTypeName} while registering service routes.")]
+    public static partial void MvcRoutingManagerUnableToCreateMapper(this ILogger logger, Exception exception, string fullTypeName);
 
     [LoggerMessage(1_000_100, LogLevel.Warning, "The specified moniker ({Moniker}) is not defined in the system")]
     public static partial void StandardTabAndModuleInfoProviderMonikerIsNotDefined(this ILogger logger, string moniker);

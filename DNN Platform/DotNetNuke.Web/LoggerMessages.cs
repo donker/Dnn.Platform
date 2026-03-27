@@ -102,6 +102,12 @@ internal static partial class LoggerMessages
     [LoggerMessage(7_000_605, LogLevel.Trace, "Instantiated/Activated instance of {AuthScheme}, class: {ClassFullName}")]
     public static partial void ServicesRoutingManagerHandlerIsActivated(this ILogger logger, string authScheme, string classFullName);
 
+    [LoggerMessage(7_000_606, LogLevel.Error, "{FullTypeName}.RegisterRoutes threw an exception.")]
+    public static partial void ServicesRoutingManagerRegisterRoutesThrewAnException(this ILogger logger, Exception exception, string fullTypeName);
+
+    [LoggerMessage(7_000_607, LogLevel.Error, "Unable to create {fullTypeName} while registering service routes.")]
+    public static partial void ServicesRoutingManagerUnableToCreateRouteMapper(this ILogger logger, Exception exception, string fullTypeName);
+
     [LoggerMessage(7_000_700, LogLevel.Warning, "The specified moniker ({Moniker}) is not defined in the system")]
     public static partial void StandardTabAndModuleInfoProviderMonikerIsNotDefined(this ILogger logger, string moniker);
 

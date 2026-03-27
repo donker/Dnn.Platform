@@ -4,6 +4,8 @@
 
 namespace Dnn.ExportImport;
 
+using System;
+
 using Microsoft.Extensions.Logging;
 
 /// <summary>Extension methods for <see cref="ILogger"/> for pre-defined logging messages.</summary>
@@ -11,4 +13,10 @@ internal static partial class LoggerMessages
 {
     [LoggerMessage(10_000_000, LogLevel.Trace, "Site Export/Import: Job Finished")]
     public static partial void ExportImportSchedulerJobFinished(this ILogger logger);
+
+    [LoggerMessage(10_000_100, LogLevel.Error, "Unable to clear {TypeName} while calling CleanupDatabaseIfDirty.")]
+    public static partial void ExportImportEngineUnableToClear(this ILogger logger, Exception exception, string typeName);
+
+    [LoggerMessage(10_000_200, LogLevel.Error, "ModuleContent: (Module ID={ModuleId}). {XmlContent}")]
+    public static partial void PagesExportServiceModuleContentError(this ILogger logger, Exception exception, int moduleId, string xmlContent);
 }

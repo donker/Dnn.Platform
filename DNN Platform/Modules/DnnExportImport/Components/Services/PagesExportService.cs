@@ -1552,17 +1552,8 @@ namespace Dnn.ExportImport.Components.Services
                                 }
                                 catch (Exception ex)
                                 {
-                                    this.Result.AddLogEntry(
-                                        "Error importing module data, Module ID=" + localModule.ModuleID,
-                                        ex.Message,
-                                        ReportLevel.Error);
-                                    Logger.ErrorFormat(
-                                        CultureInfo.InvariantCulture,
-                                        "ModuleContent: (Module ID={0}). Error: {1}{2}{3}",
-                                        localModule.ModuleID,
-                                        ex,
-                                        Environment.NewLine,
-                                        moduleContent.XmlContent);
+                                    this.Result.AddLogEntry($"Error importing module data, Module ID={localModule.ModuleID}", ex.Message, ReportLevel.Error);
+                                    Logger.PagesExportServiceModuleContentError(ex, localModule.ModuleID, moduleContent.XmlContent);
                                 }
                             }
                         }

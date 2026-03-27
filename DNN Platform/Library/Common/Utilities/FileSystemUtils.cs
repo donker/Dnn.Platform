@@ -42,12 +42,7 @@ namespace DotNetNuke.Common.Utilities
             var len = fs.Read(buffer, 0, buffer.Length);
             if (len != fs.Length)
             {
-                Logger.ErrorFormat(
-                    CultureInfo.InvariantCulture,
-                    "Reading from {0} didn't read all data in buffer. Requested to read {1} bytes, but was read {2} bytes",
-                    filePath,
-                    fs.Length,
-                    len);
+                Logger.FileSystemUtilsAddToZipDidNotReadAllDataInBuffer(filePath, fs.Length, len);
             }
 
             // Create Zip Entry
@@ -71,12 +66,7 @@ namespace DotNetNuke.Common.Utilities
             var len = await fs.ReadAsync(buffer, 0, buffer.Length, cancellationToken);
             if (len != fs.Length)
             {
-                Logger.ErrorFormat(
-                    CultureInfo.InvariantCulture,
-                    "Reading from {0} didn't read all data in buffer. Requested to read {1} bytes, but was read {2} bytes",
-                    filePath,
-                    fs.Length,
-                    len);
+                Logger.FileSystemUtilsAddToZipDidNotReadAllDataInBuffer(filePath, fs.Length, len);
             }
 
             // Create Zip Entry
@@ -787,12 +777,7 @@ namespace DotNetNuke.Common.Utilities
                 var len = fs.Read(buffer, 0, buffer.Length);
                 if (len != fs.Length)
                 {
-                    Logger.ErrorFormat(
-                        CultureInfo.InvariantCulture,
-                        "Reading from {0} didn't read all data in buffer. Requested to read {1} bytes, but was read {2} bytes",
-                        filePath,
-                        fs.Length,
-                        len);
+                    Logger.FileSystemUtilsAddToZipDidNotReadAllDataInBuffer(filePath, fs.Length, len);
                 }
 
                 // Create Zip Entry

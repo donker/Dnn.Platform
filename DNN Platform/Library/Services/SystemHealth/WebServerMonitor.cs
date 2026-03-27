@@ -46,7 +46,7 @@ namespace DotNetNuke.Services.SystemHealth
                 this.ScheduleHistoryItem.Succeeded = false;
                 this.ScheduleHistoryItem.AddLogNote($"Updating server health failed: {exc}.");
                 this.Errored(ref exc);
-                Logger.ErrorFormat(CultureInfo.InvariantCulture, "Error in WebServerMonitor: {0}. {1}", exc.Message, exc.StackTrace);
+                Logger.WebServerMonitorErrorInWebServerMonitor(exc, exc.Message, exc.StackTrace);
                 Exceptions.LogException(exc);
             }
         }

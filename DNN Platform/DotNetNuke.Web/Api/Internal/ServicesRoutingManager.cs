@@ -267,7 +267,7 @@ namespace DotNetNuke.Web.Api.Internal
                 }
                 catch (Exception e)
                 {
-                    Logger.ErrorFormat(CultureInfo.InvariantCulture, "{0}.RegisterRoutes threw an exception.  {1}\r\n{2}", routeMapper.GetType().FullName, e.Message, e.StackTrace);
+                    Logger.ServicesRoutingManagerRegisterRoutesThrewAnException(e, routeMapper.GetType().FullName);
                 }
             }
         }
@@ -288,7 +288,7 @@ namespace DotNetNuke.Web.Api.Internal
                 }
                 catch (Exception e)
                 {
-                    Logger.ErrorFormat(CultureInfo.InvariantCulture, "Unable to create {0} while registering service routes.  {1}", routeMapperType.FullName, e.Message);
+                    Logger.ServicesRoutingManagerUnableToCreateRouteMapper(e, routeMapperType.FullName);
                     routeMapper = null;
                 }
 

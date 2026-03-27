@@ -365,7 +365,7 @@ namespace DotNetNuke.Services.Log.EventLog
 
         private static void RaiseError(string filePath, string header, string message)
         {
-            Logger.ErrorFormat(CultureInfo.InvariantCulture, "filePath={0}, header={1}, message={2}", filePath, header, message);
+            Logger.LogControllerRaiseError(filePath, header, message);
 
             if (HttpContext.Current != null)
             {
