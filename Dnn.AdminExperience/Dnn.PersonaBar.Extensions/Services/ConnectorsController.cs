@@ -139,9 +139,9 @@ namespace Dnn.PersonaBar.Connectors.Services
             }
             catch (Exception ex)
             {
-                if (ex is ConnectorArgumentException)
+                if (ex is ConnectorArgumentException connectorArgumentException)
                 {
-                    Logger.Warn(ex);
+                    Logger.ConnectorsControllerSaveConnectionConnectorArgumentException(connectorArgumentException);
                 }
                 else
                 {

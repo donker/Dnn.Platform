@@ -1200,16 +1200,16 @@ namespace DotNetNuke.Services.FileSystem
                     }
                     catch (PermissionsNotMetException exc)
                     {
-                        Logger.Warn(exc);
+                        Logger.FileManagerExtractFilesPermissionsNotMet(exc);
                     }
                     catch (NoSpaceAvailableException exc)
                     {
-                        Logger.Warn(exc);
+                        Logger.FileManagerExtractFilesNoSpaceAvailable(exc);
                     }
                     catch (InvalidFileExtensionException exc)
                     {
                         invalidFiles.Add(zipEntry.FullName);
-                        Logger.Warn(exc);
+                        Logger.FileManagerExtractFilesInvalidFileExtension(exc);
                     }
                     catch (Exception exc)
                     {

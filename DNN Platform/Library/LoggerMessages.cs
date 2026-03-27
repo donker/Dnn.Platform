@@ -10,6 +10,7 @@ using System.IO;
 using System.Threading;
 
 using DotNetNuke.Abstractions.Application;
+using DotNetNuke.Services.FileSystem;
 using DotNetNuke.Services.Log.EventLog;
 using DotNetNuke.Services.Upgrade.Internals.Steps;
 
@@ -232,4 +233,13 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(4_300, LogLevel.Trace, "Executing SQL Script {SQL}")]
     public static partial void SqlDataProviderExecutingSqlScript(this ILogger logger, string sql);
+
+    [LoggerMessage(EventId = 4_400, Level = LogLevel.Warning)]
+    public static partial void FileManagerExtractFilesPermissionsNotMet(this ILogger logger, PermissionsNotMetException exception);
+
+    [LoggerMessage(EventId = 4_401, Level = LogLevel.Warning)]
+    public static partial void FileManagerExtractFilesNoSpaceAvailable(this ILogger logger, NoSpaceAvailableException exception);
+
+    [LoggerMessage(EventId = 4_402, Level = LogLevel.Warning)]
+    public static partial void FileManagerExtractFilesInvalidFileExtension(this ILogger logger, InvalidFileExtensionException exception);
 }
