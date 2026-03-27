@@ -11,4 +11,7 @@ internal static partial class LoggerMessages
 {
     [LoggerMessage(1_000_000, LogLevel.Trace, "Registered a total of {Count} routes")]
     public static partial void MvcRoutingManagerRegisteredRoutes(this ILogger logger, int count);
+
+    [LoggerMessage(1_000_001, LogLevel.Trace, "Mapping route: {FullRouteName} @ {RouteUrl}")]
+    public static partial void MvcRoutingManagerMappingRoute(this ILogger logger, string fullRouteName, string routeUrl);
 }

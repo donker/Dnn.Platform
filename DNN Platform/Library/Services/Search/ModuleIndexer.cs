@@ -163,7 +163,7 @@ namespace DotNetNuke.Services.Search
                             searchDoc.Tags = module.Terms.Select(t => t.Name);
                         }
 
-                        Logger.Trace("ModuleIndexer: Search document for metaData found for module [" + module.DesktopModule.ModuleName + " mid:" + module.ModuleID + "]");
+                        Logger.ModuleIndexerSearchDocumentForMetadataFoundForModule(module.DesktopModule.ModuleName, module.ModuleID);
 
                         searchDocuments.Add(searchDoc);
                     }

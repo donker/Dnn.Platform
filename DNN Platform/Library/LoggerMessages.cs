@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Threading;
 
+using DotNetNuke.Abstractions.Application;
 using DotNetNuke.Services.Log.EventLog;
 using DotNetNuke.Services.Upgrade.Internals.Steps;
 
@@ -133,6 +134,12 @@ internal static partial class LoggerMessages
     [LoggerMessage(2_505, LogLevel.Information, "Application Initialized")]
     public static partial void InitializeApplicationInitialized(this ILogger logger);
 
+    [LoggerMessage(2_506, LogLevel.Trace, "Running Schedule {SchedulerMode}")]
+    public static partial void InitializeRunningSchedule(this ILogger logger, SchedulerMode schedulerMode);
+
+    [LoggerMessage(2_507, LogLevel.Trace, "Request {LocalPath}")]
+    public static partial void InitializeRequest(this ILogger logger, string localPath);
+
     [LoggerMessage(2_600, LogLevel.Information, "{RootPath} does not exist. ")]
     public static partial void FileSystemUtilsFolderDoesNotExist(this ILogger logger, string rootPath);
 
@@ -169,6 +176,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(3_100, LogLevel.Trace, "ModuleIndexer: {Count} search documents found for module [{DesktopModuleName} mid:{ModuleId}]")]
     public static partial void ModuleIndexerSearchDocumentsFoundForModule(this ILogger logger, int count, string desktopModuleName, int moduleId);
 
+    [LoggerMessage(3_101, LogLevel.Trace, "ModuleIndexer: Search document for metaData found for module [{DesktopModuleName} mid:{ModuleId}]")]
+    public static partial void ModuleIndexerSearchDocumentForMetadataFoundForModule(this ILogger logger, string desktopModuleName, int moduleId);
+
     [LoggerMessage(3_200, LogLevel.Trace, "TabIndexer: Search document for metaData added for page [{Title} tid:{TabId}]")]
     public static partial void TabIndexerPageMetadataDocumentAdded(this ILogger logger, string title, int tabId);
 
@@ -192,4 +202,34 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(3_801, LogLevel.Trace, "GetUpgradedScripts including {File}")]
     public static partial void UpgradeGetUpgradedScriptsIncluding(this ILogger logger, string file);
+
+    [LoggerMessage(3_900, LogLevel.Trace, "Getting component for {FullName}")]
+    public static partial void ContainerWithServiceProviderFallbackGettingComponent(this ILogger logger, string fullName);
+
+    [LoggerMessage(3_901, LogLevel.Trace, "Got component for {FullName} from container")]
+    public static partial void ContainerWithServiceProviderFallbackGotComponentFromContainer(this ILogger logger, string fullName);
+
+    [LoggerMessage(3_902, LogLevel.Trace, "Getting component for {FullName} from service provider")]
+    public static partial void ContainerWithServiceProviderFallbackGettingComponentFromServiceProvider(this ILogger logger, string fullName);
+
+    [LoggerMessage(4_000, LogLevel.Trace, "{Details}")]
+    public static partial void InstallExtensionsStepInstallingExtensionPackage(this ILogger logger, string details);
+
+    [LoggerMessage(4_100, LogLevel.Trace, "Search: Site Crawler - Starting. Content change start time {LastSuccessfulDateTime}")]
+    public static partial void SearchEngineSchedulerStarting(this ILogger logger, DateTime lastSuccessfulDateTime);
+
+    [LoggerMessage(4_101, LogLevel.Trace, "Search: Site Crawler - Indexing Successful")]
+    public static partial void SearchEngineSchedulerSuccessful(this ILogger logger);
+
+    [LoggerMessage(4_200, LogLevel.Trace, "Getting application status")]
+    public static partial void ApplicationStatusInfoGettingStatus(this ILogger logger);
+
+    [LoggerMessage(4_201, LogLevel.Trace, "result of getting providerpath: {Message}")]
+    public static partial void ApplicationStatusInfoResultOfGettingProviderPath(this ILogger logger, string message);
+
+    [LoggerMessage(4_202, LogLevel.Trace, "Application status is {Status}")]
+    public static partial void ApplicationStatusInfoStatusIs(this ILogger logger, UpgradeStatus status);
+
+    [LoggerMessage(4_300, LogLevel.Trace, "Executing SQL Script {SQL}")]
+    public static partial void SqlDataProviderExecutingSqlScript(this ILogger logger, string sql);
 }

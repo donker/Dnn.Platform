@@ -232,7 +232,7 @@ namespace DotNetNuke.Common
 
                     if (hostSettings.SchedulerMode == SchedulerMode.RequestMethod && SchedulingProvider.ReadyForPoll)
                     {
-                        Logger.Trace("Running Schedule " + hostSettings.SchedulerMode);
+                        Logger.InitializeRunningSchedule(hostSettings.SchedulerMode);
                         var scheduler = SchedulingProvider.Instance();
                         var requestScheduleThread = new Thread(scheduler.ExecuteTasks) { IsBackground = true };
                         requestScheduleThread.Start();
@@ -264,7 +264,7 @@ namespace DotNetNuke.Common
             // instantiate APPLICATION_START scheduled jobs
             if (hostSettings.SchedulerMode == SchedulerMode.TimerMethod)
             {
-                Logger.Trace("Running Schedule " + hostSettings.SchedulerMode);
+                Logger.InitializeRunningSchedule(hostSettings.SchedulerMode);
                 var newThread = new Thread(scheduler.Start)
                 {
                     IsBackground = true,
@@ -432,7 +432,7 @@ namespace DotNetNuke.Common
         {
             var request = app.Request;
 
-            Logger.Trace("Request " + request.Url.LocalPath);
+            Logger.InitializeRequest(request.Url.LocalPath);
 
             // Don't process some of the AppStart methods if we are installing
             if (IsUpgradeOrInstallRequest(app.Request))

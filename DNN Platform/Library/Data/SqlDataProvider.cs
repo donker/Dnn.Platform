@@ -20,7 +20,8 @@ namespace DotNetNuke.Data
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
-    public sealed class SqlDataProvider : DataProvider
+    /// <summary>A <see cref="DataProvider"/> implementation for SQL Server.</summary>
+    public sealed partial class SqlDataProvider : DataProvider
     {
         private const string ScriptDelimiter = @"(?<=(?:[^\w]+|^))GO(?=(?: |\t)*?(?:\r?\n|$))";
         private static readonly ILogger Logger = DnnLoggingController.GetLogger<SqlDataProvider>();
@@ -223,7 +224,7 @@ namespace DotNetNuke.Data
 
                     try
                     {
-                        Logger.Trace("Executing SQL Script " + sql);
+                        Logger.SqlDataProviderExecutingSqlScript(sql);
 
                         dbConnectionProvider.ExecuteNonQuery(connectionString, CommandType.Text, timeoutSec, sql);
                     }

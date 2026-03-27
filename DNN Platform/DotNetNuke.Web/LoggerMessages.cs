@@ -33,6 +33,15 @@ internal static partial class LoggerMessages
     [LoggerMessage(7_000_105, LogLevel.Information, "FCNMode = {fcnMode} (Modes: NotSet/Default=0, Disabled=1, Single=2)")]
     public static partial void ShutdownOverloadFileChangeNotificationMode(this ILogger logger, object fcnMode);
 
+    [LoggerMessage(7_000_106, LogLevel.Trace, "DirMonCompletion count: {Count}")]
+    public static partial void ShutdownOverloadDirMonCompletionCount(this ILogger logger, int count);
+
+    [LoggerMessage(7_000_107, LogLevel.Trace, @"Added watcher for: {WatcherPath}/{WatcherFilter}")]
+    public static partial void ShutdownOverloadAddedWatcherFor(this ILogger logger, string watcherPath, string watcherFilter);
+
+    [LoggerMessage(7_000_108, LogLevel.Trace, "Error adding our own file monitoring object.")]
+    public static partial void ShutdownOverloadErrorAddingOurOwnFileMonitoringObject(this ILogger logger, Exception exception);
+
     [LoggerMessage(7_000_200, LogLevel.Information, "Application Starting ({ElapsedSinceAppStart})")]
     public static partial void ApplicationStarting(this ILogger logger, TimeSpan elapsedSinceAppStart);
 
@@ -45,6 +54,15 @@ internal static partial class LoggerMessages
     [LoggerMessage(7_000_203, LogLevel.Information, "Application Ended")]
     public static partial void ApplicationEnded(this ILogger logger);
 
+    [LoggerMessage(7_000_204, LogLevel.Trace, "Disposing Lucene")]
+    public static partial void ApplicationDisposingLucene(this ILogger logger);
+
+    [LoggerMessage(7_000_205, LogLevel.Trace, "Dumping all Application Errors")]
+    public static partial void ApplicationDumpingAllApplicationErrors(this ILogger logger);
+
+    [LoggerMessage(7_000_206, LogLevel.Trace, "End Dumping all Application Errors")]
+    public static partial void ApplicationEndDumpingAllApplicationErrors(this ILogger logger);
+
     [LoggerMessage(7_000_300, LogLevel.Trace, "Authorization header scheme in the request is not equal to {AuthScheme}")]
     public static partial void ApiTokenControllerAuthorizationHeaderSchemeDoesNotMatchAuthScheme(this ILogger logger, string authScheme);
 
@@ -56,6 +74,9 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(7_000_303, LogLevel.Trace, "Invalid user")]
     public static partial void ApiTokenControllerInvalidUser(this ILogger logger);
+
+    [LoggerMessage(7_000_304, LogLevel.Trace, "{SchemeType} is not registered/enabled in web.config file")]
+    public static partial void ApiTokenControllerSchemeIsNotEnabledInWebConfig(this ILogger logger, string schemeType);
 
     [LoggerMessage(7_000_400, LogLevel.Trace, "Authenticated using API token {ApiTokenId}")]
     public static partial void ApiTokenAuthMessageHandlerAuthenticatedUsingApiToken(this ILogger logger, int apiTokenId);
@@ -71,4 +92,13 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(7_000_602, LogLevel.Trace, "Registered a total of {Count} routes")]
     public static partial void ServicesRoutingManagerRegisteredRoutes(this ILogger logger, int count);
+
+    [LoggerMessage(7_000_603, LogLevel.Trace, "The following handler is disabled {ClassName}")]
+    public static partial void ServicesRoutingManagerHandlerIsDisabled(this ILogger logger, string className);
+
+    [LoggerMessage(7_000_604, LogLevel.Trace, "The following handler scheme '{ClassName}' is already added and will be skipped")]
+    public static partial void ServicesRoutingManagerHandlerIsAlreadyAdded(this ILogger logger, string className);
+
+    [LoggerMessage(7_000_605, LogLevel.Trace, "Instantiated/Activated instance of {AuthScheme}, class: {ClassFullName}")]
+    public static partial void ServicesRoutingManagerHandlerIsActivated(this ILogger logger, string authScheme, string classFullName);
 }

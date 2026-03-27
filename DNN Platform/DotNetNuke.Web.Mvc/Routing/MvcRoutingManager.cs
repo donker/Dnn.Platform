@@ -94,7 +94,7 @@ namespace DotNetNuke.Web.Mvc.Routing
                 var routeUrl = this.portalAliasMvcRouteManager.GetRouteUrl(moduleFolderName, url, count);
                 route = MapRouteWithNamespace(fullRouteName, routeUrl, defaults, constraints, namespaces);
                 this.routes.Add(route);
-                Logger.Trace($"Mapping route: {fullRouteName} @ {routeUrl}");
+                Logger.MvcRoutingManagerMappingRoute(fullRouteName, routeUrl);
             }
 
             return route;

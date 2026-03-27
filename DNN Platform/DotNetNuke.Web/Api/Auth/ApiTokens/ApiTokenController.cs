@@ -71,7 +71,7 @@ namespace DotNetNuke.Web.Api.Auth.ApiTokens
         {
             if (!ApiTokenAuthMessageHandler.IsEnabled)
             {
-                Logger.Trace(this.SchemeType + " is not registered/enabled in web.config file");
+                Logger.ApiTokenControllerSchemeIsNotEnabledInWebConfig(this.SchemeType);
                 return (null, null);
             }
 

@@ -63,7 +63,7 @@ namespace DotNetNuke.Web.Common.Internal
                         null,
                         null,
                         CultureInfo.InvariantCulture);
-                    Logger.Trace("DirMonCompletion count: " + dirMonCount);
+                    Logger.ShutdownOverloadDirMonCompletionCount(dirMonCount);
 
                     // enable our monitor only when fcnMode="Disabled"
                     ////AddSiteFilesMonitoring(fcnVal.ToString() == "1");
@@ -111,11 +111,11 @@ namespace DotNetNuke.Web.Common.Internal
 
                             // begin watching;
                             binOrRootWatcher.EnableRaisingEvents = true;
-                            Logger.Trace("Added watcher for: " + binOrRootWatcher.Path + @"\" + binOrRootWatcher.Filter);
+                            Logger.ShutdownOverloadAddedWatcherFor(binOrRootWatcher.Path, binOrRootWatcher.Filter);
                         }
                         catch (Exception ex)
                         {
-                            Logger.Trace("Error adding our own file monitoring object. " + ex);
+                            Logger.ShutdownOverloadErrorAddingOurOwnFileMonitoringObject(ex);
                         }
                     }
                 }

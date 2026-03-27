@@ -157,14 +157,14 @@ namespace DotNetNuke.Web.Common.Internal
             var appStatus = new ApplicationStatusInfo(new Application());
             if (appStatus.Status != UpgradeStatus.Install)
             {
-                Logger.Trace("Disposing Lucene");
+                Logger.ApplicationDisposingLucene();
                 if (LuceneController.Instance is IDisposable lucene)
                 {
                     lucene.Dispose();
                 }
             }
 
-            Logger.Trace("Dumping all Application Errors");
+            Logger.ApplicationDumpingAllApplicationErrors();
             if (HttpContext.Current != null)
             {
                 if (HttpContext.Current.AllErrors != null)
@@ -176,7 +176,7 @@ namespace DotNetNuke.Web.Common.Internal
                 }
             }
 
-            Logger.Trace("End Dumping all Application Errors");
+            Logger.ApplicationEndDumpingAllApplicationErrors();
             Logger.ApplicationEnded();
         }
 
@@ -202,13 +202,13 @@ namespace DotNetNuke.Web.Common.Internal
             if (HttpContext.Current != null)
             {
                 // Get the exception object.
-                Logger.Trace("Dumping all Application Errors");
+                Logger.ApplicationDumpingAllApplicationErrors();
                 foreach (Exception exc in HttpContext.Current.AllErrors)
                 {
                     Logger.Fatal(exc);
                 }
 
-                Logger.Trace("End Dumping all Application Errors");
+                Logger.ApplicationEndDumpingAllApplicationErrors();
             }
         }
 

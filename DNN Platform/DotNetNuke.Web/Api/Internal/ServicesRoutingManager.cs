@@ -212,7 +212,7 @@ namespace DotNetNuke.Web.Api.Internal
             {
                 if (!handlerEntry.Enabled)
                 {
-                    Logger.Trace("The following handler is disabled " + handlerEntry.ClassName);
+                    Logger.ServicesRoutingManagerHandlerIsDisabled(handlerEntry.ClassName);
                     continue;
                 }
 
@@ -227,14 +227,14 @@ namespace DotNetNuke.Web.Api.Internal
                     var schemeName = handler.AuthScheme.ToUpperInvariant();
                     if (registeredSchemes.Contains(schemeName))
                     {
-                        Logger.Trace($"The following handler scheme '{handlerEntry.ClassName}' is already added and will be skipped");
+                        Logger.ServicesRoutingManagerHandlerIsAlreadyAdded(handlerEntry.ClassName);
                         handler.Dispose();
                         continue;
                     }
 
                     GlobalConfiguration.Configuration.MessageHandlers.Add(handler);
                     registeredSchemes.Add(schemeName);
-                    Logger.Trace($"Instantiated/Activated instance of {handler.AuthScheme}, class: {handler.GetType().FullName}");
+                    Logger.ServicesRoutingManagerHandlerIsActivated(handler.AuthScheme, handler.GetType().FullName);
 
                     if (handlerEntry.DefaultInclude)
                     {

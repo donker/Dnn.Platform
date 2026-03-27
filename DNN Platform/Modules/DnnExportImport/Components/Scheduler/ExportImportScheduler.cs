@@ -183,7 +183,7 @@ namespace Dnn.ExportImport.Components.Scheduler
                     this.ScheduleHistoryItem.AddLogNote(sb.ToString());
                     this.engine.AddLogsToDatabase(job.JobId, result.CompleteLog);
 
-                    Logger.Trace("Site Export/Import: Job Finished");
+                    Logger.ExportImportSchedulerJobFinished();
                 }
 
                 ////SetLastSuccessfulIndexingDateTime(ScheduleHistoryItem.ScheduleID, ScheduleHistoryItem.StartDate);
