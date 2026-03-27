@@ -107,4 +107,7 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(7_000_800, LogLevel.Warning, "Unable to create thumbnail for {PhysicalPath}")]
     public static partial void DnnFilePickerUnableToCreateThumbnail(this ILogger logger, string physicalPath);
+
+    [LoggerMessage(7_000_900, LogLevel.Warning, "Unable to get image dimensions for image file")]
+    public static partial void FileUploadControllerUnableToGetImageDimensions(this ILogger logger, ArgumentException exception);
 }

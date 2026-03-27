@@ -270,4 +270,10 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(4_703, LogLevel.Warning, "Unable to find module by friendly name. Name:{FriendlyName}")]
     public static partial void DesktopModuleControllerUnableToFindModuleByFriendlyName(this ILogger logger, string friendlyName);
+
+    [LoggerMessage(4_800, LogLevel.Warning, "Indexer not implemented")]
+    public static partial void SearchEngineIndexerNotImplemented(this ILogger logger, NotImplementedException exception);
+
+    [LoggerMessage(4_900, LogLevel.Warning, "Unable to create type via service provider: {Type}")]
+    public static partial void ReflectionUnableToCreateTypeViaServiceProvider(this ILogger logger, InvalidOperationException exception, Type type);
 }

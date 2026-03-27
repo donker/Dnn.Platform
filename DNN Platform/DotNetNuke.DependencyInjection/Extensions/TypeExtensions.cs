@@ -49,12 +49,8 @@ namespace DotNetNuke.DependencyInjection.Extensions
 
             if (exception is ReflectionTypeLoadException loadException)
             {
-                var messageBuilder = BuildLoaderExceptionMessage(
-                    new StringBuilder($"Unable to get all types for {assembly.FullName}, see exception for details").AppendLine(),
-                    assembly,
-                    loadException);
-
-                logger.Warn(messageBuilder.ToString(), loadException);
+                var messageBuilder = BuildLoaderExceptionMessage(new StringBuilder(), assembly, loadException);
+                logger.SecurityControllerUpdateIpFilterArgumentException(loadException, assembly.FullName, messageBuilder.ToString());
             }
             else
             {

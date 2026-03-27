@@ -658,7 +658,7 @@ namespace DotNetNuke.Web.InternalServices
                         }
                         catch (ArgumentException exc)
                         {
-                            Logger.Warn("Unable to get image dimensions for image file", exc);
+                            Logger.FileUploadControllerUnableToGetImageDimensions(exc);
                             size = new Size(32, 32);
                         }
                     }
