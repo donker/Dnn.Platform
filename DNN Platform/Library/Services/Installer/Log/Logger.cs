@@ -144,7 +144,7 @@ namespace DotNetNuke.Services.Installer.Log
         public void AddWarning(string warning)
         {
             this.logs.Add(new LogEntry(LogType.Warning, warning));
-            DnnLogger.Warn(warning);
+            DnnLogger.InstallLoggerLogWarning(warning);
             this.hasWarnings = true;
         }
 

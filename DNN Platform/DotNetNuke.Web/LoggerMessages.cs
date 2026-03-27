@@ -110,4 +110,7 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(7_000_900, LogLevel.Warning, "Unable to get image dimensions for image file")]
     public static partial void FileUploadControllerUnableToGetImageDimensions(this ILogger logger, ArgumentException exception);
+
+    [LoggerMessage(7_001_000, LogLevel.Warning, "While loading IDnnStartup types, the following assemblies had types that could not be loaded. This is only an issue if these types contain DNN startup logic that could not be loaded:\n{Message}")]
+    public static partial void DependencyInjectionInitializeAssembliesCouldNotBeLoaded(this ILogger logger, string message);
 }

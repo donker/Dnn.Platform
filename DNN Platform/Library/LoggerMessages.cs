@@ -151,6 +151,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(2_800, LogLevel.Information, "{Message}")]
     public static partial void InstallLoggerLogInfo(this ILogger logger, string message);
 
+    [LoggerMessage(2_801, LogLevel.Warning, "{Message}")]
+    public static partial void InstallLoggerLogWarning(this ILogger logger, string message);
+
     [LoggerMessage(2_900, LogLevel.Information, "Starting WebServerMonitor")]
     public static partial void WebServerMonitorStartingWebServerMonitor(this ILogger logger);
 
@@ -276,4 +279,25 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(4_900, LogLevel.Warning, "Unable to create type via service provider: {Type}")]
     public static partial void ReflectionUnableToCreateTypeViaServiceProvider(this ILogger logger, InvalidOperationException exception, Type type);
+
+    [LoggerMessage(5_000, LogLevel.Warning, "Container was null, instantiating SimpleContainer")]
+    public static partial void ComponentFactoryInstantiatingSimpleContainer(this ILogger logger);
+
+    [LoggerMessage(5_100, LogLevel.Warning, "Icon Not Present on Disk {PhysicalPath}")]
+    public static partial void IconControllerIconNotPresentOnDisk(this ILogger logger, string physicalPath);
+
+    [LoggerMessage(5_200, LogLevel.Warning, "Current Workflow and Default workflow are not found on NotifyWorkflowAboutChanges")]
+    public static partial void TabWorkflowTrackerCurrentWorkflowAndDefaultWorkflowAreNotFoundOnNotifyWorkflowAboutChanges(this ILogger logger);
+
+    [LoggerMessage(5_300, LogLevel.Warning, "Disable cache expiration.")]
+    public static partial void CachingProviderDisableCacheExpiration(this ILogger logger);
+
+    [LoggerMessage(5_301, LogLevel.Warning, "Enable cache expiration.")]
+    public static partial void CachingProviderEnableCacheExpiration(this ILogger logger);
+
+    [LoggerMessage(5_400, LogLevel.Warning, "{Message}")]
+    public static partial void StandardFolderProviderFileStreamIOException(this ILogger logger, IOException exception, string message);
+
+    [LoggerMessage(5_500, LogLevel.Warning, "Ignoring invalid cleanup folder path '{Path}' in package '{PackageName}'.")]
+    public static partial void CleanupInstallerIgnoringInvalidCleanupFolderPath(this ILogger logger, string path, string packageName);
 }

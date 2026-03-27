@@ -274,7 +274,7 @@ namespace Dnn.PersonaBar.SiteSettings.Services
 
                     if (toBeDeleted.Count > 0)
                     {
-                        Logger.Warn(LocalizeString("Obsolete"));
+                        Logger.LanguagesControllerObsolete(LocalizeString("Obsolete"));
                         foreach (string key in toBeDeleted)
                         {
                             editTable.Remove(key);

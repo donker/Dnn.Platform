@@ -439,7 +439,7 @@ namespace DotNetNuke.Services.FileSystem
             }
             catch (IOException iex)
             {
-                Logger.Warn(iex.Message);
+                Logger.StandardFolderProviderFileStreamIOException(iex, iex.Message);
             }
             catch (Exception ex)
             {

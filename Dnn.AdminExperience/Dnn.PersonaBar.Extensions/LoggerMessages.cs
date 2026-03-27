@@ -18,4 +18,7 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(EventId = 5_000_100, Level = LogLevel.Warning)]
     public static partial void ConnectorsControllerSaveConnectionConnectorArgumentException(this ILogger logger, ConnectorArgumentException exception);
+
+    [LoggerMessage(EventId = 5_000_200, Level = LogLevel.Warning, Message = "{Message}")]
+    public static partial void LanguagesControllerObsolete(this ILogger logger, string message);
 }

@@ -231,7 +231,7 @@ namespace DotNetNuke.Services.Installer.Installers
                 }
                 else
                 {
-                    Logger.Warn($"Ignoring invalid cleanup folder path '{path}' in package '{this.Package?.Name}'.");
+                    Logger.CleanupInstallerIgnoringInvalidCleanupFolderPath(path, this.Package?.Name);
                 }
             }
             catch (Exception ex)
