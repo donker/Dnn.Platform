@@ -14,4 +14,7 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(1_000_001, LogLevel.Trace, "Mapping route: {FullRouteName} @ {RouteUrl}")]
     public static partial void MvcRoutingManagerMappingRoute(this ILogger logger, string fullRouteName, string routeUrl);
+
+    [LoggerMessage(1_000_100, LogLevel.Warning, "The specified moniker ({Moniker}) is not defined in the system")]
+    public static partial void StandardTabAndModuleInfoProviderMonikerIsNotDefined(this ILogger logger, string moniker);
 }
