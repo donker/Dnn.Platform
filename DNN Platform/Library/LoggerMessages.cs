@@ -6,6 +6,7 @@ namespace DotNetNuke;
 
 using System;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Threading;
 
@@ -174,6 +175,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(3_001, LogLevel.Trace, "Retrying action {RetriesRemaining} - {Description}")]
     public static partial void RetryableActionRetrying(this ILogger logger, int retriesRemaining, string description);
 
+    [LoggerMessage(3_002, LogLevel.Warning, "All retries of action failed - {Description}")]
+    public static partial void RetryableActionAllRetriesFailed(this ILogger logger, string description);
+
     [LoggerMessage(3_100, LogLevel.Trace, "ModuleIndexer: {Count} search documents found for module [{DesktopModuleName} mid:{ModuleId}]")]
     public static partial void ModuleIndexerSearchDocumentsFoundForModule(this ILogger logger, int count, string desktopModuleName, int moduleId);
 
@@ -185,6 +189,12 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(3_300, LogLevel.Trace, "Localizing TabId: {TabId}, TabPath: {TabPath}, Locale: {Locale}")]
     public static partial void TabControllerLocalizingTab(this ILogger logger, int tabId, string tabPath, string locale);
+
+    [LoggerMessage(3_301, LogLevel.Warning, "Invalid tabId {TabId} of portal {PortalId}")]
+    public static partial void TabControllerInvalidTabId(this ILogger logger, int tabId, int portalId);
+
+    [LoggerMessage(3_301, LogLevel.Warning, "Unable to find tabId {TabId} of portal {PortalId}")]
+    public static partial void TabControllerUnableToFindTabId(this ILogger logger, int tabId, int portalId);
 
     [LoggerMessage(3_400, LogLevel.Trace, "Adding FcnMode : {ErrorMessage}")]
     public static partial void AddFcnModeStepAddingFcnMode(this ILogger logger, string errorMessage);
@@ -242,4 +252,22 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(EventId = 4_402, Level = LogLevel.Warning)]
     public static partial void FileManagerExtractFilesInvalidFileExtension(this ILogger logger, InvalidFileExtensionException exception);
+
+    [LoggerMessage(4_500, LogLevel.Warning, "Unable to load file properties for File ID {FileId}")]
+    public static partial void AttachmentControllerUnableToLoadFileProperties(this ILogger logger, int fileId);
+
+    [LoggerMessage(4_600, LogLevel.Warning, "Missing localization key. key:{Key} resFileRoot:{ResourceFileRoot} threadCulture:{ThreadCulture} userlan:{UserLanguage}")]
+    public static partial void LocalizationProviderMissingLocalizationKey(this ILogger logger, string key, string resourceFileRoot, CultureInfo threadCulture, string userLanguage);
+
+    [LoggerMessage(4_700, LogLevel.Warning, "Unable to find module by module ID. ID:{DesktopModuleId} PortalID:{PortalId}")]
+    public static partial void DesktopModuleControllerUnableToFindModuleByModuleId(this ILogger logger, int desktopModuleId, int portalId);
+
+    [LoggerMessage(4_701, LogLevel.Warning, "Unable to find module by package ID. ID:{PackageId}")]
+    public static partial void DesktopModuleControllerUnableToFindModuleByPackageId(this ILogger logger, int packageId);
+
+    [LoggerMessage(4_702, LogLevel.Warning, "Unable to find module by name. Name:{DesktopModuleName} portalId:{PortalId}")]
+    public static partial void DesktopModuleControllerUnableToFindModuleByName(this ILogger logger, string desktopModuleName, int portalId);
+
+    [LoggerMessage(4_703, LogLevel.Warning, "Unable to find module by friendly name. Name:{FriendlyName}")]
+    public static partial void DesktopModuleControllerUnableToFindModuleByFriendlyName(this ILogger logger, string friendlyName);
 }

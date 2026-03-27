@@ -13,4 +13,7 @@ internal static partial class LoggerMessages
 {
     [LoggerMessage(6_000_000, LogLevel.Information, "Type \"{TypeFullName}\"'s version ({TypeVersion}) doesn't match current version({CurrentVersion}) so ignored")]
     public static partial void EventsControllerVersionMismatch(this ILogger logger, string typeFullName, Version typeVersion, Version currentVersion);
+
+    [LoggerMessage(6_000_100, LogLevel.Warning, "No instance of type '{TypeFullName}' and name '{Name}' is registered in the IOC container.")]
+    public static partial void IocUtilNoInstanceOfTypeAndNameIsRegisteredInTheIocContainer(this ILogger logger, string typeFullName, string name);
 }

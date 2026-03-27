@@ -102,7 +102,7 @@ namespace DotNetNuke.Services.Localization
 
             if (!keyFound)
             {
-                Logger.WarnFormat(CultureInfo.InvariantCulture, "Missing localization key. key:{0} resFileRoot:{1} threadCulture:{2} userlan:{3}", key, resourceFileRoot, Thread.CurrentThread.CurrentUICulture, language);
+                Logger.LocalizationProviderMissingLocalizationKey(key, resourceFileRoot, Thread.CurrentThread.CurrentUICulture, language);
             }
 
             return string.IsNullOrEmpty(resourceValue) ? string.Empty : resourceValue;

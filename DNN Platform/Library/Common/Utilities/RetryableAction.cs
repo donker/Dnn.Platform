@@ -108,7 +108,7 @@ namespace DotNetNuke.Common.Utilities.Internal
                 {
                     if (retriesRemaining <= 0)
                     {
-                        Logger.WarnFormat(CultureInfo.InvariantCulture, "All retries of action failed - {0}", this.Description);
+                        Logger.RetryableActionAllRetriesFailed(this.Description);
                         throw;
                     }
 

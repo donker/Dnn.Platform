@@ -1480,7 +1480,7 @@ namespace DotNetNuke.Entities.Tabs
 
             if (tabId <= 0)
             {
-                Logger.WarnFormat(CultureInfo.InvariantCulture, "Invalid tabId {0} of portal {1}", tabId, portalId);
+                Logger.TabControllerInvalidTabId(tabId, portalId);
             }
             else if (ignoreCache || Host.Host.PerformanceSetting == Globals.PerformanceSettings.NoCaching)
             {
@@ -1510,7 +1510,7 @@ namespace DotNetNuke.Entities.Tabs
                     }
                     else
                     {
-                        Logger.WarnFormat(CultureInfo.InvariantCulture, "Unable to find tabId {0} of portal {1}", tabId, portalId);
+                        Logger.TabControllerUnableToFindTabId(tabId, portalId);
                     }
                 }
             }
@@ -1519,8 +1519,8 @@ namespace DotNetNuke.Entities.Tabs
         }
 
         /// <summary>Gets the tab by culture.</summary>
-        /// <param name="tabId">The tab id.</param>
-        /// <param name="portalId">The portal id.</param>
+        /// <param name="tabId">The tab ID.</param>
+        /// <param name="portalId">The portal ID.</param>
         /// <param name="locale">The locale.</param>
         /// <returns>tab info.</returns>
         public TabInfo GetTabByCulture(int tabId, int portalId, Locale locale)

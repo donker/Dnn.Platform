@@ -104,4 +104,7 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(7_000_700, LogLevel.Warning, "The specified moniker ({Moniker}) is not defined in the system")]
     public static partial void StandardTabAndModuleInfoProviderMonikerIsNotDefined(this ILogger logger, string moniker);
+
+    [LoggerMessage(7_000_800, LogLevel.Warning, "Unable to create thumbnail for {PhysicalPath}")]
+    public static partial void DnnFilePickerUnableToCreateThumbnail(this ILogger logger, string physicalPath);
 }
