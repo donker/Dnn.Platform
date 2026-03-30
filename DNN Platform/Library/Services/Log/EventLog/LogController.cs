@@ -141,7 +141,7 @@ namespace DotNetNuke.Services.Log.EventLog
                 }
                 catch (Exception exc)
                 {
-                    Logger.Error(exc);
+                    Logger.LogControllerAddLogException(exc);
 
                     AddLogToFile(logInfo);
                 }
@@ -359,7 +359,7 @@ namespace DotNetNuke.Services.Log.EventLog
             // ReSharper disable once EmptyGeneralCatchClause
             catch (Exception exc)
             {
-                Logger.Error(exc);
+                Logger.LogControllerAddLogToFileException(exc);
             }
         }
 

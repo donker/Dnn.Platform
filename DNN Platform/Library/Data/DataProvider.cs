@@ -4079,7 +4079,7 @@ namespace DotNetNuke.Data
             }
             catch (SqlException ex)
             {
-                Logger.Error(ex);
+                Logger.DataProviderSqlExceptionFromAddSearchDeletedItems(ex);
             }
         }
 
@@ -4091,7 +4091,7 @@ namespace DotNetNuke.Data
             }
             catch (SqlException ex)
             {
-                Logger.Error(ex);
+                Logger.DataProviderSqlExceptionFromDeleteProcessedSearchDeletedItems(ex);
             }
         }
 

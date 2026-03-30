@@ -183,7 +183,7 @@ namespace Dnn.PersonaBar.Prompt.Services
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.CommandControllerCmdException(ex);
                 return this.AddLogAndReturnResponse(null, null, command, startTime, ex.Message);
             }
         }
@@ -239,7 +239,7 @@ namespace Dnn.PersonaBar.Prompt.Services
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.CommandControllerTryRunOldCommandException(ex);
                 return this.AddLogAndReturnResponse(null, null, command, startTime, ex.Message);
             }
         }
@@ -260,7 +260,7 @@ namespace Dnn.PersonaBar.Prompt.Services
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.CommandControllerTryRunNewCommandException(ex);
                 return this.AddLogAndReturnResponse(null, null, command, startTime, ex.Message);
             }
         }

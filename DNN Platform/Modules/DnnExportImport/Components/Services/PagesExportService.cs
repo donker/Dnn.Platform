@@ -1138,7 +1138,7 @@ namespace Dnn.ExportImport.Components.Services
                     catch (Exception ex)
                     {
                         this.Result.AddLogEntry("EXCEPTION importing tab module, Module ID=" + local.ModuleID, ex.Message, ReportLevel.Error);
-                        Logger.Error(ex);
+                        Logger.PagesExportServiceImportNewTabModuleException(ex);
                     }
                 }
                 else
@@ -1308,7 +1308,7 @@ namespace Dnn.ExportImport.Components.Services
                         catch (Exception ex)
                         {
                             this.Result.AddLogEntry("EXCEPTION importing tab module, Module ID=" + local.ModuleID, ex.Message, ReportLevel.Error);
-                            Logger.Error(ex);
+                            Logger.PagesExportServiceImportExistingTabModuleException(ex);
                         }
                     }
                 }
@@ -1327,7 +1327,7 @@ namespace Dnn.ExportImport.Components.Services
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(new ImportException($"Delete TabModule Failed: {moduleId}", ex));
+                        Logger.PagesExportServiceDeleteTabModuleException(new ImportException($"Delete TabModule Failed: {moduleId}", ex));
                     }
 
                     this.Result.AddLogEntry("Removed existing tab module", "Module ID=" + moduleId);
@@ -1955,7 +1955,7 @@ namespace Dnn.ExportImport.Components.Services
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(ex);
+                        Logger.PagesExportServiceExportModulePackageException(ex);
                         return 0;
                     }
                 }

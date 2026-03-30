@@ -4,6 +4,8 @@
 
 namespace Dnn.Modules.ResourceManager
 {
+    using System;
+
     using Microsoft.Extensions.Logging;
 
     /// <summary>Extension methods for <see cref="ILogger"/> for pre-defined logging messages.</summary>
@@ -17,5 +19,8 @@ namespace Dnn.Modules.ResourceManager
 
         [LoggerMessage(4_000_002, LogLevel.Information, "Removing old pages.")]
         public static partial void ResourceManagerControllerRemovingOldPages(this ILogger logger);
+
+        [LoggerMessage(EventId = 4_000_003, Level = LogLevel.Error)]
+        public static partial void ResourceManagerControllerUpgradeModuleException(this ILogger logger, Exception exception);
     }
 }

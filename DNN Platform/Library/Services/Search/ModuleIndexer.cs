@@ -264,7 +264,7 @@ namespace DotNetNuke.Services.Search
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error(ex);
+                    Logger.ModuleIndexerGetModulesForIndexException(ex);
                     ThrowLogError(module, ex);
                 }
                 finally

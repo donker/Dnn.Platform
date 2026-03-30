@@ -136,7 +136,7 @@ namespace DotNetNuke.Web.Common.Internal
             catch (Exception ex)
             {
                 shutdownInprogress = false;
-                Logger.Error(ex);
+                Logger.ShutdownOverloadUnloadAppDomainException(ex);
             }
         }
 

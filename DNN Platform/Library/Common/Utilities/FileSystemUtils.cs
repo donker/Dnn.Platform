@@ -137,11 +137,11 @@ namespace DotNetNuke.Common.Utilities
                 }
                 catch (Exception exc)
                 {
-                    Logger.Error(exc);
+                    Logger.FileSystemUtilsDeleteFileWithWaitException(exc);
                     fileDeleted = false;
                 }
 
-                if (fileDeleted == false)
+                if (!fileDeleted)
                 {
                     Thread.Sleep(waitInMilliseconds);
                 }
@@ -188,11 +188,11 @@ namespace DotNetNuke.Common.Utilities
                 }
                 catch (Exception exc)
                 {
-                    Logger.Error(exc);
+                    Logger.FileSystemUtilsDeleteFileWithWaitException(exc);
                     fileDeleted = false;
                 }
 
-                if (fileDeleted == false)
+                if (!fileDeleted)
                 {
                     await Task.Delay(waitInMilliseconds, cancellationToken);
                 }
@@ -298,7 +298,7 @@ namespace DotNetNuke.Common.Utilities
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error(ex);
+                    Logger.FileSystemUtilsUnzipResourcesException(ex);
                 }
             }
         }
@@ -362,7 +362,7 @@ namespace DotNetNuke.Common.Utilities
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error(ex);
+                    Logger.FileSystemUtilsUnzipResourcesException(ex);
                 }
             }
         }
@@ -414,7 +414,7 @@ namespace DotNetNuke.Common.Utilities
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(ex);
+                        Logger.FileSystemUtilsDeleteFilesFolderException(ex);
                         strExceptions += $"Processing folder ({strPath}) Error: {ex.Message}{Environment.NewLine}";
                     }
                 }
@@ -432,7 +432,7 @@ namespace DotNetNuke.Common.Utilities
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(ex);
+                        Logger.FileSystemUtilsDeleteFilesFileException(ex);
                         strExceptions += $"Processing file ({strPath}) Error: {ex.Message}{Environment.NewLine}";
                     }
                 }
@@ -482,7 +482,7 @@ namespace DotNetNuke.Common.Utilities
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(ex);
+                        Logger.FileSystemUtilsDeleteFilesFolderException(ex);
                         strExceptions += $"Processing folder ({strPath}) Error: {ex.Message}{Environment.NewLine}";
                     }
                 }
@@ -500,7 +500,7 @@ namespace DotNetNuke.Common.Utilities
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(ex);
+                        Logger.FileSystemUtilsDeleteFilesFileException(ex);
                         strExceptions += $"Processing file ({strPath}) Error: {ex.Message}{Environment.NewLine}";
                     }
                 }
@@ -542,7 +542,7 @@ namespace DotNetNuke.Common.Utilities
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error(ex);
+                    Logger.FileSystemUtilsDeleteFileException(ex);
                 }
             }
         }
@@ -585,7 +585,7 @@ namespace DotNetNuke.Common.Utilities
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error(ex);
+                    Logger.FileSystemUtilsDeleteFileException(ex);
                 }
             }
         }
@@ -615,7 +615,7 @@ namespace DotNetNuke.Common.Utilities
                 catch (Exception ex)
                 {
                     Logger.FileSystemUtilsFolderDoesNotExist(strRoot);
-                    Logger.Error(ex);
+                    Logger.FileSystemUtilsDeleteFileException(ex);
                 }
             }
 
@@ -627,7 +627,7 @@ namespace DotNetNuke.Common.Utilities
             catch (Exception ex)
             {
                 Logger.FileSystemUtilsFolderDoesNotExist(strRoot);
-                Logger.Error(ex);
+                Logger.FileSystemUtilsDeleteFolderException(ex);
             }
         }
 
@@ -660,7 +660,7 @@ namespace DotNetNuke.Common.Utilities
                 catch (Exception ex)
                 {
                     Logger.FileSystemUtilsFolderDoesNotExist(strRoot);
-                    Logger.Error(ex);
+                    Logger.FileSystemUtilsDeleteFileException(ex);
                 }
             }
 
@@ -672,7 +672,7 @@ namespace DotNetNuke.Common.Utilities
             catch (Exception ex)
             {
                 Logger.FileSystemUtilsFolderDoesNotExist(strRoot);
-                Logger.Error(ex);
+                Logger.FileSystemUtilsDeleteFolderException(ex);
             }
         }
 
@@ -706,7 +706,7 @@ namespace DotNetNuke.Common.Utilities
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.FileSystemUtilsDeleteFolderException(ex);
             }
         }
 
@@ -743,7 +743,7 @@ namespace DotNetNuke.Common.Utilities
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.FileSystemUtilsDeleteFolderException(ex);
             }
         }
 
@@ -857,7 +857,7 @@ namespace DotNetNuke.Common.Utilities
                         }
                         catch (Exception ex)
                         {
-                            Logger.Error(ex);
+                            Logger.FileSystemUtilsUnzipException(ex);
                         }
                     }
 

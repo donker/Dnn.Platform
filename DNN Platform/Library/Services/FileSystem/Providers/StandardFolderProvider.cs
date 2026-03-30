@@ -140,7 +140,7 @@ namespace DotNetNuke.Services.FileSystem
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.StandardFolderProviderGetFileAttributesException(ex);
             }
 
             return fileAttributes;
@@ -246,7 +246,7 @@ namespace DotNetNuke.Services.FileSystem
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.StandardFolderProviderGetLastModificationTimeException(ex);
             }
 
             return lastModificationTime;
@@ -443,7 +443,7 @@ namespace DotNetNuke.Services.FileSystem
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.StandardFolderProviderFileStreamGeneralException(ex);
             }
 
             return stream;

@@ -249,7 +249,7 @@ namespace DotNetNuke.UI.Modules
             return content;
         }
 
-        /// <summary>LoadModuleControl loads the ModuleControl (PortalModuelBase).</summary>
+        /// <summary>LoadModuleControl loads the ModuleControl (PortalModuleBase).</summary>
         private void LoadModuleControl()
         {
             try
@@ -275,11 +275,8 @@ namespace DotNetNuke.UI.Modules
                     this.control = this.moduleControlPipeline.CreateModuleControl(this.moduleConfiguration);
                 }
 
-                if (this.Skin != null)
-                {
-                    // check for IMC
-                    this.Skin.Communicator.LoadCommunicator(this.control);
-                }
+                // check for IMC
+                this.Skin?.Communicator.LoadCommunicator(this.control);
 
                 // add module settings
                 this.ModuleControl.ModuleContext.Configuration = this.moduleConfiguration;
@@ -292,7 +289,7 @@ namespace DotNetNuke.UI.Modules
             }
             catch (Exception exc)
             {
-                Logger.Error(exc);
+                Logger.ModuleHostLoadModuleControlException(exc);
 
                 // add module settings
                 this.control = this.moduleControlPipeline.CreateModuleControl(this.moduleConfiguration);

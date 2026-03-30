@@ -25,4 +25,37 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(6_000_100, LogLevel.Warning, "No instance of type '{TypeFullName}' and name '{Name}' is registered in the IOC container.")]
     public static partial void IocUtilNoInstanceOfTypeAndNameIsRegisteredInTheIocContainer(this ILogger logger, string typeFullName, string name);
+
+    [LoggerMessage(EventId = 6_000_101, Level = LogLevel.Error)]
+    public static partial void IocUtilRegisterComponentException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 6_000_102, Level = LogLevel.Error)]
+    public static partial void IocUtilRegisterComponentInstanceException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 6_000_200, Level = LogLevel.Error)]
+    public static partial void MenuPermissionControllerGetMenuPermissionsException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 6_000_201, Level = LogLevel.Error)]
+    public static partial void MenuPermissionControllerEnsureMenuDefaultPermissionsException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 6_000_202, Level = LogLevel.Error)]
+    public static partial void MenuPermissionControllerSaveMenuDefaultPermissionsException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 6_000_300, Level = LogLevel.Error)]
+    public static partial void PersonaBarControllerIsVisibleException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 6_000_301, Level = LogLevel.Error)]
+    public static partial void PersonaBarControllerGetMenuItemControllerException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 6_000_302, Level = LogLevel.Error)]
+    public static partial void PersonaBarControllerUpdateParametersException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 6_000_303, Level = LogLevel.Error)]
+    public static partial void PersonaBarControllerGetMenuSettingsException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 6_000_400, Level = LogLevel.Error)]
+    public static partial void ModulesControllerCopyModuleException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 6_000_401, Level = LogLevel.Error)]
+    public static partial void ModulesControllerDeleteModuleException(this ILogger logger, Exception exception);
 }

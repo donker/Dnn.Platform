@@ -31,4 +31,31 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(3_000_102, LogLevel.Error, "{TypeFullName}.UnLoad threw an exception.")]
     public static partial void PersonaBarModuleSkinEventsUnLoadThrewAnException(this ILogger logger, Exception exception, string typeFullName);
+
+    [LoggerMessage(EventId = 3_000_200, Level = LogLevel.Error)]
+    public static partial void ComponentsControllerGetRoleGroupsException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 3_000_201, Level = LogLevel.Error)]
+    public static partial void ComponentsControllerGetSuggestionUsersException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 3_000_202, Level = LogLevel.Error)]
+    public static partial void ComponentsControllerGetSuggestionRolesException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 3_000_300, Level = LogLevel.Error)]
+    public static partial void TabsControllerGetPortalTabsException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 3_000_301, Level = LogLevel.Error)]
+    public static partial void TabsControllerSearchPortalTabsException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 3_000_302, Level = LogLevel.Error)]
+    public static partial void TabsControllerGetPortalTabException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 3_000_303, Level = LogLevel.Error)]
+    public static partial void TabsControllerGetTabsDescendantsException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 3_000_400, Level = LogLevel.Error)]
+    public static partial void PortalsControllerGetPortalsException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 3_000_500, Level = LogLevel.Error)]
+    public static partial void MenuExtensionsControllerGetExtensionControllerException(this ILogger logger, Exception exception);
 }

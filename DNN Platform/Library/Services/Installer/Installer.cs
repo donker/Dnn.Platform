@@ -410,7 +410,7 @@ namespace DotNetNuke.Services.Installer
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.InstallerBackupStreamInfoFileException(ex);
             }
         }
 
@@ -469,7 +469,7 @@ namespace DotNetNuke.Services.Installer
             }
             catch (Exception exc)
             {
-                Logger.Error(exc);
+                Logger.InstallerLogInstallEventException(exc);
             }
         }
 

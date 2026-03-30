@@ -58,7 +58,7 @@ namespace Dnn.Modules.ResourceManager.Components
             }
             catch (Exception exc)
             {
-                Logger.Error(exc);
+                Logger.ResourceManagerControllerUpgradeModuleException(exc);
                 return "Failed";
             }
         }

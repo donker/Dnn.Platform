@@ -54,7 +54,7 @@ namespace Dnn.PersonaBar.Library.Common
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.IocUtilRegisterComponentException(e);
                 return false;
             }
         }
@@ -93,7 +93,7 @@ namespace Dnn.PersonaBar.Library.Common
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.IocUtilRegisterComponentInstanceException(e);
                 return false;
             }
         }

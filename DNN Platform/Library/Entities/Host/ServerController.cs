@@ -194,17 +194,17 @@ namespace DotNetNuke.Entities.Host
         {
             try
             {
-                var adpapter = GetServerWebRequestAdapter();
-                if (adpapter == null)
+                var adapter = GetServerWebRequestAdapter();
+                if (adapter == null)
                 {
                     return string.Empty;
                 }
 
-                return adpapter.GetServerUrl();
+                return adapter.GetServerUrl();
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.ServerControllerGetServerUrlException(ex);
                 return string.Empty;
             }
         }
@@ -213,17 +213,17 @@ namespace DotNetNuke.Entities.Host
         {
             try
             {
-                var adpapter = GetServerWebRequestAdapter();
-                if (adpapter == null)
+                var adapter = GetServerWebRequestAdapter();
+                if (adapter == null)
                 {
                     return string.Empty;
                 }
 
-                return adpapter.GetServerUniqueId();
+                return adapter.GetServerUniqueId();
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.ServerControllerGetServerUniqueIdException(ex);
                 return string.Empty;
             }
         }

@@ -6,6 +6,8 @@ namespace Dnn.ExportImport;
 
 using System;
 
+using Dnn.ExportImport.Components.Common;
+
 using Microsoft.Extensions.Logging;
 
 /// <summary>Extension methods for <see cref="ILogger"/> for pre-defined logging messages.</summary>
@@ -19,4 +21,25 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(10_000_200, LogLevel.Error, "ModuleContent: (Module ID={ModuleId}). {XmlContent}")]
     public static partial void PagesExportServiceModuleContentError(this ILogger logger, Exception exception, int moduleId, string xmlContent);
+
+    [LoggerMessage(EventId = 10_000_201, Level = LogLevel.Error)]
+    public static partial void PagesExportServiceImportNewTabModuleException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 10_000_201, Level = LogLevel.Error)]
+    public static partial void PagesExportServiceImportExistingTabModuleException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 10_000_202, Level = LogLevel.Error)]
+    public static partial void PagesExportServiceDeleteTabModuleException(this ILogger logger, ImportException exception);
+
+    [LoggerMessage(EventId = 10_000_203, Level = LogLevel.Error)]
+    public static partial void PagesExportServiceExportModulePackageException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 10_000_300, Level = LogLevel.Error)]
+    public static partial void PackagesExportServiceInstallPackageException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 10_000_301, Level = LogLevel.Error)]
+    public static partial void PackagesExportServiceProcessImportModulePackageException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 10_000_400, Level = LogLevel.Error)]
+    public static partial void ThemesExportServiceImportThemeFileException(this ILogger logger, Exception exception);
 }

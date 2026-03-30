@@ -7,7 +7,6 @@ namespace DotNetNuke.Services.Localization
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Threading;
@@ -568,7 +567,7 @@ namespace DotNetNuke.Services.Localization
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.LocalizationProviderGetLocaleException(ex);
             }
 
             if (userLocale != null && !string.IsNullOrEmpty(userLocale.Fallback))

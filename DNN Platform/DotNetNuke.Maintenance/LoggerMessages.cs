@@ -13,4 +13,7 @@ internal static partial class LoggerMessages
 {
     [LoggerMessage(12_000_000, LogLevel.Warning, "Could not determine Telerik dependencies on some assemblies.")]
     public static partial void TelerikUtilsCountNotDetermineTelerikDependenciesOnSomeAssemblies(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 12_000_100, Level = LogLevel.Error)]
+    public static partial void StepBaseExecuteException(this ILogger logger, Exception exception);
 }

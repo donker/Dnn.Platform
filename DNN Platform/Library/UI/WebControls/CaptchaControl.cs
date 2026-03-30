@@ -622,7 +622,7 @@ namespace DotNetNuke.UI.WebControls
             }
             catch (Exception exc)
             {
-                Logger.Error(exc);
+                Logger.CaptchaControlCreateTextException(exc);
             }
 
             return textPath;
@@ -731,7 +731,7 @@ namespace DotNetNuke.UI.WebControls
                 }
                 catch (Exception exc)
                 {
-                    Logger.Error(exc);
+                    Logger.CaptchaControlGetFontException(exc);
 
                     font = null;
                 }

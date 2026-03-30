@@ -783,7 +783,7 @@ namespace DotNetNuke.Entities.Tabs.TabVersions
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.TabVersionBuilderConvertToModuleInfoException(ex);
             }
 
             return modules;

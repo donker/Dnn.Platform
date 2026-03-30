@@ -141,7 +141,7 @@ namespace DotNetNuke.Web.Common.Internal
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.ApplicationLogEndException(e);
             }
 
             try
@@ -150,7 +150,7 @@ namespace DotNetNuke.Web.Common.Internal
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.ApplicationStopSchedulerException(e);
             }
 
             // Shutdown Lucene, but not when we are installing

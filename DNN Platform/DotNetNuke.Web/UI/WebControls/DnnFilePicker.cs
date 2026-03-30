@@ -743,7 +743,7 @@ namespace DotNetNuke.Web.UI.WebControls
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(ex);
+                        Logger.DnnFilePickerAddFileException(ex);
 
                         this.lblMessage.Text += "<br />" + string.Format(CultureInfo.CurrentCulture, Localization.GetString("SaveFileError"), fileName);
                     }

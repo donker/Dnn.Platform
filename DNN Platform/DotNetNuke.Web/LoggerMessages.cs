@@ -7,6 +7,8 @@ namespace DotNetNuke.Web;
 using System;
 using System.IO;
 
+using DotNetNuke.Entities.Users;
+
 using Microsoft.Extensions.Logging;
 
 /// <summary>Extension methods for <see cref="ILogger"/> for pre-defined logging messages.</summary>
@@ -42,6 +44,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(7_000_108, LogLevel.Trace, "Error adding our own file monitoring object.")]
     public static partial void ShutdownOverloadErrorAddingOurOwnFileMonitoringObject(this ILogger logger, Exception exception);
 
+    [LoggerMessage(EventId = 7_000_109, Level = LogLevel.Error)]
+    public static partial void ShutdownOverloadUnloadAppDomainException(this ILogger logger, Exception exception);
+
     [LoggerMessage(7_000_200, LogLevel.Information, "Application Starting ({ElapsedSinceAppStart})")]
     public static partial void ApplicationStarting(this ILogger logger, TimeSpan elapsedSinceAppStart);
 
@@ -62,6 +67,12 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(7_000_206, LogLevel.Trace, "End Dumping all Application Errors")]
     public static partial void ApplicationEndDumpingAllApplicationErrors(this ILogger logger);
+
+    [LoggerMessage(EventId = 7_000_207, Level = LogLevel.Error)]
+    public static partial void ApplicationLogEndException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_000_208, Level = LogLevel.Error)]
+    public static partial void ApplicationStopSchedulerException(this ILogger logger, Exception exception);
 
     [LoggerMessage(7_000_300, LogLevel.Trace, "Authorization header scheme in the request is not equal to {AuthScheme}")]
     public static partial void ApiTokenControllerAuthorizationHeaderSchemeDoesNotMatchAuthScheme(this ILogger logger, string authScheme);
@@ -114,9 +125,81 @@ internal static partial class LoggerMessages
     [LoggerMessage(7_000_800, LogLevel.Warning, "Unable to create thumbnail for {PhysicalPath}")]
     public static partial void DnnFilePickerUnableToCreateThumbnail(this ILogger logger, string physicalPath);
 
+    [LoggerMessage(EventId = 7_000_801, Level = LogLevel.Error)]
+    public static partial void DnnFilePickerAddFileException(this ILogger logger, Exception exception);
+
     [LoggerMessage(7_000_900, LogLevel.Warning, "Unable to get image dimensions for image file")]
     public static partial void FileUploadControllerUnableToGetImageDimensions(this ILogger logger, ArgumentException exception);
 
+    [LoggerMessage(EventId = 7_000_901, Level = LogLevel.Error)]
+    public static partial void FileUploadControllerSaveFileException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_000_902, Level = LogLevel.Error)]
+    public static partial void FileUploadControllerUploadFileException(this ILogger logger, Exception exception);
+
     [LoggerMessage(7_001_000, LogLevel.Warning, "While loading IDnnStartup types, the following assemblies had types that could not be loaded. This is only an issue if these types contain DNN startup logic that could not be loaded:\n{Message}")]
     public static partial void DependencyInjectionInitializeAssembliesCouldNotBeLoaded(this ILogger logger, string message);
+
+    [LoggerMessage(EventId = 7_001_100, Level = LogLevel.Error)]
+    public static partial void BuildUpExtensionsSetValueException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_001_200, Level = LogLevel.Error)]
+    public static partial void UserFileControllerGetItemsException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_001_300, Level = LogLevel.Error)]
+    public static partial void ControlBarControllerParseVisibilityException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_001_301, Level = LogLevel.Error)]
+    public static partial void ControlBarControllerParseSortException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_001_302, Level = LogLevel.Error)]
+    public static partial void ControlBarControllerParseModuleIdException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_001_303, Level = LogLevel.Error)]
+    public static partial void ControlBarControllerParsePageIdException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_001_304, Level = LogLevel.Error)]
+    public static partial void ControlBarControllerAddModuleException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_001_400, Level = LogLevel.Error)]
+    public static partial void EventLogServiceControllerGetLogDetailsException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_001_500, Level = LogLevel.Error)]
+    public static partial void MessagingServiceControllerWaitTimeForNextMessageException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_001_501, Level = LogLevel.Error)]
+    public static partial void MessagingServiceControllerCreateException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_001_502, Level = LogLevel.Error)]
+    public static partial void MessagingServiceControllerSearchException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_001_600, Level = LogLevel.Error)]
+    public static partial void NotificationsServiceControllerDismissException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_001_700, Level = LogLevel.Error)]
+    public static partial void RelationshipServiceControllerAcceptFriendException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_001_701, Level = LogLevel.Error)]
+    public static partial void RelationshipServiceControllerFollowBackUserRelationshipExistsException(this ILogger logger, UserRelationshipExistsException exception);
+
+    [LoggerMessage(EventId = 7_001_702, Level = LogLevel.Error)]
+    public static partial void RelationshipServiceControllerFollowBackGeneralException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_001_800, Level = LogLevel.Error)]
+    public static partial void ItemListServiceControllerSearchUserException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_001_900, Level = LogLevel.Error)]
+    public static partial void RibbonBarManagerAddOrUpdateTabException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_002_000, Level = LogLevel.Error)]
+    public static partial void DateTimeEditControlDateValueException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_002_001, Level = LogLevel.Error)]
+    public static partial void DateTimeEditControlOldDateValueException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_003_000, Level = LogLevel.Error)]
+    public static partial void DateEditControlDateValueException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_003_001, Level = LogLevel.Error)]
+    public static partial void DateEditControlOldDateValueException(this ILogger logger, Exception exception);
 }

@@ -628,7 +628,7 @@ namespace DotNetNuke.Entities.Modules
             catch (Exception exc)
             {
                 // module already in the page, ignore error
-                Logger.Error(exc);
+                Logger.ModuleControllerModuleAlreadyOnThePageException(exc);
             }
 
             this.ClearCache(sourceModule.TabID);
@@ -1783,7 +1783,7 @@ namespace DotNetNuke.Entities.Modules
             }
             catch (Exception exc)
             {
-                Logger.Error(exc);
+                Logger.ModuleControllerAddContentException(exc);
             }
         }
 

@@ -31,6 +31,8 @@ namespace DotNetNuke.Services.Install
     using DotNetNuke.Services.Upgrade.Internals;
     using DotNetNuke.Services.Upgrade.Internals.Steps;
     using DotNetNuke.Web.Client.ClientResourceManagement;
+    using DotNetNuke.Website;
+
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
@@ -568,7 +570,7 @@ namespace DotNetNuke.Services.Install
                 catch (Exception ex)
                 {
                     // error removing the file
-                    Logger.Error(ex);
+                    Logger.InstallDeletePortalResourcesFileException(ex);
                 }
 
                 this.Response.Write("<h2>Installation Complete</h2>");
@@ -659,7 +661,7 @@ namespace DotNetNuke.Services.Install
                 catch (Exception ex)
                 {
                     // Write out Header
-                    Logger.Error(ex);
+                    Logger.InstallNoUpgradeException(ex);
                     HtmlUtils.WriteHeader(this.Response, "error");
                     this.Response.Write("<h2>Current Assembly Version: " + DotNetNukeContext.Current.Application.Version.ToString(3) + "</h2>");
 

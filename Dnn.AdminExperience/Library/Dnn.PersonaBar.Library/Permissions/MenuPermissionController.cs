@@ -125,7 +125,7 @@ namespace Dnn.PersonaBar.Library.Permissions
                         }
                         catch (Exception ex)
                         {
-                            Logger.Error(ex);
+                            Logger.MenuPermissionControllerGetMenuPermissionsException(ex);
                         }
                         finally
                         {
@@ -402,7 +402,7 @@ namespace Dnn.PersonaBar.Library.Permissions
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.MenuPermissionControllerEnsureMenuDefaultPermissionsException(ex);
             }
         }
 
@@ -474,7 +474,7 @@ namespace Dnn.PersonaBar.Library.Permissions
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.MenuPermissionControllerSaveMenuDefaultPermissionsException(ex);
             }
         }
 

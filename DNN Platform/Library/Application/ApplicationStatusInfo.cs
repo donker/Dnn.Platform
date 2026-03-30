@@ -60,7 +60,7 @@ namespace DotNetNuke.Application
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(ex);
+                        Logger.ApplicationStatusInfoDatabaseVersionException(ex);
                         strMessage = "ERROR:" + ex.Message;
                     }
                 }

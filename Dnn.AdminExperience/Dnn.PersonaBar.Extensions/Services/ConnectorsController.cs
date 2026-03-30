@@ -145,7 +145,7 @@ namespace Dnn.PersonaBar.Connectors.Services
                 }
                 else
                 {
-                    Logger.Error(ex);
+                    Logger.ConnectorsControllerSaveConnectionGeneralException(ex);
                 }
 
                 return this.Request.CreateResponse(
@@ -202,7 +202,7 @@ namespace Dnn.PersonaBar.Connectors.Services
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.ConnectorsControllerDeleteConnectionException(ex);
                 return this.Request.CreateResponse(
                     HttpStatusCode.InternalServerError,
                     new { Success = false, Message = ex.Message });
@@ -233,7 +233,7 @@ namespace Dnn.PersonaBar.Connectors.Services
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.ConnectorsControllerGetConnectionLocalizedStringException(ex);
                 localizedStrings = new Dictionary<string, string>();
             }
 

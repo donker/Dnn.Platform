@@ -213,7 +213,7 @@ namespace DotNetNuke.Services.Installer.Installers
             }
             catch (Exception exc)
             {
-                Logger.Error(exc);
+                Logger.CleanupInstallerCleanupFileException(exc);
 
                 return false;
             }
@@ -236,7 +236,7 @@ namespace DotNetNuke.Services.Installer.Installers
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.CleanupInstallerCleanupFolderException(ex);
             }
         }
 

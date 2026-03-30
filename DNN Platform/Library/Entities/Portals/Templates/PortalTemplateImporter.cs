@@ -284,7 +284,7 @@ namespace DotNetNuke.Entities.Portals.Templates
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(ex);
+                        Logger.PortalTemplateImporterParseTemplateException(ex);
                     }
                 }
 
@@ -750,7 +750,7 @@ namespace DotNetNuke.Entities.Portals.Templates
                         }
                         catch (Exception ex)
                         {
-                            Logger.Error(ex);
+                            Logger.PortalTemplateImporterGetFolderMappingException(ex);
                             folderMapping = folderMappingController.GetDefaultFolderMapping(portalId);
                         }
 
@@ -763,7 +763,7 @@ namespace DotNetNuke.Entities.Portals.Templates
                         }
                         catch (Exception ex)
                         {
-                            Logger.Error(ex);
+                            Logger.PortalTemplateImporterAddFolderException(ex);
 
                             // Retry with default folderMapping
                             var defaultFolderMapping = folderMappingController.GetDefaultFolderMapping(portalId);

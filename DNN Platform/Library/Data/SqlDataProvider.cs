@@ -118,20 +118,20 @@ namespace DotNetNuke.Data
         {
             string exceptions = ExecuteScriptInternal(this.UpgradeConnectionString, script, timeoutSec);
 
-            // if the upgrade connection string is specified or or db_owner setting is not set to dbo
+            // if the upgrade connection string is specified or db_owner setting is not set to dbo
             if (this.UpgradeConnectionString != this.ConnectionString || !this.DatabaseOwner.Trim().Equals("dbo.", StringComparison.OrdinalIgnoreCase))
             {
                 try
                 {
                     // grant execute rights to the public role or userid for all stored procedures. This is
-                    // necesary because the UpgradeConnectionString will create stored procedures
+                    // necessary because the UpgradeConnectionString will create stored procedures
                     // which restrict execute permissions for the ConnectionString user account. This is also
                     // necessary when db_owner is not set to "dbo"
                     exceptions += this.GrantStoredProceduresPermission("EXECUTE", this.GetConnectionStringUserId());
                 }
                 catch (SqlException objException)
                 {
-                    Logger.Error(objException);
+                    Logger.SqlDataProviderGrantProcedureExecutePermissionException(objException);
 
                     exceptions += objException + Environment.NewLine + Environment.NewLine + script + Environment.NewLine + Environment.NewLine;
                 }
@@ -140,14 +140,14 @@ namespace DotNetNuke.Data
                 {
                     // grant execute or select rights to the public role or userid for all user defined functions based
                     // on what type of function it is (scalar function or table function). This is
-                    // necesary because the UpgradeConnectionString will create user defined functions
+                    // necessary because the UpgradeConnectionString will create user defined functions
                     // which restrict execute permissions for the ConnectionString user account.  This is also
                     // necessary when db_owner is not set to "dbo"
                     exceptions += this.GrantUserDefinedFunctionsPermission("EXECUTE", "SELECT", this.GetConnectionStringUserId());
                 }
                 catch (SqlException objException)
                 {
-                    Logger.Error(objException);
+                    Logger.SqlDataProviderGrantFunctionExecutePermissionException(objException);
 
                     exceptions += objException + Environment.NewLine + Environment.NewLine + script + Environment.NewLine + Environment.NewLine;
                 }
@@ -230,7 +230,7 @@ namespace DotNetNuke.Data
                     }
                     catch (SqlException objException)
                     {
-                        Logger.Error(objException);
+                        Logger.SqlDataProviderExecuteScriptException(objException);
                         exceptions += objException + Environment.NewLine + Environment.NewLine + sql + Environment.NewLine + Environment.NewLine;
                     }
                 }
@@ -262,12 +262,12 @@ namespace DotNetNuke.Data
             catch (SqlException sqlException)
             {
                 // error in SQL query
-                Logger.Error(sqlException);
+                Logger.SqlDataProviderExecuteSqlException(sqlException);
                 errorMessage = sqlException.Message;
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.SqlDataProviderExecuteSqlGeneralException(ex);
                 errorMessage = ex.ToString();
             }
 
@@ -396,7 +396,7 @@ namespace DotNetNuke.Data
             }
             catch (SqlException objException)
             {
-                Logger.Error(objException);
+                Logger.SqlDataProviderExecuteUpgradedConnectionQueryException(objException);
 
                 exceptions += objException + Environment.NewLine + Environment.NewLine + sql + Environment.NewLine + Environment.NewLine;
             }
