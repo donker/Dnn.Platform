@@ -603,7 +603,7 @@ namespace DotNetNuke.Services.Upgrade
             }
             catch (Exception ex)
             {
-                Logger.Error("Error cleanup file " + listFile, ex);
+                Logger.UpgradeErrorCleanupFile(ex, listFile);
 
                 exceptions += $"Error: {ex.Message + ex.StackTrace}{Environment.NewLine}";
 

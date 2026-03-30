@@ -4,6 +4,7 @@
 
 namespace DotNetNuke.DependencyInjection;
 
+using System;
 using System.Reflection;
 
 using Microsoft.Extensions.Logging;
@@ -12,5 +13,11 @@ using Microsoft.Extensions.Logging;
 internal static partial class LoggerMessages
 {
     [LoggerMessage(EventId = 11_000_000, Level = LogLevel.Warning, Message = "Unable to get all types for {AssemblyFullName}, see exception for details\n{Message}")]
-    public static partial void SecurityControllerUpdateIpFilterArgumentException(this ILogger logger, ReflectionTypeLoadException exception, string assemblyFullName, string message);
+    public static partial void TypeExtensionsUnableToGetAllTypesFor(this ILogger logger, ReflectionTypeLoadException exception, string assemblyFullName, string message);
+
+    [LoggerMessage(EventId = 11_000_100, Level = LogLevel.Error, Message = "Unable to get any types for {AssemblyFullName}, see exception for details")]
+    public static partial void TypeExtensionsUnableToGetAnyTypesFor(this ILogger logger, Exception exception, string assemblyFullName);
+
+    [LoggerMessage(EventId = 11_000_100, Level = LogLevel.Error, Message = "Unable to get any types for {AssemblyFullName}, see exception for details")]
+    public static partial void TypeExtensionsOtherExceptions(this ILogger logger, Exception exception, string assemblyFullName);
 }

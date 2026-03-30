@@ -419,7 +419,7 @@ namespace DotNetNuke.Framework
                 {
                     if (!ignoreErrors)
                     {
-                        Logger.Error(typeName, exc);
+                        Logger.ReflectionCreateTypeException(exc, typeName);
                     }
                 }
             }

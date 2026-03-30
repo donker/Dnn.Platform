@@ -72,5 +72,8 @@ namespace DotNetNuke.Website
 
         [LoggerMessage(EventId = 900_900, Level = LogLevel.Error)]
         public static partial void AuthenticationLoginPageNoException(this ILogger logger, Exception exception);
+
+        [LoggerMessage(EventId = 901_000, Level = LogLevel.Error, Message = "CSP error")]
+        public static partial void DefaultCspError(this ILogger logger, Exception exception);
     }
 }

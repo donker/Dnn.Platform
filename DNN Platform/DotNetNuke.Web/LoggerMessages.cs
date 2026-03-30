@@ -140,6 +140,12 @@ internal static partial class LoggerMessages
     [LoggerMessage(7_001_000, LogLevel.Warning, "While loading IDnnStartup types, the following assemblies had types that could not be loaded. This is only an issue if these types contain DNN startup logic that could not be loaded:\n{Message}")]
     public static partial void DependencyInjectionInitializeAssembliesCouldNotBeLoaded(this ILogger logger, string message);
 
+    [LoggerMessage(7_001_001, LogLevel.Error, "Unable to configure services for {FullTypeName}, see exception for details")]
+    public static partial void DependencyInjectionInitializeUnableToConfigureServicesFor(this ILogger logger, Exception exception, string fullTypeName);
+
+    [LoggerMessage(7_001_001, LogLevel.Error, "Unable to instantiate startup code for {FullTypeName}")]
+    public static partial void DependencyInjectionInitializeUnableToInstantiateStartupCodeFor(this ILogger logger, Exception exception, string fullTypeName);
+
     [LoggerMessage(EventId = 7_001_100, Level = LogLevel.Error)]
     public static partial void BuildUpExtensionsSetValueException(this ILogger logger, Exception exception);
 

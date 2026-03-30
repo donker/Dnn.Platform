@@ -1625,7 +1625,7 @@ namespace DotNetNuke.Services.FileSystem
             }
             catch (Exception ex)
             {
-                Logger.Error($"Could not create folder {item.FolderPath}. EXCEPTION: {ex.Message}", ex);
+                Logger.FolderManagerCouldNotCreateFolder(ex, item.FolderPath, ex.Message);
             }
         }
 

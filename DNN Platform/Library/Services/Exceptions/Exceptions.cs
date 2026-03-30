@@ -315,7 +315,7 @@ namespace DotNetNuke.Services.Exceptions
         /// <param name="url">The URL.</param>
         public static void ProcessPageLoadException(Exception exc, string url)
         {
-            Logger.Error(url, exc);
+            Logger.ExceptionsProcessPageLoadExceptionWithUrl(exc, url);
             if (ThreadAbortCheck(exc))
             {
                 return;
@@ -430,7 +430,7 @@ namespace DotNetNuke.Services.Exceptions
         private static void ProcessHttpException(HttpException exc, string url)
         {
             var notFoundErrorString = Localization.GetString("ResourceNotFound", Localization.SharedResourceFile);
-            Logger.Error(notFoundErrorString + ": - " + url, exc);
+            Logger.ExceptionsProcessHttpException(exc, notFoundErrorString, url);
 
             var log = new LogInfo
             {

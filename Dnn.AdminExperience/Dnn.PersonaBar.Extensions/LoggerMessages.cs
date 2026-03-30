@@ -954,4 +954,40 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(EventId = 5_006_300, Level = LogLevel.Error)]
     public static partial void GetTaskRunException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 5_006_400, Level = LogLevel.Error, Message = "An unexpected error occurred while trying to make this page neutral, please consult the logs for more details.")]
+    public static partial void PagesControllerUnexpectedErrorMakingPageNeutral(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 5_006_401, Level = LogLevel.Error, Message = "An unexpected error occurred while trying to make this page translatable.")]
+    public static partial void PagesControllerUnexpectedErrorMakingPageTranslatable(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 5_006_402, Level = LogLevel.Error, Message = "An unexpected error occurred while trying to add missing languages to this page, consult the logs for more details.")]
+    public static partial void PagesControllerUnexpectedErrorAddingMissingLanguagesToPage(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 5_006_403, Level = LogLevel.Error, Message = "An unexpected error occurred while trying to notify the translators, please consult the logs for more details.")]
+    public static partial void PagesControllerUnexpectedErrorNotifyingTranslators(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 5_006_404, Level = LogLevel.Error, Message = "An unexpected error occurred trying to get this page localization, consult the logs for more details.")]
+    public static partial void PagesControllerUnexpectedErrorGettingPageLocalization(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 5_006_405, Level = LogLevel.Error, Message = "An unexpected error occurred trying to update the page localization, please consult the logs for more details.")]
+    public static partial void PagesControllerUnexpectedErrorUpdatingPageLocalization(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 5_006_406, Level = LogLevel.Error, Message = "An unexpected error occurred while trying to restore the module onto that page.")]
+    public static partial void PagesControllerUnexpectedErrorRestoringModuleOntoPage(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 5_006_407, Level = LogLevel.Error, Message = "An unexpected error occurred while trying to delete the module, consult the logs for more details.")]
+    public static partial void PagesControllerUnexpectedErrorDeletingModule(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 5_006_408, Level = LogLevel.Error, Message = "An unexpected error occurred while trying to find if content localization is enabled")]
+    public static partial void PagesControllerUnexpectedErrorGettingContentLocalizationEnabled(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 5_006_409, Level = LogLevel.Error, Message = "An unexpected error occurred trying to get the cached items count, please consult the logs for more details.")]
+    public static partial void PagesControllerUnexpectedErrorGettingCachedItemsCount(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 5_006_410, Level = LogLevel.Error, Message = "An unexpected error occurred while trying to clear the cache for this page, see logs for more details.")]
+    public static partial void PagesControllerUnexpectedErrorClearingCacheForPage(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 5_006_500, Level = LogLevel.Error, Message = "{ID} failed")]
+    public static partial void BaseCheckFailed(this ILogger logger, Exception exception, string id);
 }

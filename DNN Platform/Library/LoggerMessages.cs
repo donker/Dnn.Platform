@@ -123,6 +123,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 1_804, Level = LogLevel.Error)]
     public static partial void LogControllerAddLogToFileException(this ILogger logger, Exception exception);
 
+    [LoggerMessage(EventId = 1_805, Level = LogLevel.Error, Message = "Unable to retrieve HttpContext.Request, ignoring LogUserName")]
+    public static partial void LogControllerUnableToRetrieveRequestIgnoringLogUserName(this ILogger logger, Exception exception);
+
     [LoggerMessage(EventId = 1_900, Level = LogLevel.Debug)]
     public static partial void PurgeModuleCachePurgeNotSupportedException(this ILogger logger, NotSupportedException exception);
 
@@ -233,6 +236,9 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(EventId = 2_707, Level = LogLevel.Error)]
     public static partial void FolderManagerDeleteFolderInternalException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 2_708, Level = LogLevel.Error, Message = "Could not create folder {FolderPath}. EXCEPTION: {Message}")]
+    public static partial void FolderManagerCouldNotCreateFolder(this ILogger logger, Exception exception, string folderPath, string message);
 
     [LoggerMessage(2_800, LogLevel.Information, "{Message}")]
     public static partial void InstallLoggerLogInfo(this ILogger logger, string message);
@@ -359,6 +365,9 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(EventId = 3_818, Level = LogLevel.Error)]
     public static partial void UpgradeFindLanguageXmlDocumentException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 3_819, Level = LogLevel.Error, Message = "Error cleanup file {ListFile}")]
+    public static partial void UpgradeErrorCleanupFile(this ILogger logger, Exception exception, string listFile);
 
     [LoggerMessage(3_900, LogLevel.Trace, "Getting component for {FullName}")]
     public static partial void ContainerWithServiceProviderFallbackGettingComponent(this ILogger logger, string fullName);
@@ -492,6 +501,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(4_900, LogLevel.Warning, "Unable to create type via service provider: {Type}")]
     public static partial void ReflectionUnableToCreateTypeViaServiceProvider(this ILogger logger, InvalidOperationException exception, Type type);
 
+    [LoggerMessage(4_901, LogLevel.Error, "{TypeName}")]
+    public static partial void ReflectionCreateTypeException(this ILogger logger, Exception exception, string typeName);
+
     [LoggerMessage(5_000, LogLevel.Warning, "Container was null, instantiating SimpleContainer")]
     public static partial void ComponentFactoryInstantiatingSimpleContainer(this ILogger logger);
 
@@ -569,6 +581,12 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(EventId = 5_908, Level = LogLevel.Error)]
     public static partial void ExceptionsLogSearchException(this ILogger logger, SearchException exception);
+
+    [LoggerMessage(EventId = 5_909, Level = LogLevel.Error, Message = "{URL}")]
+    public static partial void ExceptionsProcessPageLoadExceptionWithUrl(this ILogger logger, Exception exception, string url);
+
+    [LoggerMessage(EventId = 5_910, Level = LogLevel.Error, Message = "{ResourceNotFound}: - {URL}")]
+    public static partial void ExceptionsProcessHttpException(this ILogger logger, Exception exception, string resourceNotFound, string url);
 
     [LoggerMessage(6_000, LogLevel.Error, "Error has occurred getting PageUrl for {TabName}")]
     public static partial void CoreSitemapProviderErrorGettingPageUrl(this ILogger logger, Exception exception, string tabName);
@@ -816,6 +834,15 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 9_817, Level = LogLevel.Error)]
     public static partial void PortalControllerLogCreatePortalException(this ILogger logger, Exception exception);
 
+    [LoggerMessage(EventId = 9_818, Level = LogLevel.Error, Message = "{Message}")]
+    public static partial void PortalControllerEnsureRequiredProvidersForFolderTypesException(this ILogger logger, Exception exception, string message);
+
+    [LoggerMessage(EventId = 9_819, Level = LogLevel.Error, Message = "{Message}: {FolderTypeName}")]
+    public static partial void PortalControllerAddFolderMappingException(this ILogger logger, Exception exception, string message, string folderTypeName);
+
+    [LoggerMessage(EventId = 9_820, Level = LogLevel.Error, Message = "Error while parsing: {TemplateFilePath}")]
+    public static partial void PortalControllerErrorWhileParsing(this ILogger logger, Exception exception, string templateFilePath);
+
     [LoggerMessage(EventId = 9_900, Level = LogLevel.Error, Message = "{LogInfo}")]
     public static partial void RewriterConfigurationGetConfigFailed(this ILogger logger, LogInfo logInfo);
 
@@ -855,6 +882,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 16_001, Level = LogLevel.Error)]
     public static partial void InstallerLogInstallEventException(this ILogger logger, Exception exception);
 
+    [LoggerMessage(EventId = 16_002, Level = LogLevel.Error, Message = "Exception deleting folder {TempInstallFolder} while installing {Name}")]
+    public static partial void InstallerExceptionDeletingFolderWhileInstalling(this ILogger logger, Exception exception, string tempInstallFolder, string name);
+
     [LoggerMessage(EventId = 17_000, Level = LogLevel.Error)]
     public static partial void FileDeletionControllerDeleteFileException(this ILogger logger, Exception exception);
 
@@ -866,4 +896,19 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(EventId = 20_000, Level = LogLevel.Error)]
     public static partial void ModuleResultControllerGetModuleSearchUrlException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 21_000, Level = LogLevel.Error, Message = "Unable to register service routes")]
+    public static partial void ServicesRoutingManagerUnableToRegisterServiceRoutes(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 22_000, Level = LogLevel.Error, Message = "{Message}")]
+    public static partial void EventHandlersContainerConstructorException(this ILogger logger, Exception exception, string message);
+
+    [LoggerMessage(EventId = 23_000, Level = LogLevel.Error, Message = "Create File Security Checker for '{Extension}' failed.")]
+    public static partial void FileSecurityControllerCreateFileSecurityCheckerFailed(this ILogger logger, Exception exception, string extension);
+
+    [LoggerMessage(EventId = 24_000, Level = LogLevel.Error, Message = "Error while parsing: {TemplateFilePath}")]
+    public static partial void PortalTemplateInfoErrorWhileParsing(this ILogger logger, Exception exception, string templateFilePath);
+
+    [LoggerMessage(EventId = 25_000, Level = LogLevel.Error, Message = "{ErrorMessage}")]
+    public static partial void TabPublishingControllerPermissionsAreNotMetThePageHasNotBeenPublished(this ILogger logger, Entities.Tabs.PermissionsNotMetException exception, string errorMessage);
 }

@@ -81,7 +81,7 @@ namespace DotNetNuke.Services.Log.EventLog
                             }
                             catch (HttpException exception)
                             {
-                                Logger.Error("Unable to retrieve HttpContext.Request, ignoring LogUserName", exception);
+                                Logger.LogControllerUnableToRetrieveRequestIgnoringLogUserName(exception);
                             }
                         }
                     }

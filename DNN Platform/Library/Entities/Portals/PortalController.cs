@@ -2759,7 +2759,7 @@ namespace DotNetNuke.Entities.Portals
             }
             catch (Exception ex)
             {
-                Logger.Error(Localization.GetString("CreatingConfiguredFolderMapping.Error"), ex);
+                Logger.PortalControllerEnsureRequiredProvidersForFolderTypesException(ex, Localization.GetString("CreatingConfiguredFolderMapping.Error"));
             }
 
             var webConfig = Config.Load();
@@ -2774,7 +2774,7 @@ namespace DotNetNuke.Entities.Portals
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error(Localization.GetString("CreatingConfiguredFolderMapping.Error") + ": " + folderTypeConfig.Name, ex);
+                    Logger.PortalControllerAddFolderMappingException(ex, Localization.GetString("CreatingConfiguredFolderMapping.Error"), folderTypeConfig.Name);
                 }
             }
         }
@@ -2976,7 +2976,7 @@ namespace DotNetNuke.Entities.Portals
                 }
                 catch (Exception e)
                 {
-                    Logger.Error("Error while parsing: " + this.TemplateFilePath, e);
+                    Logger.PortalControllerErrorWhileParsing(e, this.TemplateFilePath);
                 }
             }
 
@@ -2994,7 +2994,7 @@ namespace DotNetNuke.Entities.Portals
                 }
                 catch (Exception e)
                 {
-                    Logger.Error("Error while parsing: " + this.TemplateFilePath, e);
+                    Logger.PortalControllerErrorWhileParsing(e, this.TemplateFilePath);
                 }
             }
 

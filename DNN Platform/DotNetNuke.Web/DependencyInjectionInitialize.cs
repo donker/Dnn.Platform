@@ -58,7 +58,7 @@ namespace DotNetNuke.Web
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error($"Unable to configure services for {startup.GetType().FullName}, see exception for details", ex);
+                    Logger.DependencyInjectionInitializeUnableToConfigureServicesFor(ex, startup.GetType().FullName);
                 }
             }
         }
@@ -71,7 +71,7 @@ namespace DotNetNuke.Web
             }
             catch (Exception ex)
             {
-                Logger.Error($"Unable to instantiate startup code for {startupType.FullName}", ex);
+                Logger.DependencyInjectionInitializeUnableToInstantiateStartupCodeFor(ex, startupType.FullName);
                 return null;
             }
         }
