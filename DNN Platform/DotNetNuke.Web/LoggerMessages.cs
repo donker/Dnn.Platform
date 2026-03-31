@@ -17,55 +17,55 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 7_000_000, Message = "{Message}")]
     public static partial void TraceWriterLogMessage(this ILogger logger, LogLevel logLevel, string message);
 
-    [LoggerMessage(7_000_100, LogLevel.Information, "Watcher Activity: {ChangeType}. Path: {FullPath}")]
+    [LoggerMessage(EventId = 7_000_100, Level = LogLevel.Information, Message = "Watcher Activity: {ChangeType}. Path: {FullPath}")]
     public static partial void ShutdownOverloadWatcherActivity(this ILogger logger, WatcherChangeTypes changeType, string fullPath);
 
-    [LoggerMessage(7_000_101, LogLevel.Information, "Watcher Activity: {ChangeType}. New Path: {NewPath}. Old Path: {OldPath}")]
+    [LoggerMessage(EventId = 7_000_101, Level = LogLevel.Information, Message = "Watcher Activity: {ChangeType}. New Path: {NewPath}. Old Path: {OldPath}")]
     public static partial void ShutdownOverloadWatcherRenamedActivity(this ILogger logger, WatcherChangeTypes changeType, string newPath, string oldPath);
 
-    [LoggerMessage(7_000_102, LogLevel.Information, "Watcher Activity: N/A. Error:")]
+    [LoggerMessage(EventId = 7_000_102, Level = LogLevel.Information, Message = "Watcher Activity: N/A. Error:")]
     public static partial void ShutdownOverloadWatcherError(this ILogger logger, Exception exception);
 
     [LoggerMessage(EventId = 7_000_103, Level = LogLevel.Information)]
     public static partial void ShutdownOverloadInitializeFcnSettingsException(this ILogger logger, Exception exception);
 
-    [LoggerMessage(7_000_104, LogLevel.Information, "fileChangesMonitor is null")]
+    [LoggerMessage(EventId = 7_000_104, Level = LogLevel.Information, Message = "fileChangesMonitor is null")]
     public static partial void ShutdownOverloadFileChangesMonitorIsNull(this ILogger logger);
 
-    [LoggerMessage(7_000_105, LogLevel.Information, "FCNMode = {fcnMode} (Modes: NotSet/Default=0, Disabled=1, Single=2)")]
+    [LoggerMessage(EventId = 7_000_105, Level = LogLevel.Information, Message = "FCNMode = {fcnMode} (Modes: NotSet/Default=0, Disabled=1, Single=2)")]
     public static partial void ShutdownOverloadFileChangeNotificationMode(this ILogger logger, object fcnMode);
 
-    [LoggerMessage(7_000_106, LogLevel.Trace, "DirMonCompletion count: {Count}")]
+    [LoggerMessage(EventId = 7_000_106, Level = LogLevel.Trace, Message = "DirMonCompletion count: {Count}")]
     public static partial void ShutdownOverloadDirMonCompletionCount(this ILogger logger, int count);
 
-    [LoggerMessage(7_000_107, LogLevel.Trace, @"Added watcher for: {WatcherPath}/{WatcherFilter}")]
+    [LoggerMessage(EventId = 7_000_107, Level = LogLevel.Trace, Message = @"Added watcher for: {WatcherPath}/{WatcherFilter}")]
     public static partial void ShutdownOverloadAddedWatcherFor(this ILogger logger, string watcherPath, string watcherFilter);
 
-    [LoggerMessage(7_000_108, LogLevel.Trace, "Error adding our own file monitoring object.")]
+    [LoggerMessage(EventId = 7_000_108, Level = LogLevel.Trace, Message = "Error adding our own file monitoring object.")]
     public static partial void ShutdownOverloadErrorAddingOurOwnFileMonitoringObject(this ILogger logger, Exception exception);
 
     [LoggerMessage(EventId = 7_000_109, Level = LogLevel.Error)]
     public static partial void ShutdownOverloadUnloadAppDomainException(this ILogger logger, Exception exception);
 
-    [LoggerMessage(7_000_200, LogLevel.Information, "Application Starting ({ElapsedSinceAppStart})")]
+    [LoggerMessage(EventId = 7_000_200, Level = LogLevel.Information, Message = "Application Starting ({ElapsedSinceAppStart})")]
     public static partial void ApplicationStarting(this ILogger logger, TimeSpan elapsedSinceAppStart);
 
-    [LoggerMessage(7_000_201, LogLevel.Information, "Application Started ({ElapsedSinceAppStart})")]
+    [LoggerMessage(EventId = 7_000_201, Level = LogLevel.Information, Message = "Application Started ({ElapsedSinceAppStart})")]
     public static partial void ApplicationStarted(this ILogger logger, TimeSpan elapsedSinceAppStart);
 
-    [LoggerMessage(7_000_202, LogLevel.Information, "Application Ending")]
+    [LoggerMessage(EventId = 7_000_202, Level = LogLevel.Information, Message = "Application Ending")]
     public static partial void ApplicationEnding(this ILogger logger);
 
-    [LoggerMessage(7_000_203, LogLevel.Information, "Application Ended")]
+    [LoggerMessage(EventId = 7_000_203, Level = LogLevel.Information, Message = "Application Ended")]
     public static partial void ApplicationEnded(this ILogger logger);
 
-    [LoggerMessage(7_000_204, LogLevel.Trace, "Disposing Lucene")]
+    [LoggerMessage(EventId = 7_000_204, Level = LogLevel.Trace, Message = "Disposing Lucene")]
     public static partial void ApplicationDisposingLucene(this ILogger logger);
 
-    [LoggerMessage(7_000_205, LogLevel.Trace, "Dumping all Application Errors")]
+    [LoggerMessage(EventId = 7_000_205, Level = LogLevel.Trace, Message = "Dumping all Application Errors")]
     public static partial void ApplicationDumpingAllApplicationErrors(this ILogger logger);
 
-    [LoggerMessage(7_000_206, LogLevel.Trace, "End Dumping all Application Errors")]
+    [LoggerMessage(EventId = 7_000_206, Level = LogLevel.Trace, Message = "End Dumping all Application Errors")]
     public static partial void ApplicationEndDumpingAllApplicationErrors(this ILogger logger);
 
     [LoggerMessage(EventId = 7_000_207, Level = LogLevel.Error)]
@@ -77,67 +77,67 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 7_000_209, Level = LogLevel.Critical)]
     public static partial void ApplicationLogApplicationError(this ILogger logger, Exception exception);
 
-    [LoggerMessage(7_000_300, LogLevel.Trace, "Authorization header scheme in the request is not equal to {AuthScheme}")]
+    [LoggerMessage(EventId = 7_000_300, Level = LogLevel.Trace, Message = "Authorization header scheme in the request is not equal to {AuthScheme}")]
     public static partial void ApiTokenControllerAuthorizationHeaderSchemeDoesNotMatchAuthScheme(this ILogger logger, string authScheme);
 
-    [LoggerMessage(7_000_301, LogLevel.Trace, "Missing authorization header value in the request")]
+    [LoggerMessage(EventId = 7_000_301, Level = LogLevel.Trace, Message = "Missing authorization header value in the request")]
     public static partial void ApiTokenControllerMissingAuthorizationHeaderValue(this ILogger logger);
 
-    [LoggerMessage(7_000_302, LogLevel.Trace, "Token expired")]
+    [LoggerMessage(EventId = 7_000_302, Level = LogLevel.Trace, Message = "Token expired")]
     public static partial void ApiTokenControllerTokenExpired(this ILogger logger);
 
-    [LoggerMessage(7_000_303, LogLevel.Trace, "Invalid user")]
+    [LoggerMessage(EventId = 7_000_303, Level = LogLevel.Trace, Message = "Invalid user")]
     public static partial void ApiTokenControllerInvalidUser(this ILogger logger);
 
-    [LoggerMessage(7_000_304, LogLevel.Trace, "{SchemeType} is not registered/enabled in web.config file")]
+    [LoggerMessage(EventId = 7_000_304, Level = LogLevel.Trace, Message = "{SchemeType} is not registered/enabled in web.config file")]
     public static partial void ApiTokenControllerSchemeIsNotEnabledInWebConfig(this ILogger logger, string schemeType);
 
-    [LoggerMessage(7_000_400, LogLevel.Trace, "Authenticated using API token {ApiTokenId}")]
+    [LoggerMessage(EventId = 7_000_400, Level = LogLevel.Trace, Message = "Authenticated using API token {ApiTokenId}")]
     public static partial void ApiTokenAuthMessageHandlerAuthenticatedUsingApiToken(this ILogger logger, int apiTokenId);
 
-    [LoggerMessage(7_000_401, LogLevel.Error, "Unexpected error authenticating API Token.")]
+    [LoggerMessage(EventId = 7_000_401, Level = LogLevel.Error, Message = "Unexpected error authenticating API Token.")]
     public static partial void ApiTokenAuthMessageHandlerUnexpectedErrorAuthenticatingApiToken(this ILogger logger, Exception exception);
 
-    [LoggerMessage(7_000_500, LogLevel.Trace, "{AuthScheme}: Validating request vs. SSL mode ({ForceSsl}) failed. ")]
+    [LoggerMessage(EventId = 7_000_500, Level = LogLevel.Trace, Message = "{AuthScheme}: Validating request vs. SSL mode ({ForceSsl}) failed. ")]
     public static partial void AuthMessageHandlerBaseValidatingRequestVsSslModeFailed(this ILogger logger, string authScheme, bool forceSsl);
 
-    [LoggerMessage(7_000_600, LogLevel.Trace, "Mapping route: {FullRouteName} @ {RouteUrl}")]
+    [LoggerMessage(EventId = 7_000_600, Level = LogLevel.Trace, Message = "Mapping route: {FullRouteName} @ {RouteUrl}")]
     public static partial void ServicesRoutingManagerMappingRoute(this ILogger logger, string fullRouteName, string routeUrl);
 
-    [LoggerMessage(7_000_601, LogLevel.Trace, "Mapping route: {OldRouteName} @ {OldRouteUrl}")]
+    [LoggerMessage(EventId = 7_000_601, Level = LogLevel.Trace, Message = "Mapping route: {OldRouteName} @ {OldRouteUrl}")]
     public static partial void ServicesRoutingManagerMappingOldRoute(this ILogger logger, string oldRouteName, string oldRouteUrl);
 
-    [LoggerMessage(7_000_602, LogLevel.Trace, "Registered a total of {Count} routes")]
+    [LoggerMessage(EventId = 7_000_602, Level = LogLevel.Trace, Message = "Registered a total of {Count} routes")]
     public static partial void ServicesRoutingManagerRegisteredRoutes(this ILogger logger, int count);
 
-    [LoggerMessage(7_000_603, LogLevel.Trace, "The following handler is disabled {ClassName}")]
+    [LoggerMessage(EventId = 7_000_603, Level = LogLevel.Trace, Message = "The following handler is disabled {ClassName}")]
     public static partial void ServicesRoutingManagerHandlerIsDisabled(this ILogger logger, string className);
 
-    [LoggerMessage(7_000_604, LogLevel.Trace, "The following handler scheme '{ClassName}' is already added and will be skipped")]
+    [LoggerMessage(EventId = 7_000_604, Level = LogLevel.Trace, Message = "The following handler scheme '{ClassName}' is already added and will be skipped")]
     public static partial void ServicesRoutingManagerHandlerIsAlreadyAdded(this ILogger logger, string className);
 
-    [LoggerMessage(7_000_605, LogLevel.Trace, "Instantiated/Activated instance of {AuthScheme}, class: {ClassFullName}")]
+    [LoggerMessage(EventId = 7_000_605, Level = LogLevel.Trace, Message = "Instantiated/Activated instance of {AuthScheme}, class: {ClassFullName}")]
     public static partial void ServicesRoutingManagerHandlerIsActivated(this ILogger logger, string authScheme, string classFullName);
 
-    [LoggerMessage(7_000_606, LogLevel.Error, "{FullTypeName}.RegisterRoutes threw an exception.")]
+    [LoggerMessage(EventId = 7_000_606, Level = LogLevel.Error, Message = "{FullTypeName}.RegisterRoutes threw an exception.")]
     public static partial void ServicesRoutingManagerRegisterRoutesThrewAnException(this ILogger logger, Exception exception, string fullTypeName);
 
-    [LoggerMessage(7_000_607, LogLevel.Error, "Unable to create {fullTypeName} while registering service routes.")]
+    [LoggerMessage(EventId = 7_000_607, Level = LogLevel.Error, Message = "Unable to create {fullTypeName} while registering service routes.")]
     public static partial void ServicesRoutingManagerUnableToCreateRouteMapper(this ILogger logger, Exception exception, string fullTypeName);
 
-    [LoggerMessage(7_000_608, LogLevel.Error, "Cannot instantiate/activate instance of {ClassName}")]
+    [LoggerMessage(EventId = 7_000_608, Level = LogLevel.Error, Message = "Cannot instantiate/activate instance of {ClassName}")]
     public static partial void ServicesRoutingManagerCannotInstantiateInstanceOf(this ILogger logger, Exception exception, string className);
 
-    [LoggerMessage(7_000_700, LogLevel.Warning, "The specified moniker ({Moniker}) is not defined in the system")]
+    [LoggerMessage(EventId = 7_000_700, Level = LogLevel.Warning, Message = "The specified moniker ({Moniker}) is not defined in the system")]
     public static partial void StandardTabAndModuleInfoProviderMonikerIsNotDefined(this ILogger logger, string moniker);
 
-    [LoggerMessage(7_000_800, LogLevel.Warning, "Unable to create thumbnail for {PhysicalPath}")]
+    [LoggerMessage(EventId = 7_000_800, Level = LogLevel.Warning, Message = "Unable to create thumbnail for {PhysicalPath}")]
     public static partial void DnnFilePickerUnableToCreateThumbnail(this ILogger logger, string physicalPath);
 
     [LoggerMessage(EventId = 7_000_801, Level = LogLevel.Error)]
     public static partial void DnnFilePickerAddFileException(this ILogger logger, Exception exception);
 
-    [LoggerMessage(7_000_900, LogLevel.Warning, "Unable to get image dimensions for image file")]
+    [LoggerMessage(EventId = 7_000_900, Level = LogLevel.Warning, Message = "Unable to get image dimensions for image file")]
     public static partial void FileUploadControllerUnableToGetImageDimensions(this ILogger logger, ArgumentException exception);
 
     [LoggerMessage(EventId = 7_000_901, Level = LogLevel.Error)]
@@ -146,13 +146,13 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 7_000_902, Level = LogLevel.Error)]
     public static partial void FileUploadControllerUploadFileException(this ILogger logger, Exception exception);
 
-    [LoggerMessage(7_001_000, LogLevel.Warning, "While loading IDnnStartup types, the following assemblies had types that could not be loaded. This is only an issue if these types contain DNN startup logic that could not be loaded:\n{Message}")]
+    [LoggerMessage(EventId = 7_001_000, Level = LogLevel.Warning, Message = "While loading IDnnStartup types, the following assemblies had types that could not be loaded. This is only an issue if these types contain DNN startup logic that could not be loaded:\n{Message}")]
     public static partial void DependencyInjectionInitializeAssembliesCouldNotBeLoaded(this ILogger logger, string message);
 
-    [LoggerMessage(7_001_001, LogLevel.Error, "Unable to configure services for {FullTypeName}, see exception for details")]
+    [LoggerMessage(EventId = 7_001_001, Level = LogLevel.Error, Message = "Unable to configure services for {FullTypeName}, see exception for details")]
     public static partial void DependencyInjectionInitializeUnableToConfigureServicesFor(this ILogger logger, Exception exception, string fullTypeName);
 
-    [LoggerMessage(7_001_001, LogLevel.Error, "Unable to instantiate startup code for {FullTypeName}")]
+    [LoggerMessage(EventId = 7_001_001, Level = LogLevel.Error, Message = "Unable to instantiate startup code for {FullTypeName}")]
     public static partial void DependencyInjectionInitializeUnableToInstantiateStartupCodeFor(this ILogger logger, Exception exception, string fullTypeName);
 
     [LoggerMessage(EventId = 7_001_100, Level = LogLevel.Error)]

@@ -172,40 +172,40 @@ internal static partial class LoggerMessages
     [LoggerMessage(2_500, LogLevel.Information, "Application shutting down. Reason: {Reason}")]
     public static partial void InitializeApplicationShuttingDown(this ILogger logger, string reason);
 
-    [LoggerMessage(2_501, LogLevel.Information, "Application shutting down. Reason: {Reason}\nASP.NET Shutdown Info: {ShutdownMessage}\n{ShutdownStack}")]
+    [LoggerMessage(EventId = 2_501, Level = LogLevel.Information, Message = "Application shutting down. Reason: {Reason}\nASP.NET Shutdown Info: {ShutdownMessage}\n{ShutdownStack}")]
     public static partial void InitializeApplicationShuttingDownWithInfo(this ILogger logger, string reason, string shutdownMessage, string shutdownStack);
 
-    [LoggerMessage(2_502, LogLevel.Information, "UnderConstruction page was shown because application needs to be installed, and both the AutoUpgrade and UseWizard AppSettings in web.config are false. Use /install/install.aspx?mode=install to install application. ")]
+    [LoggerMessage(EventId = 2_502, Level = LogLevel.Information, Message = "UnderConstruction page was shown because application needs to be installed, and both the AutoUpgrade and UseWizard AppSettings in web.config are false. Use /install/install.aspx?mode=install to install application. ")]
     public static partial void InitializeUnderConstructionPageShownBecauseInstallationNeeded(this ILogger logger);
 
-    [LoggerMessage(2_503, LogLevel.Information, "UnderConstruction page was shown because application needs to be upgraded, and both the AutoUpgrade and UseInstallWizard AppSettings in web.config are false. Use /install/install.aspx?mode=upgrade to upgrade application. ")]
+    [LoggerMessage(EventId = 2_503, Level = LogLevel.Information, Message = "UnderConstruction page was shown because application needs to be upgraded, and both the AutoUpgrade and UseInstallWizard AppSettings in web.config are false. Use /install/install.aspx?mode=upgrade to upgrade application. ")]
     public static partial void InitializeUnderConstructionPageShownBecauseUpgradeNeeded(this ILogger logger);
 
-    [LoggerMessage(2_504, LogLevel.Information, "Application Initializing")]
+    [LoggerMessage(EventId = 2_504, Level = LogLevel.Information, Message = "Application Initializing")]
     public static partial void InitializeApplicationInitializing(this ILogger logger);
 
-    [LoggerMessage(2_505, LogLevel.Information, "Application Initialized")]
+    [LoggerMessage(EventId = 2_505, Level = LogLevel.Information, Message = "Application Initialized")]
     public static partial void InitializeApplicationInitialized(this ILogger logger);
 
-    [LoggerMessage(2_506, LogLevel.Trace, "Running Schedule {SchedulerMode}")]
+    [LoggerMessage(EventId = 2_506, Level = LogLevel.Trace, Message = "Running Schedule {SchedulerMode}")]
     public static partial void InitializeRunningSchedule(this ILogger logger, SchedulerMode schedulerMode);
 
-    [LoggerMessage(2_507, LogLevel.Trace, "Request {LocalPath}")]
+    [LoggerMessage(EventId = 2_507, Level = LogLevel.Trace, Message = "Request {LocalPath}")]
     public static partial void InitializeRequest(this ILogger logger, string localPath);
 
-    [LoggerMessage(2_508, LogLevel.Error, "UnderConstruction page was shown because we cannot ascertain the application was ever installed, and there is no working database connection. Check database connectivity before continuing. ")]
+    [LoggerMessage(EventId = 2_508, Level = LogLevel.Error, Message = "UnderConstruction page was shown because we cannot ascertain the application was ever installed, and there is no working database connection. Check database connectivity before continuing. ")]
     public static partial void InitializeUnderConstructionPageShownBecauseNoWorkingDatabaseConnection(this ILogger logger);
 
-    [LoggerMessage(2_509, LogLevel.Error, "The connection to the database has failed, the application is not installed yet, and both AutoUpgrade and UseInstallWizard are not set in web.config, a 500 error page will be shown to visitors")]
+    [LoggerMessage(EventId = 2_509, Level = LogLevel.Error, Message = "The connection to the database has failed, the application is not installed yet, and both AutoUpgrade and UseInstallWizard are not set in web.config, a 500 error page will be shown to visitors")]
     public static partial void InitializeConnectionToTheDatabaseHasFailedTheApplicationIsNotInstalledYetA500ErrorPageWillBeShown(this ILogger logger);
 
-    [LoggerMessage(2_510, LogLevel.Error, "The connection to the database has failed, however, the application is already completely installed, a 500 error page will be shown to visitors")]
+    [LoggerMessage(EventId = 2_510, Level = LogLevel.Error, Message = "The connection to the database has failed, however, the application is already completely installed, a 500 error page will be shown to visitors")]
     public static partial void InitializeConnectionToTheDatabaseHasFailedHoweverTheApplicationIsAlreadyCompletelyInstalledA500ErrorPageWillBeShown(this ILogger logger);
 
-    [LoggerMessage(2_600, LogLevel.Information, "{RootPath} does not exist. ")]
+    [LoggerMessage(EventId = 2_600, Level = LogLevel.Information, Message = "{RootPath} does not exist. ")]
     public static partial void FileSystemUtilsFolderDoesNotExist(this ILogger logger, string rootPath);
 
-    [LoggerMessage(2_601, LogLevel.Error, "Reading from {FilePath} didn't read all data in buffer. Requested to read {BufferLength} bytes, but was read {ReadCount} bytes")]
+    [LoggerMessage(EventId = 2_601, Level = LogLevel.Error, Message = "Reading from {FilePath} didn't read all data in buffer. Requested to read {BufferLength} bytes, but was read {ReadCount} bytes")]
     public static partial void FileSystemUtilsAddToZipDidNotReadAllDataInBuffer(this ILogger logger, string filePath, long bufferLength, int readCount);
 
     [LoggerMessage(EventId = 2_602, Level = LogLevel.Error)]
@@ -229,7 +229,7 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 2_605, Level = LogLevel.Error)]
     public static partial void FileSystemUtilsUnzipException(this ILogger logger, Exception exception);
 
-    [LoggerMessage(2_700, LogLevel.Information, "{Message}")]
+    [LoggerMessage(EventId = 2_700, Level = LogLevel.Information, Message = "{Message}")]
     public static partial void FolderManagerInvalidFileExtensionException(this ILogger logger, string message);
 
     [LoggerMessage(EventId = 2_701, Level = LogLevel.Error)]
@@ -256,82 +256,82 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 2_708, Level = LogLevel.Error, Message = "Could not create folder {FolderPath}. EXCEPTION: {Message}")]
     public static partial void FolderManagerCouldNotCreateFolder(this ILogger logger, Exception exception, string folderPath, string message);
 
-    [LoggerMessage(2_800, LogLevel.Information, "{Message}")]
+    [LoggerMessage(EventId = 2_800, Level = LogLevel.Information, Message = "{Message}")]
     public static partial void InstallLoggerLogInfo(this ILogger logger, string message);
 
-    [LoggerMessage(2_801, LogLevel.Warning, "{Message}")]
+    [LoggerMessage(EventId = 2_801, Level = LogLevel.Warning, Message = "{Message}")]
     public static partial void InstallLoggerLogWarning(this ILogger logger, string message);
 
-    [LoggerMessage(2_802, LogLevel.Error, "{Message}")]
+    [LoggerMessage(EventId = 2_802, Level = LogLevel.Error, Message = "{Message}")]
     public static partial void InstallLoggerLogFailure(this ILogger logger, string message);
 
-    [LoggerMessage(2_900, LogLevel.Information, "Starting WebServerMonitor")]
+    [LoggerMessage(EventId = 2_900, Level = LogLevel.Information, Message = "Starting WebServerMonitor")]
     public static partial void WebServerMonitorStartingWebServerMonitor(this ILogger logger);
 
-    [LoggerMessage(2_901, LogLevel.Information, "Starting UpdateCurrentServerActivity")]
+    [LoggerMessage(EventId = 2_901, Level = LogLevel.Information, Message = "Starting UpdateCurrentServerActivity")]
     public static partial void WebServerMonitorStartingUpdateCurrentServerActivity(this ILogger logger);
 
-    [LoggerMessage(2_902, LogLevel.Information, "Starting RemoveInActiveServers")]
+    [LoggerMessage(EventId = 2_902, Level = LogLevel.Information, Message = "Starting RemoveInActiveServers")]
     public static partial void WebServerMonitorStartingRemoveInActiveServers(this ILogger logger);
 
-    [LoggerMessage(2_903, LogLevel.Information, "Finished RemoveInActiveServers")]
+    [LoggerMessage(EventId = 2_903, Level = LogLevel.Information, Message = "Finished RemoveInActiveServers")]
     public static partial void WebServerMonitorFinishedRemoveInActiveServers(this ILogger logger);
 
-    [LoggerMessage(2_904, LogLevel.Information, "Finished UpdateCurrentServerActivity")]
+    [LoggerMessage(EventId = 2_904, Level = LogLevel.Information, Message = "Finished UpdateCurrentServerActivity")]
     public static partial void WebServerMonitorFinishedUpdateCurrentServerActivity(this ILogger logger);
 
-    [LoggerMessage(2_905, LogLevel.Information, "Finished WebServerMonitor")]
+    [LoggerMessage(EventId = 2_905, Level = LogLevel.Information, Message = "Finished WebServerMonitor")]
     public static partial void WebServerMonitorFinishedWebServerMonitor(this ILogger logger);
 
-    [LoggerMessage(2_906, LogLevel.Error, "Error in WebServerMonitor: {Message}. {StackTrace}")]
+    [LoggerMessage(EventId = 2_906, Level = LogLevel.Error, Message = "Error in WebServerMonitor: {Message}. {StackTrace}")]
     public static partial void WebServerMonitorErrorInWebServerMonitor(this ILogger logger, Exception exception, string message, string stackTrace);
 
-    [LoggerMessage(3_000, LogLevel.Trace, "Action succeeded - {Description}")]
+    [LoggerMessage(EventId = 3_000, Level = LogLevel.Trace, Message = "Action succeeded - {Description}")]
     public static partial void RetryableActionSucceeded(this ILogger logger, string description);
 
-    [LoggerMessage(3_001, LogLevel.Trace, "Retrying action {RetriesRemaining} - {Description}")]
+    [LoggerMessage(EventId = 3_001, Level = LogLevel.Trace, Message = "Retrying action {RetriesRemaining} - {Description}")]
     public static partial void RetryableActionRetrying(this ILogger logger, int retriesRemaining, string description);
 
-    [LoggerMessage(3_002, LogLevel.Warning, "All retries of action failed - {Description}")]
+    [LoggerMessage(EventId = 3_002, Level = LogLevel.Warning, Message = "All retries of action failed - {Description}")]
     public static partial void RetryableActionAllRetriesFailed(this ILogger logger, string description);
 
-    [LoggerMessage(3_100, LogLevel.Trace, "ModuleIndexer: {Count} search documents found for module [{DesktopModuleName} mid:{ModuleId}]")]
+    [LoggerMessage(EventId = 3_100, Level = LogLevel.Trace, Message = "ModuleIndexer: {Count} search documents found for module [{DesktopModuleName} mid:{ModuleId}]")]
     public static partial void ModuleIndexerSearchDocumentsFoundForModule(this ILogger logger, int count, string desktopModuleName, int moduleId);
 
-    [LoggerMessage(3_101, LogLevel.Trace, "ModuleIndexer: Search document for metaData found for module [{DesktopModuleName} mid:{ModuleId}]")]
+    [LoggerMessage(EventId = 3_101, Level = LogLevel.Trace, Message = "ModuleIndexer: Search document for metaData found for module [{DesktopModuleName} mid:{ModuleId}]")]
     public static partial void ModuleIndexerSearchDocumentForMetadataFoundForModule(this ILogger logger, string desktopModuleName, int moduleId);
 
     [LoggerMessage(EventId = 3_102, Level = LogLevel.Error)]
     public static partial void ModuleIndexerGetModulesForIndexException(this ILogger logger, Exception exception);
 
-    [LoggerMessage(3_200, LogLevel.Trace, "TabIndexer: Search document for metaData added for page [{Title} tid:{TabId}]")]
+    [LoggerMessage(EventId = 3_200, Level = LogLevel.Trace, Message = "TabIndexer: Search document for metaData added for page [{Title} tid:{TabId}]")]
     public static partial void TabIndexerPageMetadataDocumentAdded(this ILogger logger, string title, int tabId);
 
-    [LoggerMessage(3_300, LogLevel.Trace, "Localizing TabId: {TabId}, TabPath: {TabPath}, Locale: {Locale}")]
+    [LoggerMessage(EventId = 3_300, Level = LogLevel.Trace, Message = "Localizing TabId: {TabId}, TabPath: {TabPath}, Locale: {Locale}")]
     public static partial void TabControllerLocalizingTab(this ILogger logger, int tabId, string tabPath, string locale);
 
-    [LoggerMessage(3_301, LogLevel.Warning, "Invalid tabId {TabId} of portal {PortalId}")]
+    [LoggerMessage(EventId = 3_301, Level = LogLevel.Warning, Message = "Invalid tabId {TabId} of portal {PortalId}")]
     public static partial void TabControllerInvalidTabId(this ILogger logger, int tabId, int portalId);
 
-    [LoggerMessage(3_301, LogLevel.Warning, "Unable to find tabId {TabId} of portal {PortalId}")]
+    [LoggerMessage(EventId = 3_301, Level = LogLevel.Warning, Message = "Unable to find tabId {TabId} of portal {PortalId}")]
     public static partial void TabControllerUnableToFindTabId(this ILogger logger, int tabId, int portalId);
 
-    [LoggerMessage(3_400, LogLevel.Trace, "Adding FcnMode : {ErrorMessage}")]
+    [LoggerMessage(EventId = 3_400, Level = LogLevel.Trace, Message = "Adding FcnMode : {ErrorMessage}")]
     public static partial void AddFcnModeStepAddingFcnMode(this ILogger logger, string errorMessage);
 
-    [LoggerMessage(3_500, LogLevel.Trace, "FilePermissionCheck - {Details}")]
+    [LoggerMessage(EventId = 3_500, Level = LogLevel.Trace, Message = "FilePermissionCheck - {Details}")]
     public static partial void FilePermissionCheckStepCheck(this ILogger logger, string details);
 
-    [LoggerMessage(3_600, LogLevel.Trace, "FilePermissionCheck Status - {Status}")]
+    [LoggerMessage(EventId = 3_600, Level = LogLevel.Trace, Message = "FilePermissionCheck Status - {Status}")]
     public static partial void FilePermissionCheckStepStatus(this ILogger logger, StepStatus status);
 
-    [LoggerMessage(3_700, LogLevel.Trace, "Adding InstallVersion : {ErrorMessage}")]
+    [LoggerMessage(EventId = 3_700, Level = LogLevel.Trace, Message = "Adding InstallVersion : {ErrorMessage}")]
     public static partial void InstallVersionStepAddingInstallVersion(this ILogger logger, string errorMessage);
 
-    [LoggerMessage(3_800, LogLevel.Trace, "GetUpgradedScripts databaseVersion:{DatabaseVersion} applicationVersion:{ApplicationVersion}")]
+    [LoggerMessage(EventId = 3_800, Level = LogLevel.Trace, Message = "GetUpgradedScripts databaseVersion:{DatabaseVersion} applicationVersion:{ApplicationVersion}")]
     public static partial void UpgradeGetUpgradedScripts(this ILogger logger, Version databaseVersion, Version applicationVersion);
 
-    [LoggerMessage(3_801, LogLevel.Trace, "GetUpgradedScripts including {File}")]
+    [LoggerMessage(EventId = 3_801, Level = LogLevel.Trace, Message = "GetUpgradedScripts including {File}")]
     public static partial void UpgradeGetUpgradedScriptsIncluding(this ILogger logger, string file);
 
     [LoggerMessage(EventId = 3_802, Level = LogLevel.Error)]
@@ -355,10 +355,10 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 3_808, Level = LogLevel.Error)]
     public static partial void UpgradeExceptionLoggingException(this ILogger logger, Exception exception);
 
-    [LoggerMessage(3_809, LogLevel.Error, "{Version}")]
+    [LoggerMessage(EventId = 3_809, Level = LogLevel.Error, Message = "{Version}")]
     public static partial void UpgradeExceptionDuringVersionSpecificUpgrade(this ILogger logger, Exception exception, Version version);
 
-    [LoggerMessage(3_810, LogLevel.Error, "{Version}")]
+    [LoggerMessage(EventId = 3_810, Level = LogLevel.Error, Message = "{Version}")]
     public static partial void UpgradeExceptionWritingExceptionLogForVersionSpecificUpgrade(this ILogger logger, Exception exception, Version version);
 
     [LoggerMessage(EventId = 3_811, Level = LogLevel.Error)]
@@ -394,37 +394,37 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 3_821, Level = LogLevel.Error, Message = "{LogDescription}")]
     public static partial void UpgradeFailureLog(this ILogger logger, string logDescription);
 
-    [LoggerMessage(3_900, LogLevel.Trace, "Getting component for {FullName}")]
+    [LoggerMessage(EventId = 3_900, Level = LogLevel.Trace, Message = "Getting component for {FullName}")]
     public static partial void ContainerWithServiceProviderFallbackGettingComponent(this ILogger logger, string fullName);
 
-    [LoggerMessage(3_901, LogLevel.Trace, "Got component for {FullName} from container")]
+    [LoggerMessage(EventId = 3_901, Level = LogLevel.Trace, Message = "Got component for {FullName} from container")]
     public static partial void ContainerWithServiceProviderFallbackGotComponentFromContainer(this ILogger logger, string fullName);
 
-    [LoggerMessage(3_902, LogLevel.Trace, "Getting component for {FullName} from service provider")]
+    [LoggerMessage(EventId = 3_902, Level = LogLevel.Trace, Message = "Getting component for {FullName} from service provider")]
     public static partial void ContainerWithServiceProviderFallbackGettingComponentFromServiceProvider(this ILogger logger, string fullName);
 
-    [LoggerMessage(4_000, LogLevel.Trace, "{Details}")]
+    [LoggerMessage(EventId = 4_000, Level = LogLevel.Trace, Message = "{Details}")]
     public static partial void InstallExtensionsStepInstallingExtensionPackage(this ILogger logger, string details);
 
-    [LoggerMessage(4_100, LogLevel.Trace, "Search: Site Crawler - Starting. Content change start time {LastSuccessfulDateTime}")]
+    [LoggerMessage(EventId = 4_100, Level = LogLevel.Trace, Message = "Search: Site Crawler - Starting. Content change start time {LastSuccessfulDateTime}")]
     public static partial void SearchEngineSchedulerStarting(this ILogger logger, DateTime lastSuccessfulDateTime);
 
-    [LoggerMessage(4_101, LogLevel.Trace, "Search: Site Crawler - Indexing Successful")]
+    [LoggerMessage(EventId = 4_101, Level = LogLevel.Trace, Message = "Search: Site Crawler - Indexing Successful")]
     public static partial void SearchEngineSchedulerSuccessful(this ILogger logger);
 
-    [LoggerMessage(4_200, LogLevel.Trace, "Getting application status")]
+    [LoggerMessage(EventId = 4_200, Level = LogLevel.Trace, Message = "Getting application status")]
     public static partial void ApplicationStatusInfoGettingStatus(this ILogger logger);
 
-    [LoggerMessage(4_201, LogLevel.Trace, "result of getting providerpath: {Message}")]
+    [LoggerMessage(EventId = 4_201, Level = LogLevel.Trace, Message = "result of getting providerpath: {Message}")]
     public static partial void ApplicationStatusInfoResultOfGettingProviderPath(this ILogger logger, string message);
 
-    [LoggerMessage(4_202, LogLevel.Trace, "Application status is {Status}")]
+    [LoggerMessage(EventId = 4_202, Level = LogLevel.Trace, Message = "Application status is {Status}")]
     public static partial void ApplicationStatusInfoStatusIs(this ILogger logger, UpgradeStatus status);
 
     [LoggerMessage(EventId = 4_203, Level = LogLevel.Error)]
     public static partial void ApplicationStatusInfoDatabaseVersionException(this ILogger logger, Exception exception);
 
-    [LoggerMessage(4_300, LogLevel.Trace, "Executing SQL Script {SQL}")]
+    [LoggerMessage(EventId = 4_300, Level = LogLevel.Trace, Message = "Executing SQL Script {SQL}")]
     public static partial void SqlDataProviderExecutingSqlScript(this ILogger logger, string sql);
 
     [LoggerMessage(EventId = 4_301, Level = LogLevel.Error)]
@@ -499,52 +499,52 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 4_417, Level = LogLevel.Error)]
     public static partial void FileManagerRotateFlipImageException(this ILogger logger, Exception exception);
 
-    [LoggerMessage(4_500, LogLevel.Warning, "Unable to load file properties for File ID {FileId}")]
+    [LoggerMessage(EventId = 4_500, Level = LogLevel.Warning, Message = "Unable to load file properties for File ID {FileId}")]
     public static partial void AttachmentControllerUnableToLoadFileProperties(this ILogger logger, int fileId);
 
-    [LoggerMessage(4_600, LogLevel.Warning, "Missing localization key. key:{Key} resFileRoot:{ResourceFileRoot} threadCulture:{ThreadCulture} userlan:{UserLanguage}")]
+    [LoggerMessage(EventId = 4_600, Level = LogLevel.Warning, Message = "Missing localization key. key:{Key} resFileRoot:{ResourceFileRoot} threadCulture:{ThreadCulture} userlan:{UserLanguage}")]
     public static partial void LocalizationProviderMissingLocalizationKey(this ILogger logger, string key, string resourceFileRoot, CultureInfo threadCulture, string userLanguage);
 
     [LoggerMessage(EventId = 4_601, Level = LogLevel.Error)]
     public static partial void LocalizationProviderGetLocaleException(this ILogger logger, Exception exception);
 
-    [LoggerMessage(4_700, LogLevel.Warning, "Unable to find module by module ID. ID:{DesktopModuleId} PortalID:{PortalId}")]
+    [LoggerMessage(EventId = 4_700, Level = LogLevel.Warning, Message = "Unable to find module by module ID. ID:{DesktopModuleId} PortalID:{PortalId}")]
     public static partial void DesktopModuleControllerUnableToFindModuleByModuleId(this ILogger logger, int desktopModuleId, int portalId);
 
-    [LoggerMessage(4_701, LogLevel.Warning, "Unable to find module by package ID. ID:{PackageId}")]
+    [LoggerMessage(EventId = 4_701, Level = LogLevel.Warning, Message = "Unable to find module by package ID. ID:{PackageId}")]
     public static partial void DesktopModuleControllerUnableToFindModuleByPackageId(this ILogger logger, int packageId);
 
-    [LoggerMessage(4_702, LogLevel.Warning, "Unable to find module by name. Name:{DesktopModuleName} portalId:{PortalId}")]
+    [LoggerMessage(EventId = 4_702, Level = LogLevel.Warning, Message = "Unable to find module by name. Name:{DesktopModuleName} portalId:{PortalId}")]
     public static partial void DesktopModuleControllerUnableToFindModuleByName(this ILogger logger, string desktopModuleName, int portalId);
 
-    [LoggerMessage(4_703, LogLevel.Warning, "Unable to find module by friendly name. Name:{FriendlyName}")]
+    [LoggerMessage(EventId = 4_703, Level = LogLevel.Warning, Message = "Unable to find module by friendly name. Name:{FriendlyName}")]
     public static partial void DesktopModuleControllerUnableToFindModuleByFriendlyName(this ILogger logger, string friendlyName);
 
-    [LoggerMessage(4_800, LogLevel.Warning, "Indexer not implemented")]
+    [LoggerMessage(EventId = 4_800, Level = LogLevel.Warning, Message = "Indexer not implemented")]
     public static partial void SearchEngineIndexerNotImplemented(this ILogger logger, NotImplementedException exception);
 
-    [LoggerMessage(4_900, LogLevel.Warning, "Unable to create type via service provider: {Type}")]
+    [LoggerMessage(EventId = 4_900, Level = LogLevel.Warning, Message = "Unable to create type via service provider: {Type}")]
     public static partial void ReflectionUnableToCreateTypeViaServiceProvider(this ILogger logger, InvalidOperationException exception, Type type);
 
-    [LoggerMessage(4_901, LogLevel.Error, "{TypeName}")]
+    [LoggerMessage(EventId = 4_901, Level = LogLevel.Error, Message = "{TypeName}")]
     public static partial void ReflectionCreateTypeException(this ILogger logger, Exception exception, string typeName);
 
-    [LoggerMessage(5_000, LogLevel.Warning, "Container was null, instantiating SimpleContainer")]
+    [LoggerMessage(EventId = 5_000, Level = LogLevel.Warning, Message = "Container was null, instantiating SimpleContainer")]
     public static partial void ComponentFactoryInstantiatingSimpleContainer(this ILogger logger);
 
-    [LoggerMessage(5_100, LogLevel.Warning, "Icon Not Present on Disk {PhysicalPath}")]
+    [LoggerMessage(EventId = 5_100, Level = LogLevel.Warning, Message = "Icon Not Present on Disk {PhysicalPath}")]
     public static partial void IconControllerIconNotPresentOnDisk(this ILogger logger, string physicalPath);
 
-    [LoggerMessage(5_200, LogLevel.Warning, "Current Workflow and Default workflow are not found on NotifyWorkflowAboutChanges")]
+    [LoggerMessage(EventId = 5_200, Level = LogLevel.Warning, Message = "Current Workflow and Default workflow are not found on NotifyWorkflowAboutChanges")]
     public static partial void TabWorkflowTrackerCurrentWorkflowAndDefaultWorkflowAreNotFoundOnNotifyWorkflowAboutChanges(this ILogger logger);
 
-    [LoggerMessage(5_300, LogLevel.Warning, "Disable cache expiration.")]
+    [LoggerMessage(EventId = 5_300, Level = LogLevel.Warning, Message = "Disable cache expiration.")]
     public static partial void CachingProviderDisableCacheExpiration(this ILogger logger);
 
-    [LoggerMessage(5_301, LogLevel.Warning, "Enable cache expiration.")]
+    [LoggerMessage(EventId = 5_301, Level = LogLevel.Warning, Message = "Enable cache expiration.")]
     public static partial void CachingProviderEnableCacheExpiration(this ILogger logger);
 
-    [LoggerMessage(5_400, LogLevel.Warning, "{Message}")]
+    [LoggerMessage(EventId = 5_400, Level = LogLevel.Warning, Message = "{Message}")]
     public static partial void StandardFolderProviderFileStreamIOException(this ILogger logger, IOException exception, string message);
 
     [LoggerMessage(EventId = 5_401, Level = LogLevel.Error)]
@@ -556,7 +556,7 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 5_403, Level = LogLevel.Error)]
     public static partial void StandardFolderProviderFileStreamGeneralException(this ILogger logger, Exception exception);
 
-    [LoggerMessage(5_500, LogLevel.Warning, "Ignoring invalid cleanup folder path '{Path}' in package '{PackageName}'.")]
+    [LoggerMessage(EventId = 5_500, Level = LogLevel.Warning, Message = "Ignoring invalid cleanup folder path '{Path}' in package '{PackageName}'.")]
     public static partial void CleanupInstallerIgnoringInvalidCleanupFolderPath(this ILogger logger, string path, string packageName);
 
     [LoggerMessage(EventId = 5_501, Level = LogLevel.Error)]
@@ -565,10 +565,10 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 5_501, Level = LogLevel.Error)]
     public static partial void CleanupInstallerCleanupFolderException(this ILogger logger, Exception exception);
 
-    [LoggerMessage(5_600, LogLevel.Error, "Invalid data type {DataTypeId} for profile property {PropertyName}")]
+    [LoggerMessage(EventId = 5_600, Level = LogLevel.Error, Message = "Invalid data type {DataTypeId} for profile property {PropertyName}")]
     public static partial void UserProfileInvalidDataType(this ILogger logger, int dataTypeId, string propertyName);
 
-    [LoggerMessage(5_700, LogLevel.Error, "Error localizing module, moduleId: {ModuleId}")]
+    [LoggerMessage(EventId = 5_700, Level = LogLevel.Error, Message = "Error localizing module, moduleId: {ModuleId}")]
     public static partial void ModuleControllerErrorLocalizingModule(this ILogger logger, Exception exception, int moduleId);
 
     [LoggerMessage(EventId = 5_701, Level = LogLevel.Error)]
@@ -577,10 +577,10 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 5_702, Level = LogLevel.Error)]
     public static partial void ModuleControllerAddContentException(this ILogger logger, Exception exception);
 
-    [LoggerMessage(5_800, LogLevel.Error, "WebResponse exception: {ResponseContent}")]
+    [LoggerMessage(EventId = 5_800, Level = LogLevel.Error, Message = "WebResponse exception: {ResponseContent}")]
     public static partial void OAuthClientBaseWebResponseException(this ILogger logger, WebException exception, string responseContent);
 
-    [LoggerMessage(5_900, LogLevel.Error, "FriendlyMessage=\"{FriendlyMessage}\" ctrl=\"{Control}\"")]
+    [LoggerMessage(EventId = 5_900, Level = LogLevel.Error, Message = "FriendlyMessage=\"{FriendlyMessage}\" ctrl=\"{Control}\"")]
     public static partial void ExceptionsProcessModuleLoadException(this ILogger logger, Exception exception, string friendlyMessage, Control control);
 
     [LoggerMessage(EventId = 5_901, Level = LogLevel.Error)]
@@ -616,10 +616,10 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 5_911, Level = LogLevel.Critical)]
     public static partial void ExceptionsProcessModuleLoadExceptionUnexpectedException(this ILogger logger, Exception exception);
 
-    [LoggerMessage(6_000, LogLevel.Error, "Error has occurred getting PageUrl for {TabName}")]
+    [LoggerMessage(EventId = 6_000, Level = LogLevel.Error, Message = "Error has occurred getting PageUrl for {TabName}")]
     public static partial void CoreSitemapProviderErrorGettingPageUrl(this ILogger logger, Exception exception, string tabName);
 
-    [LoggerMessage(6_100, LogLevel.Error, "Search Document error: {SearchDocument}")]
+    [LoggerMessage(EventId = 6_100, Level = LogLevel.Error, Message = "Search Document error: {SearchDocument}")]
     public static partial void InternalSearchControllerSearchDocumentError(this ILogger logger, Exception exception, SearchDocument searchDocument);
 
     [LoggerMessage(EventId = 6_200, Level = LogLevel.Error)]

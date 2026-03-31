@@ -9,15 +9,15 @@ using Microsoft.Extensions.Logging;
 /// <summary>Extension methods for <see cref="ILogger"/> for pre-defined logging messages.</summary>
 internal static partial class LoggerMessages
 {
-    [LoggerMessage(1, LogLevel.Debug, "ModuleControlFactory.LoadModuleControl Start (TabId:{TabId},ModuleId:{ModuleId}): ModuleControlSource:{ModuleControlSource}")]
+    [LoggerMessage(EventId = 1, Level = LogLevel.Debug, Message = "ModuleControlFactory.LoadModuleControl Start (TabId:{TabId},ModuleId:{ModuleId}): ModuleControlSource:{ModuleControlSource}")]
     public static partial void ModuleControlPipelineLoadModuleControlStart(this ILogger logger, int tabId, int moduleId, string moduleControlSource);
 
-    [LoggerMessage(2, LogLevel.Debug, "ModuleControlFactory.LoadModuleControl End (TabId:{TabId},ModuleId:{ModuleId}): ModuleControlSource:{ModuleControlSource}")]
+    [LoggerMessage(EventId = 2, Level = LogLevel.Debug, Message = "ModuleControlFactory.LoadModuleControl End (TabId:{TabId},ModuleId:{ModuleId}): ModuleControlSource:{ModuleControlSource}")]
     public static partial void ModuleControlPipelineLoadModuleControlEnd(this ILogger logger, int tabId, int moduleId, string moduleControlSource);
 
-    [LoggerMessage(3, LogLevel.Debug, "ModuleControlFactory.LoadSettingsControl Start (TabId:{TabId},ModuleId:{ModuleId}): ModuleControlSource:{ModuleControlSource}")]
+    [LoggerMessage(EventId = 3, Level = LogLevel.Debug, Message = "ModuleControlFactory.LoadSettingsControl Start (TabId:{TabId},ModuleId:{ModuleId}): ModuleControlSource:{ModuleControlSource}")]
     public static partial void ModuleControlPipelineLoadSettingsControlStart(this ILogger logger, int tabId, int moduleId, string moduleControlSource);
 
-    [LoggerMessage(4, LogLevel.Debug, "ModuleControlFactory.LoadSettingsControl End (TabId:{TabId},ModuleId:{ModuleId}): ModuleControlSource:{ModuleControlSource}")]
+    [LoggerMessage(EventId = 4, Level = LogLevel.Debug, Message = "ModuleControlFactory.LoadSettingsControl End (TabId:{TabId},ModuleId:{ModuleId}): ModuleControlSource:{ModuleControlSource}")]
     public static partial void ModuleControlPipelineLoadSettingsControlEnd(this ILogger logger, int tabId, int moduleId, string moduleControlSource);
 }

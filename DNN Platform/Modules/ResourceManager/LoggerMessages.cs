@@ -11,13 +11,13 @@ namespace Dnn.Modules.ResourceManager
     /// <summary>Extension methods for <see cref="ILogger"/> for pre-defined logging messages.</summary>
     internal static partial class LoggerMessages
     {
-        [LoggerMessage(4_000_000, LogLevel.Information, "Adding Global Assets host menu item.")]
+        [LoggerMessage(EventId = 4_000_000, Level = LogLevel.Information, Message = "Adding Global Assets host menu item.")]
         public static partial void ResourceManagerControllerAddingGlobalAssetsHostMenuItem(this ILogger logger);
 
-        [LoggerMessage(4_000_001, LogLevel.Information, "Added Global Assets host menu item.")]
+        [LoggerMessage(EventId = 4_000_001, Level = LogLevel.Information, Message = "Added Global Assets host menu item.")]
         public static partial void ResourceManagerControllerAddedGlobalAssetsHostMenuItem(this ILogger logger);
 
-        [LoggerMessage(4_000_002, LogLevel.Information, "Removing old pages.")]
+        [LoggerMessage(EventId = 4_000_002, Level = LogLevel.Information, Message = "Removing old pages.")]
         public static partial void ResourceManagerControllerRemovingOldPages(this ILogger logger);
 
         [LoggerMessage(EventId = 4_000_003, Level = LogLevel.Error)]

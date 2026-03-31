@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 /// <summary>Extension methods for <see cref="ILogger"/> for pre-defined logging messages.</summary>
 internal static partial class LoggerMessages
 {
-    [LoggerMessage(12_000_000, LogLevel.Warning, "Could not determine Telerik dependencies on some assemblies.")]
+    [LoggerMessage(EventId = 12_000_000, Level = LogLevel.Warning, Message = "Could not determine Telerik dependencies on some assemblies.")]
     public static partial void TelerikUtilsCountNotDetermineTelerikDependenciesOnSomeAssemblies(this ILogger logger, Exception exception);
 
     [LoggerMessage(EventId = 12_000_100, Level = LogLevel.Error)]

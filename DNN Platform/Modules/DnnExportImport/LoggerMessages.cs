@@ -13,16 +13,16 @@ using Microsoft.Extensions.Logging;
 /// <summary>Extension methods for <see cref="ILogger"/> for pre-defined logging messages.</summary>
 internal static partial class LoggerMessages
 {
-    [LoggerMessage(10_000_000, LogLevel.Trace, "Site Export/Import: Job Finished")]
+    [LoggerMessage(EventId = 10_000_000, Level = LogLevel.Trace, Message = "Site Export/Import: Job Finished")]
     public static partial void ExportImportSchedulerJobFinished(this ILogger logger);
 
-    [LoggerMessage(10_000_001, LogLevel.Error, "The Scheduler item stopped because main thread stopped, set schedule into emergency mode so it will start after app restart.")]
+    [LoggerMessage(EventId = 10_000_001, Level = LogLevel.Error, Message = "The Scheduler item stopped because main thread stopped, set schedule into emergency mode so it will start after app restart.")]
     public static partial void ExportImportSchedulerItemStoppedBecauseMainThreadStoppedSetScheduledIntoEmergencyModeSoItWillStartAfterAppRestart(this ILogger logger);
 
-    [LoggerMessage(10_000_100, LogLevel.Error, "Unable to clear {TypeName} while calling CleanupDatabaseIfDirty.")]
+    [LoggerMessage(EventId = 10_000_100, Level = LogLevel.Error, Message = "Unable to clear {TypeName} while calling CleanupDatabaseIfDirty.")]
     public static partial void ExportImportEngineUnableToClear(this ILogger logger, Exception exception, string typeName);
 
-    [LoggerMessage(10_000_200, LogLevel.Error, "ModuleContent: (Module ID={ModuleId}). {XmlContent}")]
+    [LoggerMessage(EventId = 10_000_200, Level = LogLevel.Error, Message = "ModuleContent: (Module ID={ModuleId}). {XmlContent}")]
     public static partial void PagesExportServiceModuleContentError(this ILogger logger, Exception exception, int moduleId, string xmlContent);
 
     [LoggerMessage(EventId = 10_000_201, Level = LogLevel.Error)]
