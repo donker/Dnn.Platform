@@ -304,7 +304,7 @@ namespace DotNetNuke.Services.Install
                         strError += Config.AddFCNMode(this.appStatus, Config.FcnMode.Single);
                         if (!string.IsNullOrEmpty(strError))
                         {
-                            Logger.Error(strError);
+                            Logger.InstallAddFcnModeErrorMessage(strError);
                         }
 
                         this.Response.Write("<h2>Installation Complete</h2>");
@@ -440,7 +440,7 @@ namespace DotNetNuke.Services.Install
                     strError += Config.AddFCNMode(this.appStatus, Config.FcnMode.Single);
                     if (!string.IsNullOrEmpty(strError))
                     {
-                        Logger.Error(strError);
+                        Logger.InstallAddFcnModeErrorMessage(strError);
                     }
 
                     HtmlUtils.WriteFeedback(HttpContext.Current.Response, 2, "Replacing Digital Assets Manager with the new Resource Manager: ");

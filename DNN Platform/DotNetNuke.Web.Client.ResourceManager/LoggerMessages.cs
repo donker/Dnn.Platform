@@ -21,4 +21,7 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(8_000_002, LogLevel.Debug, "Adding resource {ResolvedPath} to CRC id {ControllerId} which currently has {Count} resources")]
     public static partial void ClientResourceControllerAddingResource(this ILogger logger, string resolvedPath, Guid controllerId, int count);
+
+    [LoggerMessage(8_000_003, LogLevel.Error, "Cannot add resource {ResolvedPath} to CRC id {ControllerId} because rendering has already begun")]
+    public static partial void ClientResourceControllerCannotAddResourceBecauseRenderingHasAlreadyBegun(this ILogger logger, string resolvedPath, Guid controllerId);
 }

@@ -25,6 +25,9 @@ namespace DotNetNuke.Website
         [LoggerMessage(EventId = 900_101, Level = LogLevel.Error)]
         public static partial void InstallNoUpgradeException(this ILogger logger, Exception exception);
 
+        [LoggerMessage(EventId = 900_102, Level = LogLevel.Error, Message = "{Message}")]
+        public static partial void InstallAddFcnModeErrorMessage(this ILogger logger, string message);
+
         [LoggerMessage(EventId = 900_200, Level = LogLevel.Error)]
         public static partial void UpgradeWizardAntiForgeryTokenException(this ILogger logger, Exception exception);
 
@@ -75,5 +78,8 @@ namespace DotNetNuke.Website
 
         [LoggerMessage(EventId = 901_000, Level = LogLevel.Error, Message = "CSP error")]
         public static partial void DefaultCspError(this ILogger logger, Exception exception);
+
+        [LoggerMessage(EventId = 901_100, Level = LogLevel.Error, Message = "WIZARD ERROR:")]
+        public static partial void InstallWizardError(this ILogger logger, Exception exception);
     }
 }

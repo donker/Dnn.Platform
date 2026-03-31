@@ -75,7 +75,7 @@ namespace DotNetNuke.Web.Api.Auth
             }
             catch (Exception ex)
             {
-                Logger.Error("Unexpected error authenticating API Token. " + ex);
+                Logger.ApiTokenAuthMessageHandlerUnexpectedErrorAuthenticatingApiToken(ex);
             }
         }
     }

@@ -296,7 +296,7 @@ namespace DotNetNuke.Web.Client.ResourceManager
 
             if (this.hasBegunRendering)
             {
-                Logger.Error($"Cannot add resource {resource.ResolvedPath} to CRC id {this.controllerId} because rendering has already begun");
+                Logger.ClientResourceControllerCannotAddResourceBecauseRenderingHasAlreadyBegun(resource.ResolvedPath, this.controllerId);
 
                 ////throw new InvalidOperationException("Cannot add resources after rendering has begun.");
             }

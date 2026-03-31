@@ -105,7 +105,7 @@ namespace Dnn.PersonaBar.Prompt.Services
             if (portal == null)
             {
                 var errorMessage = string.Format(CultureInfo.CurrentCulture, Localization.GetString("Prompt_GetPortal_NotFound", Constants.LocalResourcesFile), portalId);
-                Logger.Error(errorMessage);
+                Logger.CommandControllerCmdPortalNotFound(errorMessage);
                 return this.AddLogAndReturnResponse(null, null, command, DateTime.Now, errorMessage);
             }
 

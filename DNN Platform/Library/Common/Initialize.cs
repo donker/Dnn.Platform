@@ -330,7 +330,7 @@ namespace DotNetNuke.Common
                         // app has never been installed, and either Wizard or Autoupgrade is configured
                         CreateUnderConstructionPage(server);
                         retValue = "~/Install/UnderConstruction.htm";
-                        Logger.Error("UnderConstruction page was shown because we cannot ascertain the application was ever installed, and there is no working database connection. Check database connectivity before continuing. ");
+                        Logger.InitializeUnderConstructionPageShownBecauseNoWorkingDatabaseConnection();
                     }
                     else
                     {
@@ -339,11 +339,11 @@ namespace DotNetNuke.Common
                         {
                             if (!isInstalled)
                             {
-                                Logger.Error("The connection to the database has failed, the application is not installed yet, and both AutoUpgrade and UseInstallWizard are not set in web.config, a 500 error page will be shown to visitors");
+                                Logger.InitializeConnectionToTheDatabaseHasFailedTheApplicationIsNotInstalledYetA500ErrorPageWillBeShown();
                             }
                             else
                             {
-                                Logger.Error("The connection to the database has failed, however, the application is already completely installed, a 500 error page will be shown to visitors");
+                                Logger.InitializeConnectionToTheDatabaseHasFailedHoweverTheApplicationIsAlreadyCompletelyInstalledA500ErrorPageWillBeShown();
                             }
 
                             string url = "~/ErrorPage.aspx?status=500&error=Site Unavailable&error2=Connection To The Database Failed";

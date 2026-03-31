@@ -224,7 +224,7 @@ namespace DotNetNuke.Services.Search.Internals
                     }
 
                     Logger.LuceneControllerSearchException(ex);
-                    Logger.Error($"Search Index Folder Is Not Available: {ex.Message}, Retry {i + 1} time(s).");
+                    Logger.LuceneControllerSearchIndexFolderIsNotAvailable(ex, ex.Message, i + 1);
                     Thread.Sleep(100);
                 }
             }

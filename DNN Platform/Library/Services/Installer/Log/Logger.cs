@@ -121,7 +121,7 @@ namespace DotNetNuke.Services.Installer.Log
         public void AddFailure(string failure)
         {
             this.logs.Add(new LogEntry(LogType.Failure, failure));
-            DnnLogger.Error(failure);
+            DnnLogger.InstallLoggerLogFailure(failure);
             this.valid = false;
         }
 

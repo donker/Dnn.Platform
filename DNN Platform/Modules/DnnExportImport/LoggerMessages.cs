@@ -16,6 +16,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(10_000_000, LogLevel.Trace, "Site Export/Import: Job Finished")]
     public static partial void ExportImportSchedulerJobFinished(this ILogger logger);
 
+    [LoggerMessage(10_000_001, LogLevel.Error, "The Scheduler item stopped because main thread stopped, set schedule into emergency mode so it will start after app restart.")]
+    public static partial void ExportImportSchedulerItemStoppedBecauseMainThreadStoppedSetScheduledIntoEmergencyModeSoItWillStartAfterAppRestart(this ILogger logger);
+
     [LoggerMessage(10_000_100, LogLevel.Error, "Unable to clear {TypeName} while calling CleanupDatabaseIfDirty.")]
     public static partial void ExportImportEngineUnableToClear(this ILogger logger, Exception exception, string typeName);
 
@@ -34,6 +37,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 10_000_203, Level = LogLevel.Error)]
     public static partial void PagesExportServiceExportModulePackageException(this ILogger logger, Exception exception);
 
+    [LoggerMessage(EventId = 10_000_204, Level = LogLevel.Error, Message = "Error creating business class type.")]
+    public static partial void PagesExportServiceErrorCreatingBusinessClassType(this ILogger logger, Exception exception);
+
     [LoggerMessage(EventId = 10_000_300, Level = LogLevel.Error)]
     public static partial void PackagesExportServiceInstallPackageException(this ILogger logger, Exception exception);
 
@@ -42,4 +48,7 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(EventId = 10_000_400, Level = LogLevel.Error)]
     public static partial void ThemesExportServiceImportThemeFileException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 10_000_500, Level = LogLevel.Error, Message = "Failed to delete the job data. Error:{Message}. It will need to be deleted manually. Folder Path:{FolderPath}")]
+    public static partial void BaseControllerFailedToDeleteJobData(this ILogger logger, Exception exception, string message, string folderPath);
 }

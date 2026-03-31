@@ -248,7 +248,7 @@ namespace DotNetNuke.Web.Api.Internal
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error("Cannot instantiate/activate instance of " + handlerEntry.ClassName + Environment.NewLine + ex);
+                    Logger.ServicesRoutingManagerCannotInstantiateInstanceOf(ex, handlerEntry.ClassName);
                 }
             }
         }

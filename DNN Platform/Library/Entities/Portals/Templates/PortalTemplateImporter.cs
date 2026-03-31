@@ -612,7 +612,7 @@ namespace DotNetNuke.Entities.Portals.Templates
                 catch (InvalidFileExtensionException ex)
                 {
                     // when the file is not allowed, we should not break parse process, but just log the error.
-                    Logger.Error(ex.Message);
+                    Logger.PortalTemplateImporterParseFilesInvalidFileExtensionException(ex, ex.Message);
                 }
             }
         }

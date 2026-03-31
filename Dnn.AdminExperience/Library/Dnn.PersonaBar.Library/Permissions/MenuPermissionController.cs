@@ -442,7 +442,7 @@ namespace Dnn.PersonaBar.Library.Permissions
                         }
                         else if (role != null)
                         {
-                            Logger.Error($"Role \"{roleName}\" in portal \"{portalId}\" doesn't marked as system role, will ignore add this default permission to {menuItem.Identifier}.");
+                            Logger.MenuPermissionControllerRoleInPortalNotMarkedAsSystemRoleIgnoring(roleName, portalId, menuItem.Identifier);
                         }
 
                         break;

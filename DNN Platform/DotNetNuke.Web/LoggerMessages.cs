@@ -92,6 +92,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(7_000_400, LogLevel.Trace, "Authenticated using API token {ApiTokenId}")]
     public static partial void ApiTokenAuthMessageHandlerAuthenticatedUsingApiToken(this ILogger logger, int apiTokenId);
 
+    [LoggerMessage(7_000_401, LogLevel.Error, "Unexpected error authenticating API Token.")]
+    public static partial void ApiTokenAuthMessageHandlerUnexpectedErrorAuthenticatingApiToken(this ILogger logger, Exception exception);
+
     [LoggerMessage(7_000_500, LogLevel.Trace, "{AuthScheme}: Validating request vs. SSL mode ({ForceSsl}) failed. ")]
     public static partial void AuthMessageHandlerBaseValidatingRequestVsSslModeFailed(this ILogger logger, string authScheme, bool forceSsl);
 
@@ -118,6 +121,9 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(7_000_607, LogLevel.Error, "Unable to create {fullTypeName} while registering service routes.")]
     public static partial void ServicesRoutingManagerUnableToCreateRouteMapper(this ILogger logger, Exception exception, string fullTypeName);
+
+    [LoggerMessage(7_000_608, LogLevel.Error, "Cannot instantiate/activate instance of {ClassName}")]
+    public static partial void ServicesRoutingManagerCannotInstantiateInstanceOf(this ILogger logger, Exception exception, string className);
 
     [LoggerMessage(7_000_700, LogLevel.Warning, "The specified moniker ({Moniker}) is not defined in the system")]
     public static partial void StandardTabAndModuleInfoProviderMonikerIsNotDefined(this ILogger logger, string moniker);
@@ -208,4 +214,7 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(EventId = 7_003_001, Level = LogLevel.Error)]
     public static partial void DateEditControlOldDateValueException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 7_003_100, Level = LogLevel.Error, Message = "Cannot find module ID {ModuleId} (tab ID {TabId}, portal ID {PortalId})")]
+    public static partial void ModuleServiceControllerCannotFindModule(this ILogger logger, int moduleId, int tabId, int portalId);
 }

@@ -707,7 +707,7 @@ namespace Dnn.PersonaBar.SiteSettings.Services
             }
             catch (Exception ex)
             {
-                Logger.Error(ex.Message);
+                Logger.LanguagesControllerLoadResourceException(ex, ex.Message);
                 xmlLoaded = false;
             }
 

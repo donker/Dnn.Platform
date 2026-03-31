@@ -199,6 +199,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 5_000_802, Level = LogLevel.Error)]
     public static partial void CommandControllerTryRunNewCommandException(this ILogger logger, Exception exception);
 
+    [LoggerMessage(EventId = 5_000_803, Level = LogLevel.Error, Message = "{Message}")]
+    public static partial void CommandControllerCmdPortalNotFound(this ILogger logger, string message);
+
     [LoggerMessage(EventId = 5_000_900, Level = LogLevel.Error)]
     public static partial void UpgradesControllerDeleteException(this ILogger logger, Exception exception);
 
@@ -513,6 +516,9 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(EventId = 5_003_312, Level = LogLevel.Error)]
     public static partial void LanguagesControllerDeleteLanguagePagesException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 5_003_313, Level = LogLevel.Error, Message = "{Message}")]
+    public static partial void LanguagesControllerLoadResourceException(this ILogger logger, Exception exception, string message);
 
     [LoggerMessage(EventId = 5_003_400, Level = LogLevel.Error)]
     public static partial void SitesControllerGetPortalsException(this ILogger logger, Exception exception);

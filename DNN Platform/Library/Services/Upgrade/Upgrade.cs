@@ -572,7 +572,7 @@ namespace DotNetNuke.Services.Upgrade
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error("File deletion failed for [Install\\" + file + "]. PLEASE REMOVE THIS MANUALLY." + ex);
+                    Logger.UpgradeFileDeletionFailedFor(ex, file);
                 }
             }
         }
@@ -1199,7 +1199,7 @@ namespace DotNetNuke.Services.Upgrade
                     foreach (var log in installer.InstallerInfo.Log.Logs
                                                 .Where(l => l.Type == LogType.Failure))
                     {
-                        Logger.Error(log.Description);
+                        Logger.UpgradeFailureLog(log.Description);
                         DnnInstallLogger.InstallLogError(log.Description);
                     }
 

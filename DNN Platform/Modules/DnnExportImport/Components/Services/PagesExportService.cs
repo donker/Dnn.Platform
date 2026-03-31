@@ -1561,14 +1561,14 @@ namespace Dnn.ExportImport.Components.Services
 
                 if (restoreCount > 0)
                 {
-                    this.Result.AddLogEntry("Added/Updated module content inside Tab ID=" + tabId, "Module ID=" + localModule.ModuleID);
+                    this.Result.AddLogEntry($"Added/Updated module content inside Tab ID={tabId}", $"Module ID={localModule.ModuleID}");
                     return restoreCount;
                 }
             }
             catch (Exception ex)
             {
                 this.Result.AddLogEntry("Error creating business class type", desktopModuleInfo.BusinessControllerClass, ReportLevel.Error);
-                Logger.Error("Error creating business class type. " + ex);
+                Logger.PagesExportServiceErrorCreatingBusinessClassType(ex);
             }
 
             return 0;
@@ -2043,7 +2043,7 @@ namespace Dnn.ExportImport.Components.Services
             catch (Exception ex)
             {
                 this.Result.AddLogEntry("Error creating business class type", desktopModuleInfo.BusinessControllerClass, ReportLevel.Error);
-                Logger.Error("Error creating business class type. " + ex);
+                Logger.PagesExportServiceErrorCreatingBusinessClassType(ex);
             }
 
             return 0;

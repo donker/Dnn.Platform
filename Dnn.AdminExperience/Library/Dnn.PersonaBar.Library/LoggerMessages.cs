@@ -41,6 +41,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 6_000_202, Level = LogLevel.Error)]
     public static partial void MenuPermissionControllerSaveMenuDefaultPermissionsException(this ILogger logger, Exception exception);
 
+    [LoggerMessage(EventId = 6_000_203, Level = LogLevel.Error, Message = "Role \"{RoleName}\" in portal \"{PortalId}\" doesn't marked as system role, will ignore add this default permission to {MenuItemIdentifier}.")]
+    public static partial void MenuPermissionControllerRoleInPortalNotMarkedAsSystemRoleIgnoring(this ILogger logger, string roleName, int portalId, string menuItemIdentifier);
+
     [LoggerMessage(EventId = 6_000_300, Level = LogLevel.Error)]
     public static partial void PersonaBarControllerIsVisibleException(this ILogger logger, Exception exception);
 

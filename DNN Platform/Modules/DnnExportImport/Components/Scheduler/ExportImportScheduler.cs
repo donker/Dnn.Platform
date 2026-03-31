@@ -126,7 +126,7 @@ namespace Dnn.ExportImport.Components.Scheduler
 
                                 SchedulingController.PurgeScheduleHistory();
 
-                                Logger.Error("The Scheduler item stopped because main thread stopped, set schedule into emergency mode so it will start after app restart.");
+                                Logger.ExportImportSchedulerItemStoppedBecauseMainThreadStoppedSetScheduledIntoEmergencyModeSoItWillStartAfterAppRestart();
                                 succeeded = false;
                             }
                             catch (Exception ex)

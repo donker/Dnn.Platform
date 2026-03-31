@@ -14,6 +14,7 @@ using System.Threading;
 using System.Web.UI;
 
 using DotNetNuke.Abstractions.Application;
+using DotNetNuke.Entities.Tabs.TabVersions.Exceptions;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Services.FileSystem;
 using DotNetNuke.Services.Log.EventLog;
@@ -74,6 +75,9 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(EventId = 1_404, Level = LogLevel.Error)]
     public static partial void LuceneControllerGetCustomAnalyzerException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 1_405, Level = LogLevel.Error, Message = "Search Index Folder Is Not Available: {Message}, Retry {Retries} time(s).")]
+    public static partial void LuceneControllerSearchIndexFolderIsNotAvailable(this ILogger logger, Exception exception, string message, int retries);
 
     [LoggerMessage(1_500, LogLevel.Debug, "Container.ProcessModule Start (TabId:{TabId},ModuleID: {DesktopModuleId}): Module FriendlyName: '{ModuleFriendlyName}')")]
     public static partial void ContainerProcessModuleStart(this ILogger logger, int tabId, int desktopModuleId, string moduleFriendlyName);
@@ -186,6 +190,15 @@ internal static partial class LoggerMessages
     [LoggerMessage(2_507, LogLevel.Trace, "Request {LocalPath}")]
     public static partial void InitializeRequest(this ILogger logger, string localPath);
 
+    [LoggerMessage(2_508, LogLevel.Error, "UnderConstruction page was shown because we cannot ascertain the application was ever installed, and there is no working database connection. Check database connectivity before continuing. ")]
+    public static partial void InitializeUnderConstructionPageShownBecauseNoWorkingDatabaseConnection(this ILogger logger);
+
+    [LoggerMessage(2_509, LogLevel.Error, "The connection to the database has failed, the application is not installed yet, and both AutoUpgrade and UseInstallWizard are not set in web.config, a 500 error page will be shown to visitors")]
+    public static partial void InitializeConnectionToTheDatabaseHasFailedTheApplicationIsNotInstalledYetA500ErrorPageWillBeShown(this ILogger logger);
+
+    [LoggerMessage(2_510, LogLevel.Error, "The connection to the database has failed, however, the application is already completely installed, a 500 error page will be shown to visitors")]
+    public static partial void InitializeConnectionToTheDatabaseHasFailedHoweverTheApplicationIsAlreadyCompletelyInstalledA500ErrorPageWillBeShown(this ILogger logger);
+
     [LoggerMessage(2_600, LogLevel.Information, "{RootPath} does not exist. ")]
     public static partial void FileSystemUtilsFolderDoesNotExist(this ILogger logger, string rootPath);
 
@@ -245,6 +258,9 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(2_801, LogLevel.Warning, "{Message}")]
     public static partial void InstallLoggerLogWarning(this ILogger logger, string message);
+
+    [LoggerMessage(2_802, LogLevel.Error, "{Message}")]
+    public static partial void InstallLoggerLogFailure(this ILogger logger, string message);
 
     [LoggerMessage(2_900, LogLevel.Information, "Starting WebServerMonitor")]
     public static partial void WebServerMonitorStartingWebServerMonitor(this ILogger logger);
@@ -368,6 +384,12 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(EventId = 3_819, Level = LogLevel.Error, Message = "Error cleanup file {ListFile}")]
     public static partial void UpgradeErrorCleanupFile(this ILogger logger, Exception exception, string listFile);
+
+    [LoggerMessage(EventId = 3_820, Level = LogLevel.Error, Message = "File deletion failed for [Install/{File}]. PLEASE REMOVE THIS MANUALLY.")]
+    public static partial void UpgradeFileDeletionFailedFor(this ILogger logger, Exception exception, string file);
+
+    [LoggerMessage(EventId = 3_821, Level = LogLevel.Error, Message = "{LogDescription}")]
+    public static partial void UpgradeFailureLog(this ILogger logger, string logDescription);
 
     [LoggerMessage(3_900, LogLevel.Trace, "Getting component for {FullName}")]
     public static partial void ContainerWithServiceProviderFallbackGettingComponent(this ILogger logger, string fullName);
@@ -726,6 +748,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 8_302, Level = LogLevel.Error)]
     public static partial void PortalTemplateImporterAddFolderException(this ILogger logger, Exception exception);
 
+    [LoggerMessage(EventId = 8_303, Level = LogLevel.Error, Message = "{Message}")]
+    public static partial void PortalTemplateImporterParseFilesInvalidFileExtensionException(this ILogger logger, InvalidFileExtensionException exception, string message);
+
     [LoggerMessage(EventId = 8_400, Level = LogLevel.Error)]
     public static partial void ProfileControllerCreateThumbnailsException(this ILogger logger, Exception exception);
 
@@ -743,6 +768,9 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(EventId = 8_800, Level = LogLevel.Error)]
     public static partial void TabVersionBuilderConvertToModuleInfoException(this ILogger logger, Exception exception);
+
+    [LoggerMessage(EventId = 8_801, Level = LogLevel.Error, Message = "There was a problem making rollback of the module {ModuleId}.")]
+    public static partial void TabVersionBuilderProblemMakingRollbackOfTheModule(this ILogger logger, DnnTabVersionException exception, int moduleId);
 
     [LoggerMessage(EventId = 8_900, Level = LogLevel.Error)]
     public static partial void FileSystemPermissionVerifierFileCreateException(this ILogger logger, Exception exception);
@@ -911,4 +939,22 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(EventId = 25_000, Level = LogLevel.Error, Message = "{ErrorMessage}")]
     public static partial void TabPublishingControllerPermissionsAreNotMetThePageHasNotBeenPublished(this ILogger logger, Entities.Tabs.PermissionsNotMetException exception, string errorMessage);
+
+    [LoggerMessage(EventId = 26_000, Level = LogLevel.Error, Message = "Error loading portal setting: {Key}:{Value} Default value {DefaultValue} was used instead")]
+    public static partial void CollectionExtensionsErrorLoadingPortalSettingDefaultUsedInstead(this ILogger logger, string key, object value, object defaultValue);
+
+    [LoggerMessage(EventId = 27_000, Level = LogLevel.Error, Message = "[1] Error executing SQL: {SQL}")]
+    public static partial void PetaPocoHelper1ErrorExecutingSql(this ILogger logger, Exception exception, string sql);
+
+    [LoggerMessage(EventId = 27_001, Level = LogLevel.Error, Message = "[2] Error executing SQL: {CommandText}")]
+    public static partial void PetaPocoHelper2ErrorExecutingSql(this ILogger logger, Exception exception, string commandText);
+
+    [LoggerMessage(EventId = 27_002, Level = LogLevel.Error, Message = "[3] Error executing SQL: {SQL}")]
+    public static partial void PetaPocoHelper3ErrorExecutingSql(this ILogger logger, Exception exception, string sql);
+
+    [LoggerMessage(EventId = 27_003, Level = LogLevel.Error, Message = "[4] Error executing SQL: {SQL}")]
+    public static partial void PetaPocoHelper4ErrorExecutingSql(this ILogger logger, Exception exception, string sql);
+
+    [LoggerMessage(EventId = 27_004, Level = LogLevel.Error, Message = "[5] Error executing SQL: {SQL}")]
+    public static partial void PetaPocoHelper5ErrorExecutingSql(this ILogger logger, Exception exception, string sql);
 }
