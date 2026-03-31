@@ -9,8 +9,9 @@ using System;
 using Microsoft.Extensions.Logging;
 
 /// <summary>Extension methods for <see cref="ILogger"/> for pre-defined logging messages.</summary>
+/// <remarks>The DotNetNuke.Providers.AspNetCCP project has been assigned event IDs from 2,400,000 to 2,499,999.</remarks>
 internal static partial class LoggerMessages
 {
-    [LoggerMessage(EventId = 16_000_000, Level = LogLevel.Error)]
+    [LoggerMessage(EventId = 2_400_000, Level = LogLevel.Error)]
     public static partial void AspNetClientCapabilityDetectOperatingSystemException(this ILogger logger, Exception exception);
 }

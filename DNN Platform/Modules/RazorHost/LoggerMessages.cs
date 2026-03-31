@@ -9,9 +9,10 @@ namespace DotNetNuke.Modules.RazorHost
     using Microsoft.Extensions.Logging;
 
     /// <summary>Extension methods for <see cref="ILogger"/> for pre-defined logging messages.</summary>
+    /// <remarks>The DotNetNuke.Modules.RazorHost project has been assigned event IDs from 3,400,000 to 3,499,999.</remarks>
     internal static partial class LoggerMessages
     {
-        [LoggerMessage(EventId = 18_000_000, Level = LogLevel.Error)]
+        [LoggerMessage(EventId = 3_400_000, Level = LogLevel.Error)]
         public static partial void CreateModuleDeleteFileException(this ILogger logger, Exception exception);
     }
 }

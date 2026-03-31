@@ -9,12 +9,13 @@ namespace Dnn.Modules.Console
     using Microsoft.Extensions.Logging;
 
     /// <summary>Extension methods for <see cref="ILogger"/> for pre-defined logging messages.</summary>
+    /// <remarks>The Dnn.Modules.Console project has been assigned event IDs from 3,500,000 to 3,599,999.</remarks>
     internal static partial class LoggerMessages
     {
-        [LoggerMessage(EventId = 20_000_000, Level = LogLevel.Error)]
+        [LoggerMessage(EventId = 3_500_000, Level = LogLevel.Error)]
         public static partial void SettingsParseWidthException(this ILogger logger, Exception exception);
 
-        [LoggerMessage(EventId = 20_000_100, Level = LogLevel.Error)]
+        [LoggerMessage(EventId = 3_500_100, Level = LogLevel.Error)]
         public static partial void ViewConsoleParseConsoleModuleIdException(this ILogger logger, Exception exception);
     }
 }

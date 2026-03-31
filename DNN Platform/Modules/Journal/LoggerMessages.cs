@@ -9,39 +9,40 @@ namespace DotNetNuke.Modules.Journal
     using Microsoft.Extensions.Logging;
 
     /// <summary>Extension methods for <see cref="ILogger"/> for pre-defined logging messages.</summary>
+    /// <remarks>The DotNetNuke.Modules.Journal project has been assigned event IDs from 3,200,000 to 3,299,999.</remarks>
     internal static partial class LoggerMessages
     {
-        [LoggerMessage(EventId = 19_000_000, Level = LogLevel.Error)]
+        [LoggerMessage(EventId = 3_200_000, Level = LogLevel.Error)]
         public static partial void ServicesControllerCreateException(this ILogger logger, Exception exception);
 
-        [LoggerMessage(EventId = 19_000_001, Level = LogLevel.Error)]
+        [LoggerMessage(EventId = 3_200_001, Level = LogLevel.Error)]
         public static partial void ServicesControllerDeleteException(this ILogger logger, Exception exception);
 
-        [LoggerMessage(EventId = 19_000_002, Level = LogLevel.Error)]
+        [LoggerMessage(EventId = 3_200_002, Level = LogLevel.Error)]
         public static partial void ServicesControllerSoftDeleteException(this ILogger logger, Exception exception);
 
-        [LoggerMessage(EventId = 19_000_003, Level = LogLevel.Error)]
+        [LoggerMessage(EventId = 3_200_003, Level = LogLevel.Error)]
         public static partial void ServicesControllerPreviewUrlException(this ILogger logger, Exception exception);
 
-        [LoggerMessage(EventId = 19_000_004, Level = LogLevel.Error)]
+        [LoggerMessage(EventId = 3_200_004, Level = LogLevel.Error)]
         public static partial void ServicesControllerGetListForProfileException(this ILogger logger, Exception exception);
 
-        [LoggerMessage(EventId = 19_000_005, Level = LogLevel.Error)]
+        [LoggerMessage(EventId = 3_200_005, Level = LogLevel.Error)]
         public static partial void ServicesControllerLikeException(this ILogger logger, Exception exception);
 
-        [LoggerMessage(EventId = 19_000_006, Level = LogLevel.Error)]
+        [LoggerMessage(EventId = 3_200_006, Level = LogLevel.Error)]
         public static partial void ServicesControllerCommentSaveException(this ILogger logger, Exception exception);
 
-        [LoggerMessage(EventId = 19_000_007, Level = LogLevel.Error)]
+        [LoggerMessage(EventId = 3_200_007, Level = LogLevel.Error)]
         public static partial void ServicesControllerCommentDeleteException(this ILogger logger, Exception exception);
 
-        [LoggerMessage(EventId = 19_000_008, Level = LogLevel.Error)]
+        [LoggerMessage(EventId = 3_200_008, Level = LogLevel.Error)]
         public static partial void ServicesControllerGetSuggestionsException(this ILogger logger, Exception exception);
 
-        [LoggerMessage(EventId = 19_000_100, Level = LogLevel.Error)]
+        [LoggerMessage(EventId = 3_200_100, Level = LogLevel.Error)]
         public static partial void FileUploadControllerUploadFileException(this ILogger logger, Exception exception);
 
-        [LoggerMessage(EventId = 19_000_200, Level = LogLevel.Error)]
+        [LoggerMessage(EventId = 3_200_200, Level = LogLevel.Error)]
         public static partial void NotificationServicesControllerViewJournalException(this ILogger logger, Exception exception);
     }
 }

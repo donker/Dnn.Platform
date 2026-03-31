@@ -26,11 +26,12 @@ using Lucene.Net.Search;
 using Microsoft.Extensions.Logging;
 
 /// <summary>Extension methods for <see cref="ILogger"/> for pre-defined logging messages.</summary>
+/// <remarks>The DotNetNuke.Library project has been assigned event IDs from 1 to 999,999.</remarks>
 internal static partial class LoggerMessages
 {
     /*
     # Event IDs
-    - 1 to 1,000,000
+    - 1 to 999,999
       - DotNetNuke.Library project
         - 1 to 999
           - DotNetNuke namespace
@@ -257,6 +258,52 @@ internal static partial class LoggerMessages
         - 607,000 to 607,999
           - DotNetNuke.UI.WebControls namespace
           - DotNetNuke.UI.WebControls.Internal namespace
+    - 1,000,000 to 1,199,999
+      - DotNetNuke.Website project
+    - 1,200,000 to 1,499,999
+      - DotNetNuke.Web project
+    - 1,500,000 to 1,599,999
+      - DotNetNuke.Web.Mvc project
+    - 1,600,000 to 1,649,999
+      - DotNetNuke.Web.Client project
+    - 1,650,000 to 1,699,999
+      - DotNetNuke.Web.Client.ResourceManager project
+    - 2,000,000 to 2,099,999
+      - DotNetNuke.HttpModules project
+    - 2,100,000 to 2,199,999
+      - DotNetNuke.DependencyInjection project
+    - 2,200,000 to 2,299,999
+      - DotNetNuke.Maintenance project
+    - 2,300,000 to 2,399,999
+      - DotNetNuke.Syndication project
+    - 2,400,000 to 2,499,999
+      - DotNetNuke.Providers.AspNetCCP project
+    - 2,500,000 to 2,999,999
+      - DotNetNuke.Providers.FolderProviders project
+    - 3,000,000 to 3,099,999
+      - DotNetNuke.Modules.CoreMessaging project
+    - 3,100,000 to 3,199,999
+      - DotNetNuke.Modules.Groups project
+    - 3,200,000 to 3,299,999
+      - DotNetNuke.Modules.Journal project
+    - 3,300,000 to 3,399,999
+      - DotNetNuke.Modules.MemberDirectory project
+    - 3,400,000 to 3,499,999
+      - DotNetNuke.Modules.RazorHost project
+    - 3,500,000 to 3,599,999
+      - Dnn.Modules.Console project
+    - 3,600,000 to 3,699,999
+      - Dnn.Modules.ResourceManager project
+    - 4,000,000 to 4,999,999
+      - DnnExportImport project
+    - 5,000,000 to 5,499,999
+      - Dnn.PersonaBar.Library project
+    - 5,500,000 to 5,999,999
+      - Dnn.PersonaBar.UI
+    - 6,000,000 to 6,099,999
+      - Dnn.EditBar.UI project
+    - 7,000,000 to 7,999,999
+      - Dnn.PersonaBar.Extensions project
     */
 
     /*
