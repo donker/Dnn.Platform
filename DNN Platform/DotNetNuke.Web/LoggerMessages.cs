@@ -74,6 +74,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 7_000_208, Level = LogLevel.Error)]
     public static partial void ApplicationStopSchedulerException(this ILogger logger, Exception exception);
 
+    [LoggerMessage(EventId = 7_000_209, Level = LogLevel.Critical)]
+    public static partial void ApplicationLogApplicationError(this ILogger logger, Exception exception);
+
     [LoggerMessage(7_000_300, LogLevel.Trace, "Authorization header scheme in the request is not equal to {AuthScheme}")]
     public static partial void ApiTokenControllerAuthorizationHeaderSchemeDoesNotMatchAuthScheme(this ILogger logger, string authScheme);
 

@@ -286,7 +286,7 @@ namespace DotNetNuke.Services.Exceptions
             }
             catch (Exception exc2)
             {
-                Logger.Fatal(exc2);
+                Logger.ExceptionsProcessModuleLoadExceptionUnexpectedException(exc2);
                 ProcessPageLoadException(exc2);
             }
 

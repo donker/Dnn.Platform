@@ -171,7 +171,7 @@ namespace DotNetNuke.Web.Common.Internal
                 {
                     foreach (Exception exc in HttpContext.Current.AllErrors)
                     {
-                        Logger.Fatal(exc);
+                        Logger.ApplicationLogApplicationError(exc);
                     }
                 }
             }
@@ -205,7 +205,7 @@ namespace DotNetNuke.Web.Common.Internal
                 Logger.ApplicationDumpingAllApplicationErrors();
                 foreach (Exception exc in HttpContext.Current.AllErrors)
                 {
-                    Logger.Fatal(exc);
+                    Logger.ApplicationLogApplicationError(exc);
                 }
 
                 Logger.ApplicationEndDumpingAllApplicationErrors();

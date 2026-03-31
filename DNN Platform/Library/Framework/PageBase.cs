@@ -384,7 +384,7 @@ namespace DotNetNuke.Framework
         {
             base.OnError(e);
             Exception exc = this.Server.GetLastError();
-            Logger.Fatal("An error has occurred while loading page.", exc);
+            Logger.PageBaseAnErrorHasOccurredWhileLoadingPage(exc);
 
             string strURL = Globals.ApplicationURL();
             if (exc is HttpException exception && !this.IsViewStateFailure(exception))

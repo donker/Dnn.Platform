@@ -43,6 +43,9 @@ internal static partial class LoggerMessages
     [LoggerMessage(1_100, LogLevel.Debug, "{Origin} {Action} (TabId:{TabId},{Message})")]
     public static partial void PageBaseTrace(this ILogger logger, string origin, string action, int tabId, string message);
 
+    [LoggerMessage(1_101, LogLevel.Critical, "An error has occurred while loading page.")]
+    public static partial void PageBaseAnErrorHasOccurredWhileLoadingPage(this ILogger logger, Exception exception);
+
     [LoggerMessage(1_200, LogLevel.Debug, "ScheduleHistoryItem.Succeeded Info (ScheduledTask Start): {FriendlyName}")]
     public static partial void ScheduleHistoryItemSucceededStart(this ILogger logger, string friendlyName);
 
@@ -609,6 +612,9 @@ internal static partial class LoggerMessages
 
     [LoggerMessage(EventId = 5_910, Level = LogLevel.Error, Message = "{ResourceNotFound}: - {URL}")]
     public static partial void ExceptionsProcessHttpException(this ILogger logger, Exception exception, string resourceNotFound, string url);
+
+    [LoggerMessage(EventId = 5_911, Level = LogLevel.Critical)]
+    public static partial void ExceptionsProcessModuleLoadExceptionUnexpectedException(this ILogger logger, Exception exception);
 
     [LoggerMessage(6_000, LogLevel.Error, "Error has occurred getting PageUrl for {TabName}")]
     public static partial void CoreSitemapProviderErrorGettingPageUrl(this ILogger logger, Exception exception, string tabName);
