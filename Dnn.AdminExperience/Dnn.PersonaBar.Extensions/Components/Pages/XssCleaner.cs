@@ -21,6 +21,13 @@ namespace Dnn.PersonaBar.Pages.Components
             input.Alias = Clean(input.Alias);
             input.LocalizedName = Clean(input.LocalizedName);
             input.PageStyleSheet = Clean(input.PageStyleSheet);
+            if (input.PageHeaderTags != null)
+            {
+                foreach (var item in input.PageHeaderTags)
+                {
+                    item.Name = Clean(item.Name);
+                }
+            }
         }
 
         public static void Clean(this BulkPage input)
