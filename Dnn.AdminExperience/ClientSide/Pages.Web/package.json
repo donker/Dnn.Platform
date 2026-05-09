@@ -1,6 +1,6 @@
 {
   "name": "pages",
-  "version": "10.3.2",
+  "version": "10.3.3",
   "private": true,
   "scripts": {
     "start": "rsbuild dev",
@@ -18,7 +18,7 @@
     "es6-promise": "4.0.5"
   },
   "devDependencies": {
-    "@dnnsoftware/dnn-react-common": "10.3.2",
+    "@dnnsoftware/dnn-react-common": "10.3.3",
     "@rsbuild/core": "^1.7.3",
     "@rsbuild/plugin-less": "^1.6.2",
     "@rsbuild/plugin-react": "^1.4.6",
@@ -28,7 +28,7 @@
     "create-react-class": "^15.7.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.8",
-    "eslint": "^9.39.4",
+    "eslint": "^10.2.1",
     "eslint-plugin-react": "7.37.5",
     "globals": "^17.4.0",
     "jest": "^30.3.0",
