@@ -501,13 +501,19 @@ __metadata:
   linkType: hard
 
 "@dnncommunity/dnn-elements@npm:^0.29.2":
-  version: 0.29.2
-  resolution: "@dnncommunity/dnn-elements@npm:0.29.2"
+  version: 0.29.3
+  resolution: "@dnncommunity/dnn-elements@npm:0.29.3"
   dependencies:
-    jodit: "npm:^4.6.2"
+    jodit: "npm:^4.11.15"
   peerDependencies:
     "@typescript-eslint/utils": ^8.30.1
-  checksum: 10/c26bcc2ed915aaf6d884bba3edbd7725e13beba1a11cba128016f1dc8cd45cd057a3a4586cf66955e05664a42a1bc3223353872b904084b6ab4a28570da38391
+    eslint: ^9.0.0 || ^10.0.0
+  peerDependenciesMeta:
+    "@typescript-eslint/utils":
+      optional: true
+    eslint:
+      optional: true
+  checksum: 10/d35658f1d1ce437b3b1e99f81c839556b58aea554d555457d5b5ca0ff7059b1689fb78f7464b210a1a135c4f60265027d730da14e52bed9f2fefcd0f5df550fc
   languageName: node
   linkType: hard
 
@@ -5062,13 +5068,6 @@ __metadata:
   version: 0.4.0
   resolution: "asynckit@npm:0.4.0"
   checksum: 10/3ce727cbc78f69d6a4722517a58ee926c8c21083633b1d3fdf66fd688f6c127a53a592141bd4866f9b63240a86e9d8e974b13919450bd17fa33c2d22c4558ad8
-  languageName: node
-  linkType: hard
-
-"autobind-decorator@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "autobind-decorator@npm:2.4.0"
-  checksum: 10/9e24cb18f2ca5ff0753cbf29f5616a344779bd212a79995bf9e5ab0e008c9c83772b380e88d68525e6ec08ceedb807c16d60b57f249d4e77fd4888e94a3aee21
   languageName: node
   linkType: hard
 
@@ -10497,12 +10496,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jodit@npm:^4.6.2":
-  version: 4.6.2
-  resolution: "jodit@npm:4.6.2"
-  dependencies:
-    autobind-decorator: "npm:^2.4.0"
-  checksum: 10/a0d0d537339fe0756173d62ff9a07bcba88bc8be2baeb538e93dba849802a8401f431d43c1e8e413434af413a8f3d790b465876988a6f58e034558a388378850
+"jodit@npm:^4.11.15":
+  version: 4.12.2
+  resolution: "jodit@npm:4.12.2"
+  checksum: 10/17fe6bbac6b7347a45ec6dcb713868f049081872ff4b97df6e68da322c5876ec7b90d3d73775529e7b8bdc255d0f7fd115d9e2906b77b68c5452def67571b635
   languageName: node
   linkType: hard
 
