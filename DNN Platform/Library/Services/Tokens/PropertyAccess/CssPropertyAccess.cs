@@ -2,25 +2,23 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information
 
-// ReSharper disable once CheckNamespace
 namespace DotNetNuke.Services.Tokens
 {
     using System;
     using System.Web.UI;
 
+    using DotNetNuke.Abstractions.ClientResources;
+    using DotNetNuke.Common;
     using DotNetNuke.Entities.Users;
-    using DotNetNuke.Web.Client;
-    using DotNetNuke.Web.Client.ClientResourceManagement;
+    using DotNetNuke.Web.Client.ResourceManager;
+    using Microsoft.Extensions.DependencyInjection;
 
     public class CssPropertyAccess : JsonPropertyAccess<StylesheetDto>
     {
-        private readonly Page page;
-
         /// <summary>Initializes a new instance of the <see cref="CssPropertyAccess"/> class.</summary>
         /// <param name="page">The page to which the CSS should be registered.</param>
         public CssPropertyAccess(Page page)
         {
-            this.page = page;
         }
 
         /// <inheritdoc />
@@ -38,14 +36,20 @@ namespace DotNetNuke.Services.Tokens
 
             if (string.IsNullOrEmpty(model.Provider))
             {
-                ClientResourceManager.RegisterStyleSheet(this.page, model.Path, model.Priority);
+                GetClientResourcesController().CreateStylesheet(model.Path).SetPriority(model.Priority).Register();
             }
             else
             {
-                ClientResourceManager.RegisterStyleSheet(this.page, model.Path, model.Priority, model.Provider);
+                GetClientResourcesController().CreateStylesheet(model.Path).SetPriority(model.Priority).SetProvider(model.Provider).Register();
             }
 
             return string.Empty;
+        }
+
+        private static IClientResourceController GetClientResourcesController()
+        {
+            var serviceProvider = Globals.GetCurrentServiceProvider();
+            return serviceProvider.GetRequiredService<IClientResourceController>();
         }
     }
 }
