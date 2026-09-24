@@ -112,6 +112,18 @@ namespace DotNetNuke.Web.MvcPipeline.Routing
         /// <inheritdoc/>
         public void RegisterRoutes()
         {
+            // #region agent log
+            try
+            {
+                var line = "{\"sessionId\":\"858381\",\"runId\":\"pre-fix\",\"hypothesisId\":\"B\",\"location\":\"MvcPipeline.MvcRoutingManager.RegisterRoutes\",\"message\":\"MvcPipeline RegisterRoutes entered\",\"data\":{\"routeCountBefore\":" + this.routes.Count + "},\"timestamp\":" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + "}\n";
+                System.IO.File.AppendAllText(@"D:\DNN\debug-858381.log", line);
+            }
+            catch
+            {
+            }
+
+            // #endregion
+
             // add standard tab and module id provider
             using (this.routes.GetWriteLock())
             {
@@ -181,6 +193,18 @@ namespace DotNetNuke.Web.MvcPipeline.Routing
             Logger.Trace("Mapping route: " + "mvc-pipeline-default" + " @ " + "DesktopModules/{controller}/{action}/{tabid}/{language}");
 
             this.routes.Add(route);
+
+            // #region agent log
+            try
+            {
+                var line = "{\"sessionId\":\"858381\",\"runId\":\"pre-fix\",\"hypothesisId\":\"B\",\"location\":\"MvcRoutingManager.RegisterSystemRoutes\",\"message\":\"Registered mvc-pipeline-default\",\"data\":{\"url\":\"" + route.Url + "\",\"routeCount\":" + this.routes.Count + "},\"timestamp\":" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + "}\n";
+                System.IO.File.AppendAllText(@"D:\DNN\debug-858381.log", line);
+            }
+            catch
+            {
+            }
+
+            // #endregion
         }
 
         private void LocateServicesAndMapRoutes()

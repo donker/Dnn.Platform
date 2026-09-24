@@ -41,6 +41,19 @@ namespace DotNetNuke.Web.MvcPipeline.Routing
         /// <returns>The HTTP handler.</returns>
         protected virtual IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
+            // #region agent log
+            try
+            {
+                var controller = requestContext.RouteData.Values["controller"]?.ToString() ?? "null";
+                var action = requestContext.RouteData.Values["action"]?.ToString() ?? "null";
+                var line = "{\"sessionId\":\"858381\",\"runId\":\"pre-fix\",\"hypothesisId\":\"D\",\"location\":\"DnnMvcPageRouteHandler.GetHttpHandler\",\"message\":\"Route handler selected\",\"data\":{\"controller\":\"" + controller + "\",\"action\":\"" + action + "\",\"path\":\"" + (requestContext.HttpContext.Request.Path ?? string.Empty).Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"},\"timestamp\":" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + "}\n";
+                System.IO.File.AppendAllText(@"D:\DNN\debug-858381.log", line);
+            }
+            catch
+            {
+            }
+
+            // #endregion
             requestContext.HttpContext.SetSessionStateBehavior(this.GetSessionStateBehavior(requestContext));
             return new DnnMvcPageHandler(requestContext);
         }

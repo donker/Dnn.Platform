@@ -4,12 +4,14 @@
 
 namespace DotNetNuke.Web.MvcPipeline
 {
+    using System;
     using System.Web.Mvc;
 
     using DotNetNuke.Common;
     using DotNetNuke.Common.Internal;
     using DotNetNuke.ContentSecurityPolicy;
     using DotNetNuke.DependencyInjection;
+    using DotNetNuke.Instrumentation;
     using DotNetNuke.Web.MvcPipeline.Extensions;
     using DotNetNuke.Web.MvcPipeline.ModelFactories;
     using DotNetNuke.Web.MvcPipeline.Routing;
@@ -22,25 +24,24 @@ namespace DotNetNuke.Web.MvcPipeline
     /// </summary>
     public class Startup : IDnnStartup
     {
-        private readonly ILogger<Startup> logger;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Startup"/> class.
-        /// </summary>
-        /// <param name="logger">
-        /// The <see cref="ILogger{TCategoryName}"/> used to record startup and configuration events for the MVC pipeline.
-        /// This logger is provided by the application's dependency injection container.
-        /// </param>
-        public Startup(ILogger<Startup> logger)
-        {
-            this.logger = logger;
-        }
+        private readonly ILogger logger = DnnLoggingController.GetLogger<Startup>();
 
         /// <inheritdoc/>
         public void ConfigureServices(IServiceCollection services)
         {
             services.TryAddEnumerable(new ServiceDescriptor(typeof(IRoutingManager), typeof(MvcRoutingManager), ServiceLifetime.Singleton));
 
+            // #region agent log
+            try
+            {
+                var line = "{\"sessionId\":\"858381\",\"runId\":\"post-fix\",\"hypothesisId\":\"B\",\"location\":\"MvcPipeline.Startup.ConfigureServices\",\"message\":\"MvcPipeline Startup registering IRoutingManager\",\"data\":{},\"timestamp\":" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + "}\n";
+                System.IO.File.AppendAllText(@"D:\DNN\debug-858381.log", line);
+            }
+            catch
+            {
+            }
+
+            // #endregion
             services.AddMvcControllers(this.logger);
             services.AddTransient<IPageModelFactory, PageModelFactory>();
             services.AddTransient<ISkinModelFactory, SkinModelFactory>();

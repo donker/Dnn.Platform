@@ -4,6 +4,8 @@
 
 namespace DotNetNuke.ContentSecurityPolicy
 {
+    using System;
+
     /// <summary>
     /// Provides extension methods for <see cref="IContentSecurityPolicy"/>.
     /// </summary>
@@ -16,16 +18,48 @@ namespace DotNetNuke.ContentSecurityPolicy
         /// <param name="csp">The content security policy to modify.</param>
         public static void AddWebformsSupport(this IContentSecurityPolicy csp)
         {
-            csp.DefaultSource.AddSelf();
-            csp.ScriptSource.AddSelf();
+            csp.AddBaseSupport();
             csp.ScriptSource.AddInline();
             csp.ScriptSource.AddEval();
+        }
+
+        /// <summary>
+        /// Adds script source directives to the specified <see cref="IContentSecurityPolicy"/> instance
+        /// to enable support for MVC pipeline.
+        /// </summary>
+        /// <param name="csp">The content security policy to modify.</param>
+        public static void AddMVCSupport(this IContentSecurityPolicy csp)
+        {
+            csp.AddBaseSupport();
+            csp.ScriptSource.AddNonce(csp.Nonce);
+        }
+
+        /// <summary>
+        /// Add host to source if absolute url <see cref="SourceCspContributor"/> instance.
+        /// </summary>
+        /// <param name="source">The source where to add the host.</param>
+        /// /// <param name="url">The url.</param>
+        public static void AddUrlOrigin(this SourceCspContributor source, string url)
+        {
+            if (Uri.TryCreate(url, UriKind.Absolute, out var uri))
+            {
+                var origin = uri.GetLeftPart(UriPartial.Authority);
+                source.AddHost(origin);
+            }
+        }
+
+        private static void AddBaseSupport(this IContentSecurityPolicy csp)
+        {
+            csp.DefaultSource.AddSelf();
+            csp.ScriptSource.AddSelf();
             csp.StyleSource.AddSelf();
             csp.ImgSource.AddSelf();
             csp.FontSource.AddSelf();
             csp.FrameSource.AddSelf();
             csp.FormAction.AddSelf();
             csp.ConnectSource.AddSelf();
+            csp.FrameAncestors.AddSelf();
+            csp.ObjectSource.AddNone();
             csp.BaseUriSource.AddSelf();
         }
     }

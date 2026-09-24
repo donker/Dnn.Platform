@@ -54,7 +54,7 @@ namespace DotNetNuke.Entities.Urls
         private readonly IPortalAliasService portalAliasService = portalAliasService ?? Globals.GetCurrentServiceProvider().GetRequiredService<IPortalAliasService>();
         private readonly IApplicationStatusInfo appStatus = appStatus ?? Globals.GetCurrentServiceProvider().GetRequiredService<IApplicationStatusInfo>();
         private readonly IPortalGroupController portalGroupController = portalGroupController ?? Globals.GetCurrentServiceProvider().GetRequiredService<IPortalGroupController>();
-        private readonly MvcPipelineSettings mvcPipelineSettings = Globals.GetCurrentServiceProvider().GetRequiredService<MvcPipelineSettings>();
+        private readonly MvcPipelineSettingsRepository mvcPipelineSettingsRepository = Globals.GetCurrentServiceProvider().GetRequiredService<MvcPipelineSettingsRepository>();
         private FriendlyUrlSettings settings;
 
         /// <summary>Initializes a new instance of the <see cref="AdvancedUrlRewriter"/> class.</summary>
@@ -2223,6 +2223,7 @@ namespace DotNetNuke.Entities.Urls
         {
             bool mvcCtl = false;
             bool auto = false;
+            var mvcPipelineSettings = this.GetMvcPipelineSettings(portalId);
             if (tabId > 0 && portalId > -1)
             {
                 TabInfo tab = null;
@@ -2236,9 +2237,9 @@ namespace DotNetNuke.Entities.Urls
                     }
                     else
                     {
-                        mvcCtl = this.mvcPipelineSettings.DefaultPagePipeline == Abstractions.Framework.PagePipeline.PortalRenderingPipeline.MVC ||
-                                 this.mvcPipelineSettings.DefaultPagePipeline == Abstractions.Framework.PagePipeline.PortalRenderingPipeline.Auto;
-                        auto = this.mvcPipelineSettings.DefaultPagePipeline == Abstractions.Framework.PagePipeline.PortalRenderingPipeline.Auto;
+                        mvcCtl = mvcPipelineSettings.DefaultPagePipeline == Abstractions.Framework.PagePipeline.PortalRenderingPipeline.MVC ||
+                                 mvcPipelineSettings.DefaultPagePipeline == Abstractions.Framework.PagePipeline.PortalRenderingPipeline.Auto;
+                        auto = mvcPipelineSettings.DefaultPagePipeline == Abstractions.Framework.PagePipeline.PortalRenderingPipeline.Auto;
                     }
 
                     if (mvcCtl && result.RewritePath.Contains("&ctl="))
@@ -2270,7 +2271,7 @@ namespace DotNetNuke.Entities.Urls
             }
             else if (result.RewritePath.Contains("&ctl="))
             {
-                if (this.mvcPipelineSettings.DefaultPagePipeline == Abstractions.Framework.PagePipeline.PortalRenderingPipeline.MVC)
+                if (mvcPipelineSettings.DefaultPagePipeline == Abstractions.Framework.PagePipeline.PortalRenderingPipeline.MVC)
                 {
                     var mvcCtls = new[] { "Terms", "Privacy" };
                     foreach (var item in mvcCtls)
@@ -2281,6 +2282,19 @@ namespace DotNetNuke.Entities.Urls
             }
 
             return mvcCtl;
+        }
+
+        private MvcPipelineSettings GetMvcPipelineSettings(int portalId)
+        {
+            if (portalId > -1)
+            {
+                return this.mvcPipelineSettingsRepository.GetSettings(portalId);
+            }
+
+            var current = Portals.PortalController.Instance.GetCurrentSettings();
+            return current != null
+                ? this.mvcPipelineSettingsRepository.GetSettings(current.PortalId)
+                : new MvcPipelineSettings();
         }
 
         private void ProcessRequest(
@@ -2534,7 +2548,60 @@ namespace DotNetNuke.Entities.Urls
                     {
                         if (this.IsMvc(result, queryStringCol, context, result.TabId, result.PortalId))
                         {
-                            RewriterUtils.RewriteUrl(context, "~/" + result.RewritePath.Replace(Globals.glbDefaultPage, "DesktopModules/MvcPipeline/Default/Page/" + result.TabId + "/" + result.CultureCode));
+                            var mvcPath = "~/" + result.RewritePath.Replace(Globals.glbDefaultPage, "DesktopModules/MvcPipeline/Default/Page/" + result.TabId + "/" + result.CultureCode);
+
+                            // #region agent log
+                            try
+                            {
+                                var routeNames = new System.Collections.Generic.List<string>();
+                                foreach (var r in System.Web.Routing.RouteTable.Routes)
+                                {
+                                    if (r is System.Web.Routing.Route rt)
+                                    {
+                                        var n = rt.DataTokens != null && rt.DataTokens.ContainsKey("Name") ? rt.DataTokens["Name"]?.ToString() : null;
+                                        var url = rt.Url ?? string.Empty;
+                                        if ((n != null && n.IndexOf("mvc", StringComparison.OrdinalIgnoreCase) >= 0) ||
+                                            url.IndexOf("MvcPipeline", StringComparison.OrdinalIgnoreCase) >= 0)
+                                        {
+                                            routeNames.Add((n ?? "?") + " => " + url);
+                                        }
+                                    }
+                                }
+
+                                var line = "{\"sessionId\":\"858381\",\"runId\":\"pre-fix\",\"hypothesisId\":\"A\",\"location\":\"AdvancedUrlRewriter.cs:MvcRewrite\",\"message\":\"MVC rewrite about to run\",\"data\":{\"mvcPath\":\"" + mvcPath.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\",\"rawUrl\":\"" + (context.Request.RawUrl ?? string.Empty).Replace("\\", "\\\\").Replace("\"", "\\\"") + "\",\"routeCount\":" + System.Web.Routing.RouteTable.Routes.Count + ",\"mvcRoutes\":\"" + string.Join(" | ", routeNames).Replace("\\", "\\\\").Replace("\"", "\\\"") + "\",\"handlerBefore\":\"" + (context.Handler?.GetType().FullName ?? "null") + "\",\"currentHandlerBefore\":\"" + (context.CurrentHandler?.GetType().FullName ?? "null") + "\"},\"timestamp\":" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + "}\n";
+                                System.IO.File.AppendAllText(@"D:\DNN\debug-858381.log", line);
+                            }
+                            catch
+                            {
+                            }
+
+                            // #endregion
+                            RewriterUtils.RewriteUrl(context, mvcPath);
+
+                            // #region agent log
+                            try
+                            {
+                                System.Web.Routing.RouteData rd = null;
+                                try
+                                {
+                                    rd = System.Web.Routing.RouteTable.Routes.GetRouteData(new System.Web.HttpContextWrapper(context));
+                                }
+                                catch (Exception ex)
+                                {
+                                    rd = null;
+                                    var errLine = "{\"sessionId\":\"858381\",\"runId\":\"pre-fix\",\"hypothesisId\":\"C\",\"location\":\"AdvancedUrlRewriter.cs:MvcRewriteAfter\",\"message\":\"GetRouteData threw\",\"data\":{\"error\":\"" + ex.GetType().Name + ":" + (ex.Message ?? string.Empty).Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"},\"timestamp\":" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + "}\n";
+                                    System.IO.File.AppendAllText(@"D:\DNN\debug-858381.log", errLine);
+                                }
+
+                                var vals = rd?.Values != null ? string.Join(",", System.Linq.Enumerable.Select(rd.Values, kv => kv.Key + "=" + kv.Value)) : "null";
+                                var line2 = "{\"sessionId\":\"858381\",\"runId\":\"pre-fix\",\"hypothesisId\":\"A\",\"location\":\"AdvancedUrlRewriter.cs:MvcRewriteAfter\",\"message\":\"After MVC RewritePath\",\"data\":{\"path\":\"" + (context.Request.Path ?? string.Empty).Replace("\\", "\\\\").Replace("\"", "\\\"") + "\",\"filePath\":\"" + (context.Request.FilePath ?? string.Empty).Replace("\\", "\\\\").Replace("\"", "\\\"") + "\",\"handlerAfter\":\"" + (context.Handler?.GetType().FullName ?? "null") + "\",\"currentHandlerAfter\":\"" + (context.CurrentHandler?.GetType().FullName ?? "null") + "\",\"routeMatch\":\"" + (rd?.Route != null ? "yes" : "no") + "\",\"routeValues\":\"" + vals.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"},\"timestamp\":" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + "}\n";
+                                System.IO.File.AppendAllText(@"D:\DNN\debug-858381.log", line2);
+                            }
+                            catch
+                            {
+                            }
+
+                            // #endregion
                         }
                         else
                         {

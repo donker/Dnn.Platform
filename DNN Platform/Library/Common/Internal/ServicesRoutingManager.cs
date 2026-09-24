@@ -5,6 +5,7 @@
 namespace DotNetNuke.Common.Internal
 {
     using System;
+    using System.Linq;
 
     using DotNetNuke.Instrumentation;
     using DotNetNuke.Services.Cache;
@@ -21,13 +22,49 @@ namespace DotNetNuke.Common.Internal
         {
             try
             {
-                foreach (var routingManager in Globals.GetCurrentServiceProvider().GetServices<IRoutingManager>())
+                var managers = Globals.GetCurrentServiceProvider().GetServices<IRoutingManager>().ToList();
+
+                // #region agent log
+                try
                 {
+                    var names = string.Join(", ", managers.Select(m => m.GetType().FullName));
+                    var line = "{\"sessionId\":\"858381\",\"runId\":\"pre-fix\",\"hypothesisId\":\"B\",\"location\":\"ServicesRoutingManager.RegisterServiceRoutes\",\"message\":\"Registering routing managers\",\"data\":{\"count\":" + managers.Count + ",\"types\":\"" + names.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"},\"timestamp\":" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + "}\n";
+                    System.IO.File.AppendAllText(@"D:\DNN\debug-858381.log", line);
+                }
+                catch
+                {
+                }
+
+                // #endregion
+                foreach (var routingManager in managers)
+                {
+                    // #region agent log
+                    try
+                    {
+                        var line = "{\"sessionId\":\"858381\",\"runId\":\"pre-fix\",\"hypothesisId\":\"B\",\"location\":\"ServicesRoutingManager.RegisterServiceRoutes\",\"message\":\"Calling RegisterRoutes\",\"data\":{\"type\":\"" + routingManager.GetType().FullName + "\"},\"timestamp\":" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + "}\n";
+                        System.IO.File.AppendAllText(@"D:\DNN\debug-858381.log", line);
+                    }
+                    catch
+                    {
+                    }
+
+                    // #endregion
                     routingManager.RegisterRoutes();
                 }
             }
             catch (Exception e)
             {
+                // #region agent log
+                try
+                {
+                    var line = "{\"sessionId\":\"858381\",\"runId\":\"pre-fix\",\"hypothesisId\":\"B\",\"location\":\"ServicesRoutingManager.RegisterServiceRoutes\",\"message\":\"RegisterServiceRoutes failed\",\"data\":{\"error\":\"" + e.GetType().Name + ":" + (e.Message ?? string.Empty).Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"},\"timestamp\":" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + "}\n";
+                    System.IO.File.AppendAllText(@"D:\DNN\debug-858381.log", line);
+                }
+                catch
+                {
+                }
+
+                // #endregion
                 Logger.ServicesRoutingManagerUnableToRegisterServiceRoutes(e);
             }
         }

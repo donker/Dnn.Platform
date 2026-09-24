@@ -18,10 +18,13 @@ internal static partial class LoggerMessages
     [LoggerMessage(EventId = 1_500_001, Level = LogLevel.Trace, Message = "Mapping route: {FullRouteName} @ {RouteUrl}")]
     public static partial void MvcRoutingManagerMappingRoute(this ILogger logger, string fullRouteName, string routeUrl);
 
-    [LoggerMessage(EventId = 1_500_002, Level = LogLevel.Error, Message = "{FullTypeName}.RegisterRoutes threw an exception.")]
+    [LoggerMessage(EventId = 1_500_002, Level = LogLevel.Trace, Message = "Mapping route for mvcpipeline: {fullRouteName} Area={moduleFolderName}@{routeUrl}")]
+    public static partial void MvcRoutingManagerMapMvcRoute(this ILogger logger, string fullRouteName, string moduleFolderName, string routeUrl);
+
+    [LoggerMessage(EventId = 1_500_003, Level = LogLevel.Error, Message = "{FullTypeName}.RegisterRoutes threw an exception.")]
     public static partial void MvcRoutingManagerRegisterRoutesThrewException(this ILogger logger, Exception exception, string fullTypeName);
 
-    [LoggerMessage(EventId = 1_500_002, Level = LogLevel.Error, Message = "Unable to create {fullTypeName} while registering service routes.")]
+    [LoggerMessage(EventId = 1_500_004, Level = LogLevel.Error, Message = "Unable to create {fullTypeName} while registering service routes.")]
     public static partial void MvcRoutingManagerUnableToCreateMapper(this ILogger logger, Exception exception, string fullTypeName);
 
     [LoggerMessage(EventId = 1_500_100, Level = LogLevel.Warning, Message = "The specified moniker ({Moniker}) is not defined in the system")]
